@@ -6,7 +6,7 @@
  * Time: 16:54
  */
 
-namespace U43;
+namespace U443;
 
 
 class Table extends Entry {

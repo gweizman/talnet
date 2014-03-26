@@ -6,7 +6,7 @@
  * Time: 16:17
  */
 
-namespace U43;
+namespace U443;
 
 
 class Entry {
@@ -15,7 +15,7 @@ class Entry {
     public function __constructor ($keys) {
         // $keys is a dictionary of name : value
         // Returns a Entry object of the created row
-        // Performs INSERT using U43::send()
+        // Performs INSERT using U443::send()
     }
 
     public function __set($name, $value) {

@@ -6,7 +6,7 @@
  * Time: 16:33
  */
 
-namespace U43;
+namespace U443;
 
 
 class User extends Entry {
