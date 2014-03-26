@@ -1,0 +1,10 @@
+Yo.
+
+PermissionGroup should extend Table (so the same syntax is used), don't know
+exactly how to do that yet.
+
+Request should be sent as-is to U43::send() and should be directly translatable
+to JSON
+
+Possibly consider adding some less-generic functions to RequestFactory, for ease
+of work.
