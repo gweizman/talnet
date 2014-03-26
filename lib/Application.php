@@ -17,7 +17,7 @@ class Application {
     }
 
     public function deleteApp() {
-
+       //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 
     public function setAdmin($user) {
