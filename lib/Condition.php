@@ -21,16 +21,10 @@ class Condition {
         $_type = $type;
     }
 
-    //A method that parses a given condition into Field, operator and value
-    private function parser($left)
-    {
-
-    }
-
     public function JSON() {
         if ($this->_type == "Node")
         {
-            $this->_cond= "TERM: {" + $this->parser($this->_left) + "}";
+            $this->_cond= "TERM: {" + $this->$_left.JSON() + "}";
             return $this->_cond;
         }
         else if ($this->_type == "OR")
