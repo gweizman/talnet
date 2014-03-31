@@ -15,10 +15,25 @@ class Condition {
     private $_left, $_right; // Only $_left is used in case of "Node"
 
     function __construct ($left, $right = NULL, $type = "Node") {
-
+        $_left = $left;
+        $_right = $right;
+        $_type = $type;
     }
 
-    function JSON() {
-        // Recursive
+    public function JSON() {
+        if ($this->_type == "Node")
+        {
+            //Json??
+            retun;
+        }
+        else if ($this->_type == "OR")
+        {
+            //OR for Json??
+            return;
+        }
+        else if ($this->_type == "AND")
+        {
+            //
+        }
     }
 } 
