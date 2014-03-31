@@ -23,17 +23,15 @@ class Condition {
     public function JSON() {
         if ($this->_type == "Node")
         {
-            //Json??
-            retun;
+            return $this->_left;
         }
         else if ($this->_type == "OR")
         {
-            //OR for Json??
-            return;
+            return $this->_left.JSON() + " OR " + $this->_right.JSON();
         }
         else if ($this->_type == "AND")
         {
-            //
+            return $this->_left.JSON() + " AND " + $this->_right.JSON();
         }
     }
 } 
