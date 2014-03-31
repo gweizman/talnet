@@ -13,6 +13,7 @@ class Condition {
     // Recursively built
     private $_type; // OR, AND, Node
     private $_left, $_right; // Only $_left is used in case of "Node"
+    private $_cond= "";// The condition in the given JSON format
 
     function __construct ($left, $right = NULL, $type = "Node") {
         $_left = $left;
@@ -20,18 +21,28 @@ class Condition {
         $_type = $type;
     }
 
+    //A method that parses a given condition into Field, operator and value
+    private function parser($left)
+    {
+
+    }
+
     public function JSON() {
         if ($this->_type == "Node")
         {
-            return $this->_left;
+            $this->_cond= "TERM: {" + $this->parser($this->_left) + "}";
+            return $this->_cond;
         }
         else if ($this->_type == "OR")
         {
-            return $this->_left.JSON() + " OR " + $this->_right.JSON();
+
+            $this->_cond= "OR: {firstStatement: {" + $this->_left.JSON() + "}, secondStatement: {" + $this->_right.JSON() + "}";
+            return $this->_cond;
         }
         else if ($this->_type == "AND")
         {
-            return $this->_left.JSON() + " AND " + $this->_right.JSON();
+            $this->_cond= "OR: {firstStatement: {" + $this->_left.JSON() + "}, secondStatement: {" + $this->_right.JSON() + "}";
+            return $this->_cond;
         }
     }
 } 
