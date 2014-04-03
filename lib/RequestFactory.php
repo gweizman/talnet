@@ -20,7 +20,7 @@ class RequestFactory {
 
     }
 
-    public static function createDtdAction() {
-
+    public static function createDtdAction($api, $table, $action, $data, $condition) {
+        //Data : key => value
     }
 } 

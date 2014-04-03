@@ -39,4 +39,4 @@ class Condition {
             return $this->_cond;
         }
     }
-} 
+}

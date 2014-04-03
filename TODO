@@ -8,3 +8,7 @@ to JSON
 
 Possibly consider adding some less-generic functions to RequestFactory, for ease
 of work.
+
+Need to decide where responses are parsed.
+Probable direction - Response object holds json response almost as-is. It will be able to return some information (errors,
+etc.), but whoever asked for the data is in charge of parsing the data itself.
