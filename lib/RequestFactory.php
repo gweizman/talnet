@@ -16,28 +16,60 @@ class RequestFactory {
         return new Request();
     }
 
-    public static function createAppAction() {
-        return new Request();
-    }
 
     public static function createDtdAction($api, $table, $action, $data = NULL, $condition = NULL) {
-        //Data : key => value
-        $request= "RequestInfo: {requestType: {DTD}, requestAction: {" .$action . "}},
-                   RequestData: {";
         switch($action)
         {
             case "SELECT":
-                $request = $request . "FROM : {". $table . "WHERE {" . $condition . "}}}";
-                return $request;
+                $request = array (
+                    "RequestInfo" => array(
+                        "RequestType" => "DTD",
+                        "RequestAction" => "SELECT"
+                    ),
+                    "RequestData" => array(
+                        "FROM" => $table,
+                        "WHERE" => $condition
+                    )
+                );
+                break;
             case "INSERT":
-                $request = $request . "into: {". $table . "}, data: " . json_encode($data) . "}";
-                return $request;
+                $request = array (
+                    "RequestInfo" => array(
+                        "RequestType" => "DTD",
+                        "RequestAction" => "INSERT"
+                    ),
+                    "RequestData" => array(
+                        "into" => $table,
+                        "data" => $data
+                    )
+                );
+                break;
             case "UPDATE":
-                $request = $request . "into: {". $table . "}, data: " . json_encode($data) . " WHERE: {" . $condition . "}}";
-                return $request;
-            default: //In case there is a delete action
-                $request = $request . "FROM : {". $table . "WHERE {" . $condition . "}}}";
-                return $request;
+                $request = array (
+                    "RequestInfo" => array(
+                        "RequestType" => "DTD",
+                        "RequestAction" => "UPDATE"
+                    ),
+                    "RequestData" => array(
+                        "into" => $table,
+                        "data" => $data,
+                        "WHERE" => $condition
+                    )
+                );
+                break;
+            default: //In case there is a DELETE action
+                $request = array (
+                    "RequestInfo" => array(
+                        "RequestType" => "DTD",
+                        "RequestAction" => "DELETE"
+                    ),
+                    "RequestData" => array(
+                        "into" => $table,
+                        "WHERE" => $condition
+                    )
+                );
+                break;
         }
+        return $request;
     }
 } 
