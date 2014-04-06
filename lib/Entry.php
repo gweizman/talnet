@@ -31,23 +31,24 @@ class Entry {
         Entry::$_app = $app;
         Entry::$_columns = $columns;
         Entry::$_table = $table;
-
-        if($created= FALSE)
+        if($created== FALSE)
         {
             for($i=0; $i<sizeof($_keys);$i++)
             {
                 $temp_key= array_search($this->_keys[$i],$this->_keys);
-                if (!isset(Entry::$_[$temp_key]))
+                if (!isset(Entry::$_columns[$temp_key]))
                 {
                     throw new Exception("The given name does not exist");
                 }
-                if (gettype(Entry::$_columns[$temp_key]) != $this->_keys[$i])
+                if (gettype(Entry::$_columns[$temp_key]) != gettype($this->_keys[$i]))
                 {
                     throw new Exception("The given value does not meet the column requirement");
                 }
             }
 
             $request= RequestFactory::createDtdAction($app, $table, "INSERT", $keys);
+            return Communicate::send(Entry::$_app,$request);
+
         }
     }
 
@@ -62,14 +63,21 @@ class Entry {
         {
             throw new Exception("The given name does not exist");
         }
-        if (gettype(Entry::$_columns[$name]) != $value)
+        if (gettype(Entry::$_columns[$name]) != gettype($value))
         {
             throw new Exception("The given value does not meet the column requirement");
         }
+        $this->_keys[$name] = $value;
+        if (!isset($this->_keys["id"]))
+        {
+            throw new Exception("The id column does not exist");
+        }
+        $id = $this->_keys["id"];
+        $condition = new Condition("id = " . $id);
+        $json = "WHERE : {" . $condition.JSON() . "}";
         $data = array($name => $value);
-        $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", $data);
-        Communicate::send($request);
-        //To be continuation
+        $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", $data, $json);
+        return Communicate::send(Entry::$_app,$request);
     }
 
     /**
@@ -90,7 +98,7 @@ class Entry {
      * Delete row from the table
      */
     public function remove() {
-        if (!isset(Entry::$_keys["id"]))
+        if (!isset($this->_keys["id"]))
         {
             throw new Exception("The id column does not exist");
         }
@@ -98,7 +106,7 @@ class Entry {
         $condition = new Condition("id = " . $id);
         $json = "WHERE : {" . $condition.JSON() . "}";
         $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "DELETE", NULL , $json);
-        Communicate::send($request);
+        return Communicate::send(Entry::$_app,$request);
     }
 
     /**
@@ -108,9 +116,9 @@ class Entry {
      */
     public static function get($condition) {
         $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "SELECT", NULL , $condition);
-        $answer = Communicate::send($request);
+        $answer = Communicate::send(Entry::$_app,$request);
         $entries = array();
-        for ($i = 0 ; $i < $answer.count($answer) ; $i++)
+        for ($i = 0 ; $i < $answer.sizeof($answer) ; $i++)
         {
             array_push($entries,new Entry($answer[$i]));
         }
