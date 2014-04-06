@@ -44,6 +44,6 @@ class Communicate {
     }
 
     public static function getCurrentUser() {
-        // Returns a User object of the currently connected user (anonymous of none)
+        /// Returns a User object of the currently connected user (anonymous of none)
     }
 } 
