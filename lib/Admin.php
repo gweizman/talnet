@@ -6,22 +6,25 @@
  * Time: 23:50
  */
 
+namespace talnet;
 
 class Admin {
 
-    public static function createApp($api,$name) {
+    public static function createApp($calling_app, $new_app) {
+        // Calling_app = { name => name, key => key }
+        // new_app = { name => name, key => key }
         // Returns app key
     }
 
-    public static function deleteApp($api, $name) {
+    public static function deleteApp($calling_app, $del_app) {
         //Test!!!!!!!!!
     }
 
-    public static function setPermissionGroupAdmin($api, $user) {
+    public static function setPermissionGroupAdmin($calling_app, $called_app, $user) {
         // setPermissionGroupAdmin
     }
 
-    public static function addPermissionGroup($api, $name) {
+    public static function addPermissionGroup($calling_app,  $name) {
 
     }
 
