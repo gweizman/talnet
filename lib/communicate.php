@@ -21,7 +21,9 @@ class Communicate {
         // Sends the request to the server through the TCP connection
         // Must be called after U443::connect()
         error_reporting(E_ALL);
-//
+
+        $user = "Anonymous";
+        $pass = "";
         $address = "10.0.0.10";
         $port = 4850;
 
@@ -30,17 +32,28 @@ class Communicate {
         $result = socket_connect($socket, $address, $port) or die("socket_connect() failed.\nReason: ($result) " . socket_strerror(socket_last_error($socket)));
 
         sleep(5);
-        $challenge = socket_read($socket, 2048);
+        $challenge = trim(socket_read($socket, 2048));
 
         $request = array(
-
+            "RequesterCredentials" => array(
+                "appName" => $app["name"],
+                "appKey" => Communicate::encrypt($app["key"], $challenge),
+                "username" => $user,
+                "password" => Communicate::encrypt($pass, $challenge)
+            ),
+            "RequestInfo" => $request["RequestInfo"],
+            "RequestData" => $request["RequestData"]
         );
 
         //socket_write($socket, json_encode($request), strlen($i));
-
+        echo json_encode($request);
         echo "Closing socket...";
         socket_close($socket);
 
+    }
+
+    private static function encrypt($field, $challenge) {
+        return md5(md5($field) . trim($challenge));
     }
 
     public static function getCurrentUser() {
