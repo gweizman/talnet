@@ -31,7 +31,7 @@ class Condition {
     public function JSON() {
         if ($this->_type == "Node")
         {
-            $this->_cond= "TERM: {" . $this->$_left.JSON() . "}";
+            $this->_cond= "Term: {" . $this->$_left.JSON() . "}";
             return $this->_cond;
         }
         else if ($this->_type == "OR")

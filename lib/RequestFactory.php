@@ -22,6 +22,22 @@ class RequestFactory {
 
     public static function createDtdAction($api, $table, $action, $data = NULL, $condition = NULL) {
         //Data : key => value
-        return new Request();
+        $request= "RequestInfo: {requestType: {DTD}, requestAction: {" .$action . "}},
+                   RequestData: {";
+        switch($action)
+        {
+            case "SELECT":
+                $request = $request . "FROM : {". $table . "WHERE {" . $condition . "}}}";
+                return $request;
+            case "INSERT":
+                $request = $request . "into: {". $table . "}, data: " . json_encode($data) . "}";
+                return $request;
+            case "UPDATE":
+                $request = $request . "into: {". $table . "}, data: " . json_encode($data) . " WHERE: {" . $condition . "}}";
+                return $request;
+            default: //In case there is a delete action
+                $request = $request . "FROM : {". $table . "WHERE {" . $condition . "}}}";
+                return $request;
+        }
     }
 } 

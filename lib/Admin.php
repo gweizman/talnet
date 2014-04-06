@@ -14,6 +14,8 @@ class Admin {
         // Calling_app = { name => name, key => key }
         // new_app = { name => name, key => key }
         // Returns app key
+
+        $app = "requestType:{APP}, "
     }
 
     public static function deleteApp($calling_app, $del_app) {
@@ -24,19 +26,19 @@ class Admin {
         // setPermissionGroupAdmin
     }
 
-    public static function addPermissionGroup($calling_app,  $name) {
+    public static function addPermissionGroup($calling_app,  $called_app, $user) {
 
     }
 
-    public static function removePermissionGroup($api, $name) {
+    public static function removePermissionGroup($calling_app,  $called_app, $user) {
 
     }
 
-    public static function addPermissionGroupForTable($api, $name, $to, $type) {
+    public static function addPermissionGroupForTable($calling_app,  $called_app, $user, $to, $type) {
 
     }
 
-    public static function removePermissionGroupForTable($api, $name, $frome, $type) {
+    public static function removePermissionGroupForTable($calling_app,  $called_app, $user, $from, $type) {
 
     }
 }
