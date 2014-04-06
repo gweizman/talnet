@@ -45,16 +45,16 @@ class Entry {
         $id = $this->_keys("id");
         $condition = Condition("id = " +$id);
         $json = "WHERE : {" + $condition.JSON() + "}";
-        $request = createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", NULL , $json);
+        $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", NULL , $json);
         Communicate::send($request);
     }
 
     public static function get($condition) {
-        $request = createDtdAction(Entry::$_app, Entry::$_table, "SELECT", NULL , $condition);
+        $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "SELECT", NULL , $condition);
         $entries = array();
         for ($i = 0 ; $i < $request.count($request) ; $i++)
         {
-            array_push($entries, Entry($request($i)));
+            array_push($entries,new Entry($request($i)));
         }
         return $entries;
     }

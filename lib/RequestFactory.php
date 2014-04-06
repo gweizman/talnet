@@ -22,5 +22,6 @@ class RequestFactory {
 
     public static function createDtdAction($api, $table, $action, $data = NULL, $condition = NULL) {
         //Data : key => value
+        return;
     }
 } 
