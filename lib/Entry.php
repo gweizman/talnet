@@ -8,12 +8,22 @@
 
 namespace U443;
 
+use Exception;
+
 require_once ("RequestFactory.php");
 
 class Entry {
-    protected $_keys; // Columns is a dictionary of name : type
-    protected static $_app, $_columns, $_table;
+    protected $_keys; // Dictionary containing name and value
+    protected static $_app, $_columns, $_table; // The given application, table and columns.
+                                               //Columns is a dictionary of name : type
 
+    /**
+     * A constructor creating a given entry
+     * @param $keys
+     * @param null $app
+     * @param null $table
+     * @param null $columns
+     */
     public function __constructor ($keys, $app = NULL , $table = NULL, $columns = NULL) {
         $this->$_keys = $keys;
         Entry::$_app = $app;
@@ -21,14 +31,20 @@ class Entry {
         Entry::$_table = $table;
     }
 
+    /**
+     * Sets value in the given column
+     * @param $name
+     * @param $value
+     * @throws \Exception
+     */
     public function __set($name, $value) {
         if (!isset(Entry::$_columns[$name]))
         {
-            //ERROR!
+            throw new Exception("The given name does not exist");
         }
         if (gettype(Entry::$_columns[$name]) != $value)
         {
-            //ERROR!
+            throw new Exception("The given value does not meet the column requirement");
         }
         $data = array($name => $value);
         $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", $data);
@@ -36,10 +52,16 @@ class Entry {
         //To be continuation
     }
 
+    /**
+     * Returns the value from the requested column
+     * @param $name
+     * @return mixed
+     * @throws \Exception
+     */
     public function __get($name) {
         if (!isset(Entry::$_columns[$name]))
         {
-            //ERROR!
+            throw new Exception("The given name does not exist");
         }
         return $this->_keys[$name];
     }

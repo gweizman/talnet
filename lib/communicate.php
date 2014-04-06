@@ -19,8 +19,8 @@ class Communicate {
         $a =  "{ \"RequesterCredentials\": {
                 \"appName\":\"%s\" , \"appKey\":\"\" , \"username\":\"\", \"password\":\"\" } " +  ", \"RequestInfo\": { \"requestType\":\"\" , \"requestAction\":\"\" } ," + "\"RequestData\": }";
 
-
     }
+
 
     public static function createApp($name) {
         // Returns app key
