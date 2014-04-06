@@ -20,7 +20,7 @@ class User extends Entry {
 
         if($created= FALSE)
         {
-            for($i=0; $i<sizeof(parent::$_keys);$i++)
+            for($i=0; $i<sizeof($this->_keys);$i++)
             {
                 $temp_key= array_search($this->_keys[$i],$this->_keys);
                 if (!isset(Entry::$_[$temp_key]))
