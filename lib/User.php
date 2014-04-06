@@ -69,6 +69,12 @@ class User extends Entry {
         //To be continuation
     }
 
+    /**
+     * Returns the value from the requested column
+     * @param $name - the column whose value we want to attain
+     * @return mixed- the value of the requested column
+     * @throws \Exception
+     */
     public function __get($name) {
         if (!isset(User::$_columns[$name]))
         {
@@ -77,6 +83,9 @@ class User extends Entry {
         return $this->_keys[$name];
     }
 
+    /**
+     * Delete row from the table
+     */
     public function remove() {
         $id = $this->_keys["id"];
         $condition = new Condition("id = " . $id);
@@ -85,6 +94,11 @@ class User extends Entry {
         Communicate::send($request);
     }
 
+    /**
+     * Returns a list of all the entries matching a given condition
+     * @param $condition - given condition
+     * @return array- array of entries matching the condition
+     */
     public static function get($condition) {
         $request = RequestFactory::createUserAction(User::$_app, "SELECT", NULL , $condition);
         $entries = array();
