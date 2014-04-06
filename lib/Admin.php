@@ -12,23 +12,31 @@ class Admin {
 
     public static function createApp($calling_app, $new_app) {
         // Calling_app = { name => name, key => key }
-        // new_app = { name => name, key => key }
-        // Returns app keykl
+        // Returns app key
         $request = array (
-            RequestInfo => array(
-                requestType => "APP",
-                requestAction => "createApp"
+            "RequestInfo" => array(
+                "requestType" => "APP",
+                "requestAction" => "createApp"
             ),
-            RequestData => array(
-                appName => $new_app["name"],
-                appKey => $calling_app["key"]
-            )
+            "RequestData" => [
+                "appName" => $new_app["name"]
+            ]
         );
         return Communicate::send($calling_app,$request);
     }
 
     public static function deleteApp($calling_app, $del_app) {
-        //Test!!!!!!!!!
+        $request = array (
+            "RequestInfo" => array(
+                "requestType" => "APP",
+                "requestAction" => "deleteApp"
+            ),
+            "RequestData" => array(
+                "appName" => $new_app["name"],
+                "appKey" => $calling_app["key"]
+            )
+        );
+        return Communicate::send($calling_app,$request);
     }
 
     public static function setPermissionGroupAdmin($calling_app, $group, $user) {
