@@ -70,8 +70,18 @@ class Admin {
         return Communicate::send($calling_app,$request);
     }
 
-    public static function addPermissionGroupForTable($calling_app,  $called_app, $user, $to, $type) {
+    public static function addPermissionGroupForTable($calling_app,  $called_app, $group, $to, $type) {
+        $request = array (
+            "RequestInfo" => array(
+                "requestType" => "APP",
+                "requestAction" => "addPermissionGroupForTable"
+            ),
+            "RequestData" => array(
+                "permissionGroupName" => $group,
 
+            )
+        );
+        return Communicate::send($calling_app,$request);
     }
 
     public static function removePermissionGroupForTable($calling_app,  $called_app, $user, $from, $type) {
