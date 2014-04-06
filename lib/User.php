@@ -16,7 +16,7 @@ class User extends Entry {
     public function __constructor ($app , $columns , $keys) {
         parent::__constructor($keys);
         User::$_app = $app;
-        User::$_columes = $columns;
+        User::$_columns = $columns;
     }
 
 
