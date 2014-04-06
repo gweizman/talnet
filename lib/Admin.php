@@ -15,13 +15,12 @@ class Admin {
         // new_app = { name => name, key => key }
         // Returns app keykl
         $request = array (
-            RequestInfo => array(
-                requestType => "APP",
-                requestAction => "createApp"
+            "RequestInfo" => array(
+                "requestType" => "APP",
+                "requestAction" => "createApp"
             ),
-            RequestData => array(
-                appName => $new_app["name"],
-                appKey => $calling_app["key"]
+            "RequestData" => array(
+                "appName" => $new_app["name"]
             )
         );
         return Communicate::send($calling_app,$request);
