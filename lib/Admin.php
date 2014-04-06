@@ -13,7 +13,7 @@ class Admin {
     public static function createApp($calling_app, $new_app) {
         // Calling_app = { name => name, key => key }
         // new_app = { name => name, key => key }
-        // Returns app key
+        // Returns app keykl
         $request = array (
             RequestInfo => array(
                 requestType => "APP",
