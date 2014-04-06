@@ -53,8 +53,18 @@ class Admin {
         return Communicate::send($calling_app,$request);
     }
 
-    public static function addPermissionGroup($calling_app,  $called_app, $user) {
-
+    public static function addPermissionGroup($calling_app, $group ,$user) {
+        $request = array (
+            "RequestInfo" => array(
+                "requestType" => "APP",
+                "requestAction" => "addPermissionGroup"
+            ),
+            "RequestData" => array(
+                "permissionGroupName" => $group,
+                "description" => $user
+            )
+        );
+        return Communicate::send($calling_app,$request);
     }
 
     public static function removePermissionGroup($calling_app, $group) {
@@ -74,7 +84,18 @@ class Admin {
 
     }
 
-    public static function removePermissionGroupForTable($calling_app,  $called_app, $user, $from, $type) {
-
+    public static function removePermissionGroupForTable($calling_app, $group, $from, $type) {
+        $request = array (
+            "RequestInfo" => array(
+                "requestType" => "APP",
+                "requestAction" => "removePermissionGroupForTable"
+            ),
+            "RequestData" => array(
+                "permissionGroupName" => $group,
+                "from" => $from,
+                "type" => $type
+            )
+        );
+        return Communicate::send($calling_app,$request);
     }
 }
