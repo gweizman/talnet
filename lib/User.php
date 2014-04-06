@@ -65,7 +65,7 @@ class User extends Entry {
         }
         $data = array($name => $value);
         $request = RequestFactory::createUserAction(User::$_app, "UPDATE", $data);
-        Communicate::send($request);
+        communicate::send($request);
         //To be continuation
     }
 
@@ -101,10 +101,11 @@ class User extends Entry {
      */
     public static function get($condition) {
         $request = RequestFactory::createUserAction(User::$_app, "SELECT", NULL , $condition);
+        $answer = Communicate::send($request);
         $entries = array();
-        for ($i = 0 ; $i < $request.count($request) ; $i++)
+        for ($i = 0 ; $i < $answer.count($answer) ; $i++)
         {
-            array_push($entries,new Entry($request[$i]));
+            array_push($entries,new Entry($answer[$i]));
         }
         return $entries;
     }

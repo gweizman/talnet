@@ -108,10 +108,11 @@ class Entry {
      */
     public static function get($condition) {
         $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "SELECT", NULL , $condition);
+        $answer = Communicate::send($request);
         $entries = array();
-        for ($i = 0 ; $i < $request.count($request) ; $i++)
+        for ($i = 0 ; $i < $answer.count($answer) ; $i++)
         {
-            array_push($entries,new Entry($request[$i]));
+            array_push($entries,new Entry($answer[$i]));
         }
         return $entries;
     }
