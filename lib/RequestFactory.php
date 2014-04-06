@@ -12,7 +12,7 @@ namespace U443;
 class RequestFactory {
     // All three return a Request object to be sent to U443::request()
 
-    public static function createUserAction() {
+    public static function createUserAction($api, $action, $data = NULL, $condition = NULL) {
         return new Request();
     }
 
