@@ -40,7 +40,17 @@ class Admin {
     }
 
     public static function setPermissionGroupAdmin($calling_app, $group, $user) {
-        // setPermissionGroupAdmin
+        $request = array (
+            "RequestInfo" => array(
+                "requestType" => "APP",
+                "requestAction" => "setPermissionGroupAdmin"
+            ),
+            "RequestData" => array(
+                "permissionGroupName" => $group,
+                "username" => $user
+            )
+        );
+        return Communicate::send($calling_app,$request);
     }
 
     public static function addPermissionGroup($calling_app,  $called_app, $user) {

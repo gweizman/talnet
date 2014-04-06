@@ -16,7 +16,6 @@ class RequestFactory {
         return new Request();
     }
 
-
     public static function createDtdAction($api, $table, $action, $data = NULL, $condition = NULL) {
         switch($action)
         {
