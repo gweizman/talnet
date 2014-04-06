@@ -33,8 +33,8 @@ class Entry {
 
     /**
      * Sets value in the given column
-     * @param $name
-     * @param $value
+     * @param $name - the column whose value we want to change
+     * @param $value - the value to insert into the given column
      * @throws \Exception
      */
     public function __set($name, $value) {
@@ -54,8 +54,8 @@ class Entry {
 
     /**
      * Returns the value from the requested column
-     * @param $name
-     * @return mixed
+     * @param $name - the column whose value we want to attain
+     * @return mixed- the value of the requested column
      * @throws \Exception
      */
     public function __get($name) {
@@ -66,6 +66,9 @@ class Entry {
         return $this->_keys[$name];
     }
 
+    /**
+     *
+     */
     public function remove() {
         $id = $this->_keys["id"];
         $condition = new Condition("id = " . $id);
