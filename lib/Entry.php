@@ -54,7 +54,7 @@ class Entry {
         $entries = array();
         for ($i = 0 ; $i < $request.count($request) ; $i++)
         {
-            array_push($entries,new Entry($request($i)));
+            array_push($entries,new Entry($request[$i]));
         }
         return $entries;
     }
