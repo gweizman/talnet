@@ -87,10 +87,10 @@ class Entry {
     }
 
     /**
-     *
+     * Delete row from the table
      */
     public function remove() {
-        if (!isset(Entry::$_columns["id"]))
+        if (!isset(Entry::$_keys["id"]))
         {
             throw new Exception("The id column does not exist");
         }
@@ -101,6 +101,11 @@ class Entry {
         Communicate::send($request);
     }
 
+    /**
+     * Returns a list of all the entries matching a given condition
+     * @param $condition - given condition
+     * @return array- array of entries matching the condition
+     */
     public static function get($condition) {
         $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "SELECT", NULL , $condition);
         $entries = array();

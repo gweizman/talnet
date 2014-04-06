@@ -8,11 +8,21 @@
 
 namespace U443;
 
+use Exception;
+
 require_once ("Entry.php");
 
 class User extends Entry {
     private static $_app, $_columns;
 
+    /**
+     * Constructor
+     *
+     * @param $app
+     * @param bool $columns
+     * @param null $keys
+     * @throws Exception
+     */
     public function __constructor ($app , $columns , $keys) {
         parent::__constructor($keys);
         User::$_app = $app;
@@ -38,14 +48,20 @@ class User extends Entry {
     }
 
 
+    /**
+     * Sets value in the given column
+     * @param $name - the column whose value we want to change
+     * @param $value - the value to insert into the given column
+     * @throws \Exception
+     */
     public function __set($name, $value) {
         if (!isset(User::$_columns[$name]))
         {
-            //ERROR!
+            throw new Exception("The given column does not exist");
         }
         if (gettype(User::$_columns[$name]) != $value)
         {
-            //ERROR!
+            throw new Exception("The given value does not meet the column requirement");
         }
         $data = array($name => $value);
         $request = RequestFactory::createUserAction(User::$_app, "UPDATE", $data);
@@ -56,7 +72,7 @@ class User extends Entry {
     public function __get($name) {
         if (!isset(User::$_columns[$name]))
         {
-            //ERROR!
+            throw new Exception("The given name does not exist");
         }
         return $this->_keys[$name];
     }
