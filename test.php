@@ -8,4 +8,4 @@
 
 require_once("lib/talnet.php");
 
-\talnet\Communicate::send(array("name" => "test", "key" => "key"), array("RequestInfo" => "", "RequestData" => ""));
+\talnet\Communicate::login("olifshitz", "12345678");

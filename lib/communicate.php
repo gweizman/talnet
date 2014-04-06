@@ -10,10 +10,22 @@ namespace talnet;
 
 class Communicate {
     public static function login($user, $pass) {
-        // Connects to the db
+        $app = array (
+          "name" => "talnet",
+            "key" => "betzim"
+        );
+        $request = array (
+          "RequestInfo" => array(
+              "RequestType" => "USER",
+              "RequestAction" => "SIGN_IN"
+          ),
+          "RequestData" => array(
+          )
+        );
+        Communicate::send($app, $request);
     }
 
-    public static function logout($user, $pass) {
+    public static function logout() {
 
     }
 
@@ -44,10 +56,11 @@ class Communicate {
             "RequestInfo" => $request["RequestInfo"],
             "RequestData" => $request["RequestData"]
         );
-
-        //socket_write($socket, json_encode($request), strlen($i));
-        echo json_encode($request);
-        echo "Closing socket...";
+        $message = json_encode($request);
+        echo $message;
+        socket_write($socket, $message, strlen($message));
+        echo "A";
+        echo socket_read($socket, 2048);
         socket_close($socket);
 
     }
