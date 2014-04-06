@@ -18,7 +18,7 @@ class Admin {
         $app = "requestType:{APP}, "
     }
 
-    public static function deleteApp($calling_app, $del_app) {
+    public static function deleteApp($calling_app, $del_app_name) {
         //Test!!!!!!!!!
     }
 
@@ -38,7 +38,7 @@ class Admin {
 
     }
 
-    public static function removePermissionGroupForTable($calling_app,  $called_app, $user, $from, $type) {
+    public static function removePermissionGroupForTable($calling_app, $table_app_name, $user, $from, $type) {
 
     }
 }

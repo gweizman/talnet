@@ -16,10 +16,6 @@ class RequestFactory {
         return new Request();
     }
 
-    public static function createAppAction() {
-        return new Request();
-    }
-
     public static function createDtdAction($api, $table, $action, $data = NULL, $condition = NULL) {
         //Data : key => value
         $request= "RequestInfo: {requestType: {DTD}, requestAction: {" .$action . "}},
@@ -35,7 +31,7 @@ class RequestFactory {
             case "UPDATE":
                 $request = $request . "into: {". $table . "}, data: " . json_encode($data) . " WHERE: {" . $condition . "}}";
                 return $request;
-            default: //In case there is a delete action
+            default: //In case there is a DELETE action
                 $request = $request . "FROM : {". $table . "WHERE {" . $condition . "}}}";
                 return $request;
         }
