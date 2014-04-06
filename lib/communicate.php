@@ -21,11 +21,6 @@ class Communicate {
 
     }
 
-
-    public static function createApp($name) {
-        // Returns app key
-    }
-
     public static function getCurrentUser() {
         // Returns a User object of the currently connected user (anonymous of none)
     }
