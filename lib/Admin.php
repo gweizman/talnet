@@ -20,7 +20,7 @@ class Admin {
         //Test!!!!!!!!!
     }
 
-    public static function setPermissionGroupAdmin($calling_app, $called_app, $user) {
+    public static function setPermissionGroupAdmin($calling_app, $group, $user) {
         // setPermissionGroupAdmin
     }
 
