@@ -8,6 +8,7 @@
 
 namespace U443;
 
+require_once ("RequestFactory.php");
 
 class Entry {
     private $_app, $_table, $_columns; // Columns is a dictionary of name : type

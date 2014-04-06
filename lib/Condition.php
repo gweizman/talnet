@@ -8,6 +8,8 @@
 
 namespace U443;
 
+require_once ("BaseCondition");
+
 
 class Condition {
     // Recursively built

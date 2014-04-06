@@ -8,6 +8,7 @@
 
 namespace U443;
 
+require_once ("Request.php");
 
 class Request {
     private $RequesterCredentials, $RequestInfo, $RequestData; // These are ALL dictionaries

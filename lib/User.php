@@ -8,6 +8,7 @@
 
 namespace U443;
 
+require_once ("Entry.php");
 
 class User extends Entry {
     // Provides the same interface as Entry, might need different implementation
