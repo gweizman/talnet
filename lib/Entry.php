@@ -42,14 +42,24 @@ class Entry {
         {
             //ERROR!
         }
-
+        return $this->_keys($name);
     }
 
     public function remove() {
-        // Removes entry from table
+        $id = $this->_keys("id");
+        $condition = Condition("id = " +$id);
+        $json = "WHERE : {" + $condition.JSON() + "}";
+        $request = createDtdAction($this->_app, $this->_table, "UPDATE", NULL , $json);
+        Communicate::send($request);
     }
 
     public static function get($condition) {
-        // Returns a list of Entry objects satisfying $condition
+        $request = createDtdAction($this->_app, $this->_table, "SELECT", NULL , $condition);
+        $entries = array();
+        for ($i = 0 ; $i < $request.count($request) ; $i)
+        {
+            array_push($entries, Entry($request($i)));
+        }
+        return $entries;
     }
-} 
+}

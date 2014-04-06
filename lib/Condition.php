@@ -15,7 +15,7 @@ class Condition {
     // Recursively built
     private $_type; // OR, AND, Node
     private $_left, $_right; // Only $_left is used in case of "Node"
-    private $_cond= "";// The condition in the given JSON format
+    private $_cond = "";// The condition in the given JSON format
 
     function __construct ($left, $right = NULL, $type = "Node") {
         $_left = $left;
