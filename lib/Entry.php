@@ -47,6 +47,8 @@ class Entry {
             }
 
             $request= RequestFactory::createDtdAction($app, $table, "INSERT", $keys);
+            return Communicate::send(Entry::$_app,$request);
+
         }
     }
 
@@ -75,8 +77,7 @@ class Entry {
         $json = "WHERE : {" . $condition.JSON() . "}";
         $data = array($name => $value);
         $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", $data, $json);
-        Communicate::send(Entry::$_app,$request);
-        //To be continuation
+        return Communicate::send(Entry::$_app,$request);
     }
 
     /**
@@ -105,7 +106,7 @@ class Entry {
         $condition = new Condition("id = " . $id);
         $json = "WHERE : {" . $condition.JSON() . "}";
         $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "DELETE", NULL , $json);
-        Communicate::send(Entry::$_app,$request);
+        return Communicate::send(Entry::$_app,$request);
     }
 
     /**

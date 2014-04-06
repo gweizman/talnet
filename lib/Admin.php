@@ -14,8 +14,17 @@ class Admin {
         // Calling_app = { name => name, key => key }
         // new_app = { name => name, key => key }
         // Returns app key
-
-        $app = "requestType:{APP}, "
+        $request = array (
+            RequestInfo => array(
+                requestType => "APP",
+                requestAction => "createApp"
+            ),
+            RequestData => array(
+                appName => $new_app["name"],
+                appKey => $calling_app["key"]
+            )
+        );
+        return Communicate::send($calling_app,$request);
     }
 
     public static function deleteApp($calling_app, $del_app) {

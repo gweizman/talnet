@@ -43,6 +43,7 @@ class User extends Entry {
                 }
             }
             $request= RequestFactory::createUserAction($app, "INSERT", $keys);
+            Communicate::send(Entry::$_app,$request);
         }
     }
 
