@@ -26,18 +26,18 @@ class Condition {
     public function JSON() {
         if ($this->_type == "Node")
         {
-            $this->_cond= "TERM: {" + $this->$_left.JSON() + "}";
+            $this->_cond= "TERM: {" . $this->$_left.JSON() . "}";
             return $this->_cond;
         }
         else if ($this->_type == "OR")
         {
 
-            $this->_cond= "OR: {firstStatement: {" + $this->_left.JSON() + "}, secondStatement: {" + $this->_right.JSON() + "}";
+            $this->_cond= "OR: {firstStatement: {" . $this->_left.JSON() . "}, secondStatement: {" . $this->_right.JSON() . "}";
             return $this->_cond;
         }
         else if ($this->_type == "AND")
         {
-            $this->_cond= "OR: {firstStatement: {" + $this->_left.JSON() + "}, secondStatement: {" + $this->_right.JSON() + "}";
+            $this->_cond= "OR: {firstStatement: {" . $this->_left.JSON() . "}, secondStatement: {" . $this->_right.JSON() . "}";
             return $this->_cond;
         }
     }
