@@ -80,7 +80,7 @@ class Admin {
         return Communicate::send($calling_app,$request);
     }
 
-    public static function addPermissionGroupForTable($calling_app,  $called_app, $group, $to, $type) {
+    public static function addPermissionGroupForTable($calling_app,  $called_app_name, $group, $to, $type) {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
@@ -88,7 +88,9 @@ class Admin {
             ),
             "RequestData" => array(
                 "permissionGroupName" => $group,
-
+                "to" => $to,
+                "type" => $type,
+                "appName" => $called_app_name
             )
         );
         return Communicate::send($calling_app,$request);
