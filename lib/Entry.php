@@ -11,22 +11,19 @@ namespace U443;
 require_once ("RequestFactory.php");
 
 class Entry {
-    private $_columns, $_keys; // Columns is a dictionary of name : type
-    private static $_app, $_table;
+    private $_keys; // Columns is a dictionary of name : type
+    private static $_app, $_table, $_columns;
 
     public function __constructor ($keys) {
         $this->$_keys =  $keys;
-        // $keys is a dictionary of name : value
-        // Returns a Entry object of the created row
-        // Performs INSERT using U443::send()
     }
 
     public function __set($name, $value) {
-        if (!isset($this->_columns[$name]))
+        if (!isset(Entry::$_columns[$name]))
         {
             //ERROR!
         }
-        if (gettype($this->_columns[$name]) != $value)
+        if (gettype(Entry::$_columns[$name]) != $value)
         {
             //ERROR!
         }
@@ -37,9 +34,7 @@ class Entry {
     }
 
     public function __get($name) {
-        // Generic getter, must check input validity
-        // All values should already be set locally, no SQL needed
-        if (!isset($this->_columns[$name]))
+        if (!isset(Entry::$_columns[$name]))
         {
             //ERROR!
         }
