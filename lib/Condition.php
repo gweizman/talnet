@@ -8,7 +8,7 @@
 
 namespace talnet;
 
-require_once ("BaseCondition");
+require_once ("BaseCondition.php");
 
 
 class Condition {
