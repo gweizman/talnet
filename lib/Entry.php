@@ -11,7 +11,8 @@ namespace U443;
 require_once ("RequestFactory.php");
 
 class Entry {
-    private $_app, $_table, $_columns, $_keys; // Columns is a dictionary of name : type
+    private $_columns, $_keys; // Columns is a dictionary of name : type
+    private static $_app, $_table;
 
     public function __constructor ($keys) {
         $this->$_keys =  $keys;
@@ -30,7 +31,7 @@ class Entry {
             //ERROR!
         }
         $data = array($name => $value);
-        $request = createDtdAction($this->_app, $this->_table, "UPDATE", $data);
+        $request = createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", $data);
         Communicate::send($request);
         //To be continuation
     }
@@ -49,12 +50,12 @@ class Entry {
         $id = $this->_keys("id");
         $condition = Condition("id = " +$id);
         $json = "WHERE : {" + $condition.JSON() + "}";
-        $request = createDtdAction($this->_app, $this->_table, "UPDATE", NULL , $json);
+        $request = createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", NULL , $json);
         Communicate::send($request);
     }
 
     public static function get($condition) {
-        $request = createDtdAction($this->_app, $this->_table, "SELECT", NULL , $condition);
+        $request = createDtdAction(Entry::$_app, Entry::$_table, "SELECT", NULL , $condition);
         $entries = array();
         for ($i = 0 ; $i < $request.count($request) ; $i)
         {
