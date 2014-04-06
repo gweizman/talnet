@@ -117,7 +117,7 @@ class Entry {
         $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "SELECT", NULL , $condition);
         $answer = Communicate::send(Entry::$_app,$request);
         $entries = array();
-        for ($i = 0 ; $i < $answer.count($answer) ; $i++)
+        for ($i = 0 ; $i < $answer.sizeof($answer) ; $i++)
         {
             array_push($entries,new Entry($answer[$i]));
         }

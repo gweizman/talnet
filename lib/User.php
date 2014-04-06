@@ -33,7 +33,7 @@ class User extends Entry {
             for($i=0; $i<sizeof($this->_keys);$i++)
             {
                 $temp_key= array_search($this->_keys[$i],$this->_keys);
-                if (!isset(Entry::$_[$temp_key]))
+                if (!isset(Entry::$_keys[$temp_key]))
                 {
                     throw new Exception("The given name does not exist");
                 }
@@ -42,7 +42,6 @@ class User extends Entry {
                     throw new Exception("The given value does not meet the column requirement");
                 }
             }
-
             $request= RequestFactory::createUserAction($app, "INSERT", $keys);
         }
     }
@@ -115,7 +114,7 @@ class User extends Entry {
         $request = RequestFactory::createUserAction(User::$_app, "SELECT", NULL , $condition);
         $answer = communicate::send(Entry::$_app,$request);
         $entries = array();
-        for ($i = 0 ; $i < $answer.count($answer) ; $i++)
+        for ($i = 0 ; $i < $answer.sizeof($answer) ; $i++)
         {
             array_push($entries,new Entry($answer[$i]));
         }
