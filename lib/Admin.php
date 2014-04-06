@@ -27,7 +27,16 @@ class Admin {
     }
 
     public static function deleteApp($calling_app, $del_app) {
-        //Test!!!!!!!!!
+        $request = array (
+            "RequestInfo" => array(
+                "requestType" => "APP",
+                "requestAction" => "deleteApp"
+            ),
+            "RequestData" => array(
+                "appName" => $del_app["name"]
+            )
+        );
+        return Communicate::send($calling_app,$request);
     }
 
     public static function setPermissionGroupAdmin($calling_app, $group, $user) {
