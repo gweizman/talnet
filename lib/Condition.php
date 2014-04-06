@@ -7,6 +7,8 @@
  */
 
 namespace talnet;
+use Exception;
+
 
 require_once ("BaseCondition.php");
 
@@ -31,7 +33,7 @@ class Condition {
     public function JSON() {
         if ($this->_type == "Node")
         {
-            $this->_cond= "Term: {" . $this->$_left.JSON() . "}";
+            $this->_cond= "Term: {" . $this->_left.JSON() . "}";
             return $this->_cond;
         }
         else if ($this->_type == "OR")
@@ -44,6 +46,10 @@ class Condition {
         {
             $this->_cond= "OR: {firstStatement: {" . $this->_left.JSON() . "}, secondStatement: {" . $this->_right.JSON() . "}";
             return $this->_cond;
+        }
+        else
+        {
+            throw new Exception("there is no such type");
         }
     }
 }
