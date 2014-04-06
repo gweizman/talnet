@@ -23,7 +23,7 @@ class BaseCondition
 
     public function JSON()
     {
-        return "Field:" + $this->_field + ", Op:" + $this->_op +", Value:" + $this->_value;
+        return "Field:" . $this->_field . ", Op:" . $this->_op +", Value:" . $this->_value;
     }
 }
 
