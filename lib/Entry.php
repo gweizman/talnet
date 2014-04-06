@@ -13,7 +13,7 @@ use Exception;
 require_once ("RequestFactory.php");
 
 class Entry {
-    protected $_keys; // Dictionary containing name and value
+    protected $_keys; // Dictionary containing names and values
     protected static $_app, $_columns, $_table; // The given application, table and columns.
                                                //Columns is a dictionary of name : type
 
