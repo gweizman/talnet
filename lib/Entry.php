@@ -29,7 +29,10 @@ class Entry {
         {
             //ERROR!
         }
-
+        $data = array($name => $value);
+        $request = createDtdAction($this->_app, $this->_table, "UPDATE", $data);
+        Communicate::send($request);
+        //To be continuation
     }
 
     public function __get($name) {
@@ -39,6 +42,7 @@ class Entry {
         {
             //ERROR!
         }
+
     }
 
     public function remove() {

@@ -8,7 +8,7 @@
 
 namespace U443;
 
-class U443 {
+class Communicate {
     public static function connect($user, $pass) {
         // Connects to the db
     }
