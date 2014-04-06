@@ -36,7 +36,7 @@ class Communicate {
 
         );
 
-        socket_write($socket, json_encode($request), strlen($i));
+        //socket_write($socket, json_encode($request), strlen($i));
 
         echo "Closing socket...";
         socket_close($socket);
@@ -44,6 +44,6 @@ class Communicate {
     }
 
     public static function getCurrentUser() {
-        /// Returns a User object of the currently connected user (anonymous of none)
+        // Returns a User object of the currently connected user (anonymous of none)
     }
 } 
