@@ -28,7 +28,7 @@ class Entry {
             //ERROR!
         }
         $data = array($name => $value);
-        $request = createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", $data);
+        $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", $data);
         Communicate::send($request);
         //To be continuation
     }
@@ -38,13 +38,13 @@ class Entry {
         {
             //ERROR!
         }
-        return $this->_keys($name);
+        return $this->_keys[$name];
     }
 
     public function remove() {
-        $id = $this->_keys("id");
-        $condition = Condition("id = " +$id);
-        $json = "WHERE : {" + $condition.JSON() + "}";
+        $id = $this->_keys["id"];
+        $condition = new Condition("id = " . $id);
+        $json = "WHERE : {" . $condition.JSON() . "}";
         $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", NULL , $json);
         Communicate::send($request);
     }

@@ -13,15 +13,15 @@ class RequestFactory {
     // All three return a Request object to be sent to U443::request()
 
     public static function createUserAction() {
-
+        return new Request();
     }
 
     public static function createAppAction() {
-
+        return new Request();
     }
 
     public static function createDtdAction($api, $table, $action, $data = NULL, $condition = NULL) {
         //Data : key => value
-        return;
+        return new Request();
     }
 } 
