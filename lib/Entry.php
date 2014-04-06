@@ -24,11 +24,15 @@ class Entry {
      * @param null $table
      * @param null $columns
      */
-    public function __constructor ($keys, $app = NULL , $table = NULL, $columns = NULL) {
+    public function __constructor ($keys, $created = FALSE, $app = NULL , $table = NULL, $columns = NULL) {
         $this->$_keys = $keys;
         Entry::$_app = $app;
         Entry::$_columns = $columns;
         Entry::$_table = $table;
+
+        //Check that each field in $_keys exists
+
+        $request= RequestFactory::createDtdAction($app, $table, "INSERT", $keys);
     }
 
     /**
@@ -70,10 +74,14 @@ class Entry {
      *
      */
     public function remove() {
+        if (!isset(Entry::$_columns["id"]))
+        {
+            throw new Exception("The id column does not exist");
+        }
         $id = $this->_keys["id"];
         $condition = new Condition("id = " . $id);
         $json = "WHERE : {" . $condition.JSON() . "}";
-        $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", NULL , $json);
+        $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "DELETE", NULL , $json);
         Communicate::send($request);
     }
 
