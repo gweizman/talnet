@@ -17,6 +17,24 @@ class User extends Entry {
         parent::__constructor($keys);
         User::$_app = $app;
         User::$_columns = $columns;
+
+        if($created= FALSE)
+        {
+            for($i=0; $i<sizeof(parent::$_keys);$i++)
+            {
+                $temp_key= array_search($this->_keys[$i],$this->_keys);
+                if (!isset(Entry::$_[$temp_key]))
+                {
+                    throw new Exception("The given name does not exist");
+                }
+                if (gettype(Entry::$_columns[$temp_key]) != $this->_keys[$i])
+                {
+                    throw new Exception("The given value does not meet the column requirement");
+                }
+            }
+
+            $request= RequestFactory::createUserAction($app, "INSERT", $keys);
+        }
     }
 
 

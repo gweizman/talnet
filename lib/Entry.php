@@ -18,11 +18,13 @@ class Entry {
                                                //Columns is a dictionary of name : type
 
     /**
-     * A constructor creating a given entry
+     * A constructor for a given entry
      * @param $keys
+     * @param bool $created- flag stating if the entry has already been created. Default setting is the TRUE- we do not need to create the entry
      * @param null $app
      * @param null $table
      * @param null $columns
+     * @throws \Exception
      */
     public function __constructor ($keys, $created = TRUE, $app = NULL , $table = NULL, $columns = NULL) {
         $this->$_keys = $keys;
