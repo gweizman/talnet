@@ -24,15 +24,29 @@ class Entry {
      * @param null $table
      * @param null $columns
      */
-    public function __constructor ($keys, $created = FALSE, $app = NULL , $table = NULL, $columns = NULL) {
+    public function __constructor ($keys, $created = TRUE, $app = NULL , $table = NULL, $columns = NULL) {
         $this->$_keys = $keys;
         Entry::$_app = $app;
         Entry::$_columns = $columns;
         Entry::$_table = $table;
 
-        //Check that each field in $_keys exists
+        if($created= FALSE)
+        {
+            for($i=0; $i<sizeof($_keys);$i++)
+            {
+                $temp_key= array_search($this->_keys[$i],$this->_keys);
+                if (!isset(Entry::$_[$temp_key]))
+                {
+                    throw new Exception("The given name does not exist");
+                }
+                if (gettype(Entry::$_columns[$temp_key]) != $this->_keys[$i])
+                {
+                    throw new Exception("The given value does not meet the column requirement");
+                }
+            }
 
-        $request= RequestFactory::createDtdAction($app, $table, "INSERT", $keys);
+            $request= RequestFactory::createDtdAction($app, $table, "INSERT", $keys);
+        }
     }
 
     /**
