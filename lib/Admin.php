@@ -57,7 +57,7 @@ class Admin {
 
     }
 
-    public static function removePermissionGroup($calling_app,, $group) {
+    public static function removePermissionGroup($calling_app, $group) {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
