@@ -11,7 +11,13 @@ namespace U443;
 require_once ("Entry.php");
 
 class User extends Entry {
-    private static $_app, $_table, $_columns;
+    private static $_app, $_columns;
+
+    public function __constructor ($app , $columns , $keys) {
+        parent::__constructor($keys);
+        User::$_app = $app;
+        User::$_columes = $columns;
+    }
 
 
     public function __set($name, $value) {
@@ -24,7 +30,7 @@ class User extends Entry {
             //ERROR!
         }
         $data = array($name => $value);
-        $request = RequestFactory::createUserAction(User::$_app, User::$_table, "UPDATE", $data);
+        $request = RequestFactory::createUserAction(User::$_app, "UPDATE", $data);
         Communicate::send($request);
         //To be continuation
     }
@@ -41,16 +47,16 @@ class User extends Entry {
         $id = $this->_keys["id"];
         $condition = new Condition("id = " . $id);
         $json = "WHERE : {" . $condition.JSON() . "}";
-        $request = RequestFactory::createUserAction(User::$_app, User::$_table, "UPDATE", NULL , $json);
+        $request = RequestFactory::createUserAction(User::$_app, "UPDATE", NULL , $json);
         Communicate::send($request);
     }
 
     public static function get($condition) {
-        $request = RequestFactory::createUserAction(User::$_app, User::$_table, "SELECT", NULL , $condition);
+        $request = RequestFactory::createUserAction(User::$_app, "SELECT", NULL , $condition);
         $entries = array();
         for ($i = 0 ; $i < $request.count($request) ; $i++)
         {
-            array_push($entries,new Entry($request($i)));
+            array_push($entries,new Entry($request[$i]));
         }
         return $entries;
     }
