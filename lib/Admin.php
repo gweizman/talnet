@@ -84,7 +84,18 @@ class Admin {
 
     }
 
-    public static function removePermissionGroupForTable($calling_app,  $called_app, $user, $from, $type) {
-
+    public static function removePermissionGroupForTable($calling_app, $group, $from, $type) {
+        $request = array (
+            "RequestInfo" => array(
+                "requestType" => "APP",
+                "requestAction" => "removePermissionGroupForTable"
+            ),
+            "RequestData" => array(
+                "permissionGroupName" => $group,
+                "from" => $from,
+                "type" => $type
+            )
+        );
+        return Communicate::send($calling_app,$request);
     }
 }
