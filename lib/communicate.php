@@ -16,13 +16,12 @@ class Communicate {
         );
         $request = array (
           "RequestInfo" => array(
-              "RequestType" => "USER",
-              "RequestAction" => "SIGN_IN"
+              "requestType" => "USER",
+              "requestAction" => "SIGN_IN"
           ),
-          "RequestData" => array(
-          )
+          "RequestData" => (object) null
         );
-        Communicate::send($app, $request);
+        echo var_dump(Communicate::send($app, $request));
     }
 
     public static function logout() {
@@ -43,7 +42,6 @@ class Communicate {
         $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP) or die("socket_create() failed: reason: " . socket_strerror(socket_last_error()));
         $result = socket_connect($socket, $address, $port) or die("socket_connect() failed.\nReason: ($result) " . socket_strerror(socket_last_error($socket)));
 
-        sleep(5);
         $challenge = trim(socket_read($socket, 2048));
 
         $request = array(
@@ -57,12 +55,10 @@ class Communicate {
             "RequestData" => $request["RequestData"]
         );
         $message = json_encode($request);
-        echo $message;
         socket_write($socket, $message, strlen($message));
-        echo "A";
-        echo socket_read($socket, 2048);
+        $output = socket_read($socket, 2048);
         socket_close($socket);
-
+        return json_decode($output);
     }
 
     private static function encrypt($field, $challenge) {
