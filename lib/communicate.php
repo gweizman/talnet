@@ -21,20 +21,25 @@ class Communicate {
           ),
           "RequestData" => (object) null
         );
-        echo var_dump(Communicate::send($app, $request));
+        $user = Communicate::send($app, $request, $user, $pass);
+        return $user;
     }
 
     public static function logout() {
 
     }
 
-    public static function send($app, $request) {
+    public static function send($app, $request, $username = NULL, $password = NULL) {
         // Sends the request to the server through the TCP connection
         // Must be called after U443::connect()
         error_reporting(E_ALL);
-
-        $user = "Anonymous";
-        $pass = "";
+        if ($username == NULL) {
+            $user = "Anonymous";
+            $pass = "";
+        } else {
+            $user = $username;
+            $pass = $password;
+        }
         $address = "10.0.0.10";
         $port = 4850;
 
