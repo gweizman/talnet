@@ -22,7 +22,7 @@ class Communicate {
           "RequestData" => (object) null
         );
         $user = Communicate::send($app, $request, $user, $pass);
-        return $user;
+        return $user["Entry1"];
     }
 
     public static function logout() {
