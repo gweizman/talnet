@@ -53,8 +53,18 @@ class Admin {
         return Communicate::send($calling_app,$request);
     }
 
-    public static function addPermissionGroup($calling_app,  $called_app, $user) {
-
+    public static function addPermissionGroup($calling_app, $group ,$user) {
+        $request = array (
+            "RequestInfo" => array(
+                "requestType" => "APP",
+                "requestAction" => "addPermissionGroup"
+            ),
+            "RequestData" => array(
+                "permissionGroupName" => $group,
+                "description" => $user
+            )
+        );
+        return Communicate::send($calling_app,$request);
     }
 
     public static function removePermissionGroup($calling_app, $group) {
