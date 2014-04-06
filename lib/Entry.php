@@ -52,7 +52,7 @@ class Entry {
     public static function get($condition) {
         $request = createDtdAction(Entry::$_app, Entry::$_table, "SELECT", NULL , $condition);
         $entries = array();
-        for ($i = 0 ; $i < $request.count($request) ; $i)
+        for ($i = 0 ; $i < $request.count($request) ; $i++)
         {
             array_push($entries, Entry($request($i)));
         }
