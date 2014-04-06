@@ -6,7 +6,7 @@
  * Time: 16:48
  */
 
-namespace U443;
+namespace talent;
 
 
 class RequestFactory {

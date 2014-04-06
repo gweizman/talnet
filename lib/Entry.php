@@ -6,7 +6,7 @@
  * Time: 16:17
  */
 
-namespace U443;
+namespace talnet;
 
 use Exception;
 

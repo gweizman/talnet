@@ -6,7 +6,7 @@
  * Time: 16:54
  */
 
-namespace U443;
+namespace talnet;
 
 require_once ("Entry.php");
 

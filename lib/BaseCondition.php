@@ -6,7 +6,7 @@
  * Time: 16:18
  */
 
-namespace U443;
+namespace talnet;
 
 class BaseCondition
 {
