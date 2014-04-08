@@ -1,5 +1,5 @@
 <?php
-require_once ("communicate.php");
+require_once ("Communicate.php");
 require_once ("Entry.php");
 //require_once ("Condition.php");
 require_once ("Table.php");
