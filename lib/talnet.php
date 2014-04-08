@@ -8,6 +8,5 @@ if (!defined("TALNET_ENABLED"))
   //require_once ("User.php");
   
   define("TALNET_ENABLED", TRUE);
-  echo "test";
 }
 ?>
