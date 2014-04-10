@@ -42,9 +42,9 @@ class Communicate {
         // Sends the request to the server through the TCP connection
         // Must be called after U443::connect()
         error_reporting(E_ALL);
+        print_r($_SESSION);
         if ($username == NULL) {
             if (isset($_SESSION['user'])) {
-                echo "hi";
                 $user = $_SESSION['user'];
                 $pass = $_SESSION['pass'];
             }
