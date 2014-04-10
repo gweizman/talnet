@@ -44,6 +44,7 @@ class Communicate {
         error_reporting(E_ALL);
         if ($username == NULL) {
             if (isset($_SESSION['user'])) {
+                echo "hi";
                 $user = $_SESSION['user'];
                 $pass = $_SESSION['pass'];
             }
