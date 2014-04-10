@@ -8,7 +8,10 @@
 
 namespace talnet;
 
+
 class Communicate {
+    private static $last_error = "";
+
     public static function login($user, $pass) {
         $app = array (
           "name" => "talnet",
@@ -63,8 +66,13 @@ class Communicate {
         socket_write($socket, $message, strlen($message));
         $output = socket_read($socket, 2048);
         socket_close($socket);
-        echo $output;
-        return json_decode($output);
+        $decode = json_decode($output);
+        if ($decode->Status != 1)
+        {
+            Communicate::$last_error = $decode->Message;
+            return false;
+        }
+        return $decode->Data;
     }
 
     private static function encrypt($field, $challenge) {
@@ -73,5 +81,10 @@ class Communicate {
 
     public static function getCurrentUser() {
         // Returns a User object of the currently connected user (anonymous of none)
+    }
+
+    public static function getLastError()
+    {
+        return Communicate::$last_error;
     }
 } 
