@@ -42,7 +42,6 @@ class Communicate {
         // Sends the request to the server through the TCP connection
         // Must be called after U443::connect()
         error_reporting(E_ALL);
-        print_r($_SESSION);
         if ($username == NULL) {
             if (isset($_SESSION['user'])) {
                 $user = $_SESSION['user'];
@@ -104,7 +103,6 @@ class Communicate {
             ),
             "RequestData" => (object) null
         );
-        print_r($_SESSION);
         $user = Communicate::send($app, $request);
         if (!$user) {
             return false;
