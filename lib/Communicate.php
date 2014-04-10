@@ -24,13 +24,13 @@ class Communicate {
           ),
           "RequestData" => (object) null
         );
-        $user = Communicate::send($app, $request, $user, md5($pass));
-        if (!$user) {
+        $comm = Communicate::send($app, $request, $user, md5($pass));
+        if (!$comm) {
             return false;
         }
         $_SESSION['user'] = $user;
         $_SESSION['pass'] = $pass;
-        return $user[0];
+        return $comm[0];
     }
 
     public static function logout() {
@@ -42,7 +42,6 @@ class Communicate {
         // Sends the request to the server through the TCP connection
         // Must be called after U443::connect()
         error_reporting(E_ALL);
-        print_r($_SESSION);
         if ($username == NULL) {
             if (isset($_SESSION['user'])) {
                 $user = $_SESSION['user'];
