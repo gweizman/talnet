@@ -25,6 +25,9 @@ class Communicate {
           "RequestData" => (object) null
         );
         $user = Communicate::send($app, $request, $user, $pass);
+        if (!$user) {
+            return $user[0];
+        }
         return $user;
     }
 
