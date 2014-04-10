@@ -24,15 +24,18 @@ class Communicate {
           ),
           "RequestData" => (object) null
         );
-        $user = Communicate::send($app, $request, $user, $pass);
+        $user = Communicate::send($app, $request, $user, md5($pass));
         if (!$user) {
             return false;
         }
+        $_SESSION['user'] = $user;
+        $_SESSION['pass'] = $pass;
         return $user[0];
     }
 
     public static function logout() {
-
+        $_SESSION['user'] = "Anonymous";
+        $_SESSION['pass'] = "";
     }
 
     public static function send($app, $request, $username = NULL, $password = NULL) {
@@ -40,8 +43,14 @@ class Communicate {
         // Must be called after U443::connect()
         error_reporting(E_ALL);
         if ($username == NULL) {
-            $user = "Anonymous";
-            $pass = "";
+            if (isset($_SESSION['user'])) {
+                $user = $_SESSION['user'];
+                $pass = $_SESSION['pass'];
+            }
+            else {
+                $user = "Anonymous";
+                $pass = "";
+            }
         } else {
             $user = $username;
             $pass = $password;
@@ -58,9 +67,9 @@ class Communicate {
         $request = array(
             "RequesterCredentials" => array(
                 "appName" => $app["name"],
-                "appKey" => Communicate::encrypt($app["key"], $challenge),
+                "appKey" => Communicate::challenge(md5($app["key"]), $challenge),
                 "username" => $user,
-                "password" => Communicate::encrypt($pass, $challenge)
+                "password" => Communicate::challenge($pass, $challenge)
             ),
             "RequestInfo" => $request["RequestInfo"],
             "RequestData" => $request["RequestData"]
@@ -78,12 +87,27 @@ class Communicate {
         return $decode->Data;
     }
 
-    private static function encrypt($field, $challenge) {
-        return md5(md5($field) . trim($challenge));
+    private static function challenge($field, $challenge) {
+        return md5($field . trim($challenge));
     }
 
     public static function getCurrentUser() {
-        // Returns a User object of the currently connected user (anonymous of none)
+        $app = array (
+            "name" => "talnet",
+            "key" => "betzim"
+        );
+        $request = array (
+            "RequestInfo" => array(
+                "requestType" => "USER",
+                "requestAction" => "SIGN_IN"
+            ),
+            "RequestData" => (object) null
+        );
+        $user = Communicate::send($app, $request);
+        if (!$user) {
+            return false;
+        }
+        return $user[0];
     }
 
     public static function getLastError()
