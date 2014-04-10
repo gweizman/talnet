@@ -63,6 +63,7 @@ class Communicate {
         socket_write($socket, $message, strlen($message));
         $output = socket_read($socket, 2048);
         socket_close($socket);
+        echo $output;
         return json_decode($output);
     }
 
