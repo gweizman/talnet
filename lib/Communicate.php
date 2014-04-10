@@ -104,7 +104,7 @@ class Communicate {
             ),
             "RequestData" => (object) null
         );
-        echo "a";
+        print_r($_SESSION);
         $user = Communicate::send($app, $request);
         if (!$user) {
             return false;
