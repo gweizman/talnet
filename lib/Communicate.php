@@ -29,7 +29,7 @@ class Communicate {
             return false;
         }
         $_SESSION['user'] = $user;
-        $_SESSION['pass'] = $pass;
+        $_SESSION['pass'] = md5($pass);
         return $comm[0];
     }
 
