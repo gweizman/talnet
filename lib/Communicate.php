@@ -26,9 +26,9 @@ class Communicate {
         );
         $user = Communicate::send($app, $request, $user, $pass);
         if (!$user) {
-            return $user[0];
+            return false;
         }
-        return $user;
+        return $user[0];
     }
 
     public static function logout() {
