@@ -13,7 +13,7 @@ use Exception;
 require_once ("Entry.php");
 
 class User extends Entry {
-    private static $_app, $_columns;
+    protected static $_app, $_columns;
 
     /**
      * Constructor
