@@ -47,9 +47,21 @@ class RequestFactory {
      *  $condition is to be built using \talnet\Condition.
      */
     public static function createUserAction($action, $data = NULL, $condition = NULL) {
+        $request = array (
+            "RequestInfo" => array(
+                "requestType" => "USER",
+                "requestAction" => $action
+            ),
+            "RequestData" => (object) null
+        );
         switch ($action) {
-
+            case "SIGN_IN":
+                break;
+            default:
+                throw new Exception("Unknown action");
+                break;
         }
+        return $request;
     }
 
     public static function createDtdAction($table, $action, $data = NULL, $condition = NULL) {

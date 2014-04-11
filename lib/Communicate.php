@@ -9,6 +9,8 @@
 namespace talnet;
 
 
+use talent\RequestFactory;
+
 class Communicate {
     private static $last_error = "";
 
@@ -17,25 +19,19 @@ class Communicate {
           "name" => "talnet",
             "key" => "betzim"
         );
-        $request = array (
-          "RequestInfo" => array(
-              "requestType" => "USER",
-              "requestAction" => "SIGN_IN"
-          ),
-          "RequestData" => (object) null
-        );
+        $request = RequestFactory::createUserAction("SIGN_IN");
         $comm = Communicate::send($app, $request, $user, md5($pass));
         if (!$comm) {
             return false;
         }
         $_SESSION['user'] = $user;
-        $_SESSION['pass'] = md5($pass);
+        $_SESSION['pass'] = Communicate::encrypt($pass);
         return $comm[0];
     }
 
     public static function logout() {
         $_SESSION['user'] = "Anonymous";
-        $_SESSION['pass'] = "";
+        $_SESSION['pass'] = Communicate::encrypt("");
     }
 
     public static function send($app, $request, $username = NULL, $password = NULL) {
@@ -49,7 +45,7 @@ class Communicate {
             }
             else {
                 $user = "Anonymous";
-                $pass = "";
+                $pass = Communicate::encrypt("");
             }
         } else {
             $user = $username;
@@ -90,7 +86,11 @@ class Communicate {
     }
 
     private static function challenge($field, $challenge) {
-        return md5($field . trim($challenge));
+        return Communicate::encrypt($field . trim($challenge));
+    }
+
+    private static function encrypt($text) {
+        return md5($text);
     }
 
     public static function getCurrentUser() {
