@@ -13,8 +13,8 @@ use Exception;
 require_once ("RequestFactory.php");
 
 class Entry {
-    protected $_keys; // Dictionary containing names and values
-    protected static $_app, $_columns, $_table; // The given application, table and columns.
+    private $_keys; // Dictionary containing names and values
+    protected static $_app, $_columns, $_table, $_id_field; // The given application, table and columns.
                                                //Columns is a dictionary of name : type
 
     /**
@@ -26,29 +26,25 @@ class Entry {
      * @param null $columns
      * @throws \Exception
      */
-    public function __constructor ($keys, $created = TRUE, $app = NULL , $table = NULL, $columns = NULL) {
-        $this->$_keys = $keys;
-        Entry::$_app = $app;
-        Entry::$_columns = $columns;
-        Entry::$_table = $table;
+    public function __construct ($keys, $created = TRUE) {
+        $this->_keys = $keys;
+        // Possibly not required as backend will throw an error
         if($created== FALSE)
         {
-            for($i=0; $i<sizeof($_keys);$i++)
+            for($i=0; $i<sizeof($this->_keys);$i++)
             {
-                $temp_key= array_search($this->_keys[$i],$this->_keys);
-                if (!isset(Entry::$_columns[$temp_key]))
+                $temp_key = array_search($this->_keys[$i],$this->_keys);
+                if (!isset(static::$_columns[$temp_key]))
                 {
                     throw new Exception("The given name does not exist");
                 }
-                if (gettype(Entry::$_columns[$temp_key]) != gettype($this->_keys[$i]))
+                if (static::$_columns[$temp_key] != gettype($this->_keys[$i]))
                 {
                     throw new Exception("The given value does not meet the column requirement");
                 }
             }
-
-            $request= RequestFactory::createDtdAction($app, $table, "INSERT", $keys);
-            return Communicate::send(Entry::$_app,$request);
-
+            $request= RequestFactory::createDtdAction(static::$_table, "INSERT", $keys);
+            return Communicate::send(static::$_app,$request);
         }
     }
 
@@ -59,11 +55,11 @@ class Entry {
      * @throws \Exception
      */
     public function __set($name, $value) {
-        if (!isset(Entry::$_columns[$name]))
+        if (!isset(static::$_columns[$name]))
         {
             throw new Exception("The given name does not exist");
         }
-        if (gettype(Entry::$_columns[$name]) != gettype($value))
+        if (gettype(static::$_columns[$name]) != gettype($value))
         {
             throw new Exception("The given value does not meet the column requirement");
         }
@@ -72,12 +68,11 @@ class Entry {
         {
             throw new Exception("The id column does not exist");
         }
-        $id = $this->_keys["id"];
-        $condition = new Condition("id = " . $id);
-        $json = "WHERE : {" . $condition.JSON() . "}";
+        $id = $this->_keys[static::$_id_field];
+        $condition = new Condition(new BaseCondition(static::$_id_field,"=", $id));
         $data = array($name => $value);
-        $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "UPDATE", $data, $json);
-        return Communicate::send(Entry::$_app,$request);
+        $request = RequestFactory::createDtdAction(static::$_table, "UPDATE", $data, $condition);
+        return Communicate::send(static::$_app,$request);
     }
 
     /**
@@ -102,11 +97,10 @@ class Entry {
         {
             throw new Exception("The id column does not exist");
         }
-        $id = $this->_keys["id"];
-        $condition = new Condition("id = " . $id);
-        $json = "WHERE : {" . $condition.JSON() . "}";
-        $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "DELETE", NULL , $json);
-        return Communicate::send(Entry::$_app,$request);
+        $id = $this->_keys[static::$_id_field];
+        $condition = new Condition(new BaseCondition(static::$_id_field,"=", $id));
+        $request = RequestFactory::createDtdAction(static::$_table, "DELETE", NULL , $condition);
+        return Communicate::send(static::$_app,$request);
     }
 
     /**
@@ -115,13 +109,8 @@ class Entry {
      * @return array- array of entries matching the condition
      */
     public static function get($condition) {
-        $request = RequestFactory::createDtdAction(Entry::$_app, Entry::$_table, "SELECT", NULL , $condition);
-        $answer = Communicate::send(Entry::$_app,$request);
-        $entries = array();
-        for ($i = 0 ; $i < $answer.sizeof($answer) ; $i++)
-        {
-            array_push($entries,new Entry($answer[$i]));
-        }
-        return $entries;
+        $request = RequestFactory::createDtdAction(static::$_table, "SELECT", NULL , $condition);
+        $answer = Communicate::send(static::$_app,$request);
+        return $answer;
     }
 }

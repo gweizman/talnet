@@ -13,40 +13,8 @@ use Exception;
 require_once ("Entry.php");
 
 class User extends Entry {
-    protected static $_app, $_columns;
-
-    /**
-     * Constructor
-     *
-     * @param $app
-     * @param bool $columns
-     * @param null $keys
-     * @throws Exception
-     */
-    public function __constructor ($app , $columns , $keys) {
-        parent::__constructor($keys);
-        User::$_app = $app;
-        User::$_columns = $columns;
-
-        if($created= FALSE)
-        {
-            for($i=0; $i<sizeof($this->_keys);$i++)
-            {
-                $temp_key= array_search($this->_keys[$i],$this->_keys);
-                if (!isset(Entry::$_keys[$temp_key]))
-                {
-                    throw new Exception("The given name does not exist");
-                }
-                if (gettype(Entry::$_columns[$temp_key]) != gettype($this->_keys[$i]))
-                {
-                    throw new Exception("The given value does not meet the column requirement");
-                }
-            }
-            $request= RequestFactory::createUserAction($app, "INSERT", $keys);
-            Communicate::send(Entry::$_app,$request);
-        }
-    }
-
+    private $_keys; // Dictionary containing names and values
+    protected static $_app, $_columns, $_table, $_id_field;
 
     /**
      * Sets value in the given column
@@ -55,26 +23,7 @@ class User extends Entry {
      * @throws \Exception
      */
     public function __set($name, $value) {
-        if (!isset(User::$_columns[$name]))
-        {
-            throw new Exception("The given column does not exist");
-        }
-        if (gettype(User::$_columns[$name]) != gettype($value))
-        {
-            throw new Exception("The given value does not meet the column requirement");
-        }
-        $this->_keys[$name] = $value;
-        if (!isset($this->_keys["id"]))
-        {
-            throw new Exception("The id column does not exist");
-        }
-        $id = $this->_keys["id"];
-        $condition = new Condition("id = " . $id);
-        $json = "WHERE : {" . $condition.JSON() . "}";
-        $data = array($name => $value);
-        $request = RequestFactory::createUserAction(User::$_app, "UPDATE", $data);
-        communicate::send(Entry::$_app,$request);
-        //To be continuation
+        throw new Exception("Cannot set individual parameter");
     }
 
     /**
@@ -95,7 +44,8 @@ class User extends Entry {
      * Delete row from the table
      */
     public function remove() {
-        if (!isset($this->_keys["id"]))
+        throw new Exception("Cannot remove user");
+        if (!isset($this->_keys[User::$_id_field]))
         {
             throw new Exception("The id column does not exist");
         }
@@ -114,11 +64,6 @@ class User extends Entry {
     public static function get($condition) {
         $request = RequestFactory::createUserAction(User::$_app, "SELECT", NULL , $condition);
         $answer = communicate::send(Entry::$_app,$request);
-        $entries = array();
-        for ($i = 0 ; $i < $answer.sizeof($answer) ; $i++)
-        {
-            array_push($entries,new Entry($answer[$i]));
-        }
-        return $entries;
+        return $answer;
     }
 } 

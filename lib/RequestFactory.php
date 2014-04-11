@@ -36,7 +36,7 @@ class RequestFactory {
      *  $action = REMOVE_PERMISSION_GROUP:
      *      username, permissionGroupName
      *
-     *  $action = GET_PERMISSION_GRUPS:
+     *  $action = GET_PERMISSION_GROUPS:
      *      Nothing.
      *
      *  $action = SELECT:
@@ -52,14 +52,10 @@ class RequestFactory {
                 "requestType" => "USER",
                 "requestAction" => $action
             ),
-            "RequestData" => (object) null
+            "RequestData" => $data
         );
-        switch ($action) {
-            case "SIGN_IN":
-                break;
-            default:
-                throw new Exception("Unknown action");
-                break;
+        if ($action == "SELECT") {
+            $request["WHERE"] = $condition->JSON();
         }
         return $request;
     }

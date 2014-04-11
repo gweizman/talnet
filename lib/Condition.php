@@ -19,9 +19,9 @@ class Condition {
     private $_left, $_right; // Only $_left is used in case of "Node"
 
     function __construct ($left, $right = NULL, $type = "Node") {
-        $_left = $left;
-        $_right = $right;
-        $_type = $type;
+        $this->_left = $left;
+        $this->_right = $right;
+        $this->_type = $type;
     }
 
     /**
@@ -33,15 +33,15 @@ class Condition {
         if ($this->_type == "Node")
         {
             return array (
-              "Term" => $this->_left.JSON()
+              "Term" => $this->_left->JSON()
             );
         }
         else if ($this->_type == "OR" || $this->_type == "AND")
         {
             return array (
               $this->_type => array (
-                  "firstStatement" => $this->_left.JSON(),
-                  "secondStatement" => $this->_right.JSON()
+                  "firstStatement" => $this->_left->JSON(),
+                  "secondStatement" => $this->_right->JSON()
               )
             );
         }

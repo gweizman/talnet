@@ -20,11 +20,11 @@ class BaseCondition
      * @param $op - operator
      * @param $value - value
      */
-    function __constructor($field, $op, $value)
+    function __construct($field, $op, $value)
     {
-        $_field=$field;
-        $_op=$op;
-        $_value=$value;
+        $this->_field = $field;
+        $this->_op=$op;
+        $this->_value=$value;
     }
 
     /**

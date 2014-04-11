@@ -8,8 +8,8 @@
 
 namespace talnet;
 
-
 use talent\RequestFactory;
+use Exception;
 
 class Communicate {
     private static $last_error = "";
@@ -21,9 +21,6 @@ class Communicate {
         );
         $request = RequestFactory::createUserAction("SIGN_IN");
         $comm = Communicate::send($app, $request, $user, md5($pass));
-        if (!$comm) {
-            return false;
-        }
         $_SESSION['user'] = $user;
         $_SESSION['pass'] = Communicate::encrypt($pass);
         return $comm[0];
@@ -79,8 +76,7 @@ class Communicate {
         $_SESSION['last_response'] = $decode;
         if ($decode->Status != 1)
         {
-            Communicate::$last_error = $decode->Message;
-            return false;
+            throw new Exception($decode->Message);
         }
         return $decode->Data;
     }
@@ -98,13 +94,7 @@ class Communicate {
             "name" => "talnet",
             "key" => "betzim"
         );
-        $request = array (
-            "RequestInfo" => array(
-                "requestType" => "USER",
-                "requestAction" => "SIGN_IN"
-            ),
-            "RequestData" => (object) null
-        );
+        $request = RequestFactory::createUserAction("SIGN_IN");
         $user = Communicate::send($app, $request);
         if (!$user) {
             return false;
