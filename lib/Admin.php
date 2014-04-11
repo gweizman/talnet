@@ -17,7 +17,7 @@ class Admin {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
-                "requestAction" => "createApp"
+                "requestAction" => "CREATE_APP"
             ),
             "RequestData" => array(
                 "appName" => $new_app["name"]
@@ -30,7 +30,7 @@ class Admin {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
-                "requestAction" => "deleteApp"
+                "requestAction" => "DELETE_APP"
             ),
             "RequestData" => array(
                 "appName" => $del_app["name"]
@@ -43,7 +43,7 @@ class Admin {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
-                "requestAction" => "setPermissionGroupAdmin"
+                "requestAction" => "SET_PERMISSION_GROUP_ADMIN"
             ),
             "RequestData" => array(
                 "permissionGroupName" => $group,
@@ -57,7 +57,7 @@ class Admin {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
-                "requestAction" => "addPermissionGroup"
+                "requestAction" => "ADD_PERMISSION_GROUP"
             ),
             "RequestData" => array(
                 "permissionGroupName" => $group,
@@ -71,7 +71,7 @@ class Admin {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
-                "requestAction" => "removePermissionGroup"
+                "requestAction" => "REMOVE_PERMISSION_GROUP"
             ),
             "RequestData" => array(
                 "permissionGroupName" => $group
@@ -80,11 +80,19 @@ class Admin {
         return Communicate::send($calling_app,$request);
     }
 
+    /**
+     * @param $calling_app
+     * @param $called_app_name
+     * @param $group
+     * @param $to
+     * @param $type SELECT, INSERT, DELETE, UPDATE
+     * @return bool
+     */
     public static function addPermissionGroupForTable($calling_app,  $called_app_name, $group, $to, $type) {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
-                "requestAction" => "addPermissionGroupForTable"
+                "requestAction" => "ADD_PERMISSION_GROUP_FOR_TABLE"
             ),
             "RequestData" => array(
                 "permissionGroupName" => $group,
@@ -96,11 +104,18 @@ class Admin {
         return Communicate::send($calling_app,$request);
     }
 
+    /**
+     * @param $calling_app
+     * @param $group
+     * @param $from
+     * @param $type SELECT, INSERT, DELETE, UPDATE
+     * @return bool
+     */
     public static function removePermissionGroupForTable($calling_app, $group, $from, $type) {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
-                "requestAction" => "removePermissionGroupForTable"
+                "requestAction" => "REMOVE_PERMISSION_GROUP_FOR_TABLE"
             ),
             "RequestData" => array(
                 "permissionGroupName" => $group,

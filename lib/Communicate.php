@@ -74,11 +74,13 @@ class Communicate {
             "RequestInfo" => $request["RequestInfo"],
             "RequestData" => $request["RequestData"]
         );
+        $_SESSION['last_request'] = $request;
         $message = json_encode($request);
         socket_write($socket, $message, strlen($message));
         $output = socket_read($socket, 2048);
         socket_close($socket);
         $decode = json_decode($output);
+        $_SESSION['last_response'] = $decode;
         if ($decode->Status != 1)
         {
             Communicate::$last_error = $decode->Message;

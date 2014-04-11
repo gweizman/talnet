@@ -8,15 +8,51 @@
 
 namespace talent;
 
+use Exception;
 
 class RequestFactory {
     // All three return a Request object to be sent to U443::request()
 
-    public static function createUserAction($api, $action, $data = NULL, $condition = NULL) {
-        return new Request();
+    /*
+     * Returns an array corresponding to the sent user action.
+     * $data should be an array containing the following fields, dependant on $action:
+     *
+     *  $action = SIGN_IN:
+     *      Nothing.
+     *
+     *  $action = SIGN_UP:
+     *      username, password, name, displayName, email, year, room
+     *
+     *  $action = UPDATE_USER_INFO:
+     *      username (if empty, will be done on requester), newName, newDisplayName, newEmail, newYear, newRoom
+     *      if any of these will remain empty, no changes will be done
+     *
+     *  $action = UPDATE_USER_PASSWORD:
+     *      username (if empty, will be done on requester), newPassword
+     *
+     *  $action = ADD_PERMISSION_GROUP:
+     *      username, permissionGroupName
+     *
+     *  $action = REMOVE_PERMISSION_GROUP:
+     *      username, permissionGroupName
+     *
+     *  $action = GET_PERMISSION_GRUPS:
+     *      Nothing.
+     *
+     *  $action = SELECT:
+     *      Nothing. (Does require a valid $condition, though).
+     *
+     *  Note that all actions should be performed only using a valid app and a user with the matching permissions.
+     *
+     *  $condition is to be built using \talnet\Condition.
+     */
+    public static function createUserAction($action, $data = NULL, $condition = NULL) {
+        switch ($action) {
+
+        }
     }
 
-    public static function createDtdAction($api, $table, $action, $data = NULL, $condition = NULL) {
+    public static function createDtdAction($table, $action, $data = NULL, $condition = NULL) {
         switch($action)
         {
             case "SELECT":
@@ -27,11 +63,13 @@ class RequestFactory {
                     ),
                     "RequestData" => array(
                         "FROM" => $table,
-                        "WHERE" => $condition
+                        "WHERE" => $condition.JSON()
                     )
                 );
                 break;
             case "INSERT":
+            case "UPDATE":
+            case "DELETE":
                 $request = array (
                     "RequestInfo" => array(
                         "RequestType" => "DTD",
@@ -39,34 +77,13 @@ class RequestFactory {
                     ),
                     "RequestData" => array(
                         "into" => $table,
-                        "data" => $data
-                    )
-                );
-                break;
-            case "UPDATE":
-                $request = array (
-                    "RequestInfo" => array(
-                        "RequestType" => "DTD",
-                        "RequestAction" => "UPDATE"
-                    ),
-                    "RequestData" => array(
-                        "into" => $table,
                         "data" => $data,
-                        "WHERE" => $condition
+                        "WHERE" => $condition.JSON()
                     )
                 );
                 break;
-            default: //In case there is a DELETE action
-                $request = array (
-                    "RequestInfo" => array(
-                        "RequestType" => "DTD",
-                        "RequestAction" => "DELETE"
-                    ),
-                    "RequestData" => array(
-                        "into" => $table,
-                        "WHERE" => $condition
-                    )
-                );
+            default:
+                throw new Exception("Unkown action");
                 break;
         }
         return $request;
