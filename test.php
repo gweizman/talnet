@@ -13,7 +13,7 @@ $test2 = (new \talnet\BaseCondition("name", "!=", "Yossi"));
 $condition = new \talnet\Condition($test1, $test2, "OR");
 
 
-$test = \talent\RequestFactory::createUserAction("SIGN_IN");
+$test = \talent\RequestFactory::createUserAction("SELECT", NULL, new \talnet\Condition(new \talnet\BaseCondition("a", "a", "a")));
 
 echo "<pre>";
 print_r(json_encode($test));

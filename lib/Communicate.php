@@ -97,7 +97,7 @@ class Communicate {
         if (!isset($_SESSION['user'])) {
             Communicate::logout();
         }
-        return User::get(new Condition(new BaseCondition("username", "=", $_SESSION['user'])));
+        return User::get(new BaseCondition("username", "=", $_SESSION['user']));
     }
 
     public static function getLastError()

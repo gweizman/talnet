@@ -32,9 +32,7 @@ class Condition {
     public function JSON() {
         if ($this->_type == "Node")
         {
-            return array (
-              "Term" => $this->_left->JSON()
-            );
+            return $this->_left->JSON();
         }
         else if ($this->_type == "OR" || $this->_type == "AND")
         {
