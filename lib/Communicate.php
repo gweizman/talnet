@@ -48,7 +48,7 @@ class Communicate {
             $user = $username;
             $pass = $password;
         }
-        $address = "10.0.0.10";
+        $address = "localhost";
         $port = 4850;
 
         /* Create a TCP/IP socket. */
@@ -94,10 +94,10 @@ class Communicate {
             "name" => "talnet",
             "key" => "betzim"
         );
-        if (!isset($_SESSION['username'])) {
+        if (!isset($_SESSION['user'])) {
             Communicate::logout();
         }
-        return User::get(new Condition(new BaseCondition("username", "=", $_SESSION['username'])));
+        return User::get(new Condition(new BaseCondition("username", "=", $_SESSION['user'])));
     }
 
     public static function getLastError()
