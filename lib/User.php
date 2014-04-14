@@ -63,7 +63,6 @@ class User extends Entry {
      */
     public static function get($condition) {
         $request = RequestFactory::createUserAction("SELECT", NULL , $condition);
-        return $request;
         $answer = Communicate::send(User::$_app,$request);
         return $answer;
     }
