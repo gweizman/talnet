@@ -52,8 +52,7 @@ class User extends Entry {
         }
         $id = $this->_keys["id"];
         $condition = new Condition("id = " . $id);
-        $json = "WHERE : {" . $condition.JSON() . "}";
-        $request = RequestFactory::createUserAction(User::$_app, "UPDATE", NULL , $json);
+        $request = RequestFactory::createUserAction(User::$_app, "UPDATE", NULL , $condition);
         Communicate::send(Entry::$_app,$request);
     }
 
