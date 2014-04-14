@@ -23,7 +23,7 @@ class Communicate {
         $comm = Communicate::send($app, $request, $user, md5($pass));
         $_SESSION['user'] = $user;
         $_SESSION['pass'] = Communicate::encrypt($pass);
-        return $comm[0];
+        return Communicate::getCurrentUser();
     }
 
     public static function logout() {
@@ -94,12 +94,10 @@ class Communicate {
             "name" => "talnet",
             "key" => "betzim"
         );
-        $request = RequestFactory::createUserAction("SIGN_IN");
-        $user = Communicate::send($app, $request);
-        if (!$user) {
-            return false;
+        if (!isset($_SESSION['username'])) {
+            Communicate::logout();
         }
-        return $user[0];
+        return User::get(new Condition(new BaseCondition("username", "=", $_SESSION['username'])));
     }
 
     public static function getLastError()

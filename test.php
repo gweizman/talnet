@@ -12,18 +12,9 @@ $test1 = (new \talnet\BaseCondition("id", "=", "3"));
 $test2 = (new \talnet\BaseCondition("name", "!=", "Yossi"));
 $condition = new \talnet\Condition($test1, $test2, "OR");
 
-$data = array (
-    "username" => "TEST",
-    "password" => "TEST",
-    "name" => "TEST",
-    "displayName" => "TEST",
-    "email" => "TEST",
-    "year" => "TEST",
-    "room" => "TEST"
-);
 
-$test = \talent\RequestFactory::createUserAction("SIGN_UP", $data);
+$test = \talent\RequestFactory::createUserAction("SIGN_IN");
 
 echo "<pre>";
-print_r($test);
+print_r(json_encode($test));
 echo "</pre>";

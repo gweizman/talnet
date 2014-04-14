@@ -14,7 +14,7 @@ require_once ("Entry.php");
 
 class User extends Entry {
     private $_keys; // Dictionary containing names and values
-    protected static $_app, $_columns, $_table, $_id_field;
+    protected static $_app = array ("name" => "talnet","key" => "betzim"), $_columns, $_table = NULL, $_id_field = "username";
 
     /**
      * Sets value in the given column
@@ -62,8 +62,8 @@ class User extends Entry {
      * @return array- array of entries matching the condition
      */
     public static function get($condition) {
-        $request = RequestFactory::createUserAction(User::$_app, "SELECT", NULL , $condition);
-        $answer = communicate::send(Entry::$_app,$request);
+        $request = RequestFactory::createUserAction("SELECT", NULL , $condition);
+        $answer = communicate::send(User::$_app,$request);
         return $answer;
     }
 } 
