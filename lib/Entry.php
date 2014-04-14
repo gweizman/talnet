@@ -9,6 +9,7 @@
 namespace talnet;
 
 use Exception;
+use talent\RequestFactory;
 
 require_once ("RequestFactory.php");
 

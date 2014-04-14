@@ -8,9 +8,10 @@
 
 namespace talnet;
 
-use Exception;
-
 require_once ("Entry.php");
+
+use Exception;
+use talent\RequestFactory;
 
 class User extends Entry {
     private $_keys; // Dictionary containing names and values
