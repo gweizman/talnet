@@ -14,7 +14,7 @@ use talent\RequestFactory;
 require_once ("RequestFactory.php");
 
 class Entry {
-    private $_keys; // Dictionary containing names and values
+    protected $_keys; // Dictionary containing names and values
     protected static $_app, $_table, $_id_field; // The given application, table and columns.
                                                //Columns is a dictionary of name : type
 
@@ -70,11 +70,11 @@ class Entry {
      * @throws \Exception
      */
     public function __get($name) {
-        if (!isset(static::$_keys[$name]))
+        if (!isset($this->_keys->$name))
         {
             throw new Exception("The given name does not exist");
         }
-        return $this->_keys[$name];
+        return $this->_keys->$name;
     }
 
     /**

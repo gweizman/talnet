@@ -14,7 +14,7 @@ use Exception;
 use talent\RequestFactory;
 
 class User extends Entry {
-    private $_keys; // Dictionary containing names and values
+    protected $_keys; // Dictionary containing names and values
     protected static $_app = array ("name" => "talnet","key" => "betzim"),
         $_table = NULL,
         $_id_field = "username";
