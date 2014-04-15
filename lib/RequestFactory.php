@@ -71,7 +71,7 @@ class RequestFactory {
                     ),
                     "RequestData" => array(
                         "FROM" => $table,
-                        "WHERE" => $condition.JSON()
+                        "WHERE" => ($condition != NULL ? $condition->JSON() : (object) NULL)
                     )
                 );
                 break;
@@ -81,12 +81,12 @@ class RequestFactory {
                 $request = array (
                     "RequestInfo" => array(
                         "RequestType" => "DTD",
-                        "RequestAction" => "INSERT"
+                        "RequestAction" => $action
                     ),
                     "RequestData" => array(
                         "into" => $table,
-                        "data" => $data,
-                        "WHERE" => $condition.JSON()
+                        "data" => (object) $data,
+                        "WHERE" => ($condition != NULL ? $condition->JSON() : (object) NULL)
                     )
                 );
                 break;

@@ -1,17 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Guy Weizman
- * Date: 06/04/14
- * Time: 23:50
- */
 
 namespace talnet;
 
+use talent\Talnet;
+
 class Admin {
 
-    public static function createApp($calling_app, $new_app) {
-        // Calling_app = { name => name, key => key }
+    public static function createApp($new_app) {
         // new_app = { name => name, key => key }
         // Returns app keykl
         $request = array (
@@ -23,10 +18,10 @@ class Admin {
                 "appName" => $new_app["name"]
             )
         );
-        return Communicate::send($calling_app,$request);
+        return Communicate::send(Talnet::getApp(), $request);
     }
 
-    public static function deleteApp($calling_app, $del_app) {
+    public static function deleteApp($del_app) {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
@@ -36,10 +31,10 @@ class Admin {
                 "appName" => $del_app["name"]
             )
         );
-        return Communicate::send($calling_app,$request);
+        return Communicate::send(Talnet::getApp(), $request);
     }
 
-    public static function setPermissionGroupAdmin($calling_app, $group, $user) {
+    public static function setPermissionGroupAdmin($group, $user) {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
@@ -50,10 +45,10 @@ class Admin {
                 "username" => $user
             )
         );
-        return Communicate::send($calling_app,$request);
+        return Communicate::send(Talnet::getApp(), $request);
     }
 
-    public static function addPermissionGroup($calling_app, $group ,$user) {
+    public static function addPermissionGroup($group ,$user) {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
@@ -64,10 +59,10 @@ class Admin {
                 "description" => $user
             )
         );
-        return Communicate::send($calling_app,$request);
+        return Communicate::send(Talnet::getApp(), $request);
     }
 
-    public static function removePermissionGroup($calling_app, $group) {
+    public static function removePermissionGroup($group) {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
@@ -77,18 +72,10 @@ class Admin {
                 "permissionGroupName" => $group
             )
         );
-        return Communicate::send($calling_app,$request);
+        return Communicate::send(Talnet::getApp(), $request);
     }
 
-    /**
-     * @param $calling_app
-     * @param $called_app_name
-     * @param $group
-     * @param $to
-     * @param $type SELECT, INSERT, DELETE, UPDATE
-     * @return bool
-     */
-    public static function addPermissionGroupForTable($calling_app,  $called_app_name, $group, $to, $type) {
+    public static function addPermissionGroupForTable($called_app_name, $group, $to, $type) {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
@@ -101,17 +88,10 @@ class Admin {
                 "appName" => $called_app_name
             )
         );
-        return Communicate::send($calling_app,$request);
+        return Communicate::send(Talnet::getApp(), $request);
     }
 
-    /**
-     * @param $calling_app
-     * @param $group
-     * @param $from
-     * @param $type SELECT, INSERT, DELETE, UPDATE
-     * @return bool
-     */
-    public static function removePermissionGroupForTable($calling_app, $group, $from, $type) {
+    public static function removePermissionGroupForTable($group, $from, $type) {
         $request = array (
             "RequestInfo" => array(
                 "requestType" => "APP",
@@ -123,6 +103,6 @@ class Admin {
                 "type" => $type
             )
         );
-        return Communicate::send($calling_app,$request);
+        return Communicate::send(Talnet::getApp(),$request);
     }
 }

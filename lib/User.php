@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Guy Weizman
- * Date: 26/03/14
- * Time: 16:33
- */
 
 namespace talnet;
 
@@ -12,11 +6,10 @@ require_once ("Entry.php");
 
 use Exception;
 use talent\RequestFactory;
+use talent\Talnet;
 
 class User extends Entry {
-    protected $_keys; // Dictionary containing names and values
-    protected static $_app = array ("name" => "talnet","key" => "betzim"),
-        $_table = NULL,
+    protected static $_table = NULL,
         $_id_field = "username";
 
     /**
@@ -32,7 +25,7 @@ class User extends Entry {
     public function changeData($data) {
         $data['username'] = $this->USERNAME;
         $request = RequestFactory::createUserAction("UPDATE_INFO", $data, NULL);
-        Communicate::send(User::$_app, $request);
+        Communicate::send(Talnet::getApp(), $request);
         Communicate::refresh();
     }
 
@@ -40,20 +33,17 @@ class User extends Entry {
      * Delete row from the table
      */
     public function remove() {
-        throw new Exception("Cannot remove user");
-        if (!isset($this->_keys[User::$_id_field]))
-        {
-            throw new Exception("The id column does not exist");
-        }
-        $id = $this->_keys["id"];
-        $condition = new Condition("id = " . $id);
-        $request = RequestFactory::createUserAction(User::$_app, "UPDATE", NULL , $condition);
-        Communicate::send(Entry::$_app,$request);
+        $id = $this->USERNAME;
+        $data = array (
+            'userToDelete' => $id
+        );
+        $request = RequestFactory::createUserAction(Talnet::getApp(), "DELETE_USER", $data, NULL);
+        Communicate::send(Talnet::getApp(),$request);
     }
 
     public static function register($data) {
         $request = RequestFactory::createUserAction("SIGN_UP", $data, NULL);
-        Communicate::send(User::$_app, $request);
+        Communicate::send(Talnet::getApp(), $request);
         return User::get(new BaseCondition("USERNAME", "=", "'" . $data['username'] . "'"));
     }
 
@@ -64,7 +54,7 @@ class User extends Entry {
      */
     public static function get($condition) {
         $request = RequestFactory::createUserAction("SELECT", NULL , $condition);
-        $answer = Communicate::send(User::$_app,$request);
+        $answer = Communicate::send(Talnet::getApp(),$request);
         $retVal = array();
         foreach ($answer as $user)
         {

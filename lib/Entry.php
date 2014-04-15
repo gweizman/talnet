@@ -1,39 +1,26 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Guy Weizman
- * Date: 26/03/14
- * Time: 16:17
- */
 
 namespace talnet;
 
 use Exception;
 use talent\RequestFactory;
+use talent\Talnet;
 
 require_once ("RequestFactory.php");
 
 class Entry {
     protected $_keys; // Dictionary containing names and values
-    protected static $_app, $_table, $_id_field; // The given application, table and columns.
+    protected static $_table, $_id_field; // The given application, table and columns.
                                                //Columns is a dictionary of name : type
 
-    /**
-     * A constructor for a given entry
-     * @param $keys
-     * @param bool $created- flag stating if the entry has already been created. Default setting is the TRUE- we do not need to create the entry
-     * @param null $app
-     * @param null $table
-     * @param null $columns
-     * @throws \Exception
-     */
     public function __construct ($keys, $created = TRUE) {
         $this->_keys = $keys;
         if($created== FALSE)
         {
             $request = RequestFactory::createDtdAction(static::$_table, "INSERT", $keys);
-            return Communicate::send(static::$_app,$request);
+            return Communicate::send(Talnet::getApp(),$request);
         }
+        return $this;
     }
 
     /**
@@ -43,24 +30,20 @@ class Entry {
      * @throws \Exception
      */
     public function __set($name, $value) {
-        if (!isset(static::$_columns[$name]))
+        if (!isset($this->_keys->$name))
         {
             throw new Exception("The given name does not exist");
         }
-        if (gettype(static::$_columns[$name]) != gettype($value))
-        {
-            throw new Exception("The given value does not meet the column requirement");
-        }
         $this->_keys[$name] = $value;
-        if (!isset($this->_keys["id"]))
+        if (!isset($this->{static::$_id_field}))
         {
             throw new Exception("The id column does not exist");
         }
-        $id = $this->_keys[static::$_id_field];
-        $condition = new Condition(new BaseCondition(static::$_id_field,"=", $id));
+        $id = $this->{static::$_id_field};
+        $condition = new BaseCondition(static::$_id_field,"=", $id);
         $data = array($name => $value);
         $request = RequestFactory::createDtdAction(static::$_table, "UPDATE", $data, $condition);
-        return Communicate::send(static::$_app,$request);
+        return Communicate::send(Talnet::getApp(),$request);
     }
 
     /**
@@ -88,7 +71,7 @@ class Entry {
         $id = $this->_keys[static::$_id_field];
         $condition = new Condition(new BaseCondition(static::$_id_field,"=", $id));
         $request = RequestFactory::createDtdAction(static::$_table, "DELETE", NULL , $condition);
-        return Communicate::send(static::$_app,$request);
+        return Communicate::send(Talnet::getApp(),$request);
     }
 
     /**
@@ -98,7 +81,7 @@ class Entry {
      */
     public static function get($condition) {
         $request = RequestFactory::createDtdAction(static::$_table, "SELECT", NULL , $condition);
-        $answer = Communicate::send(static::$_app,$request);
+        $answer = Communicate::send(Talnet::getApp(),$request);
         return $answer;
     }
 }

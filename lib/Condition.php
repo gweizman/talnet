@@ -24,11 +24,6 @@ class Condition {
         $this->_type = $type;
     }
 
-    /**
-     * Method returning a JSON form of the condition
-     *
-     * @return string
-     */
     public function JSON() {
         if ($this->_type == "Node")
         {

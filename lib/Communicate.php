@@ -10,17 +10,13 @@ namespace talnet;
 
 use talent\RequestFactory;
 use Exception;
+use talent\Talnet;
 
 class Communicate {
-    private static $last_error = "";
 
     public static function login($user, $pass) {
-        $app = array (
-          "name" => "talnet",
-            "key" => "betzim"
-        );
         $request = RequestFactory::createUserAction("SIGN_IN");
-        $comm = Communicate::send($app, $request, $user, md5($pass));
+        $comm = Communicate::send(Talnet::getApp(), $request, $user, md5($pass));
         $_SESSION['username'] = $user;
         $_SESSION['pass'] = Communicate::encrypt($pass);
         $_SESSION['user'] = new User($comm[0]);
@@ -28,14 +24,10 @@ class Communicate {
     }
 
     public static function logout() {
-        $app = array (
-            "name" => "talnet",
-            "key" => "betzim"
-        );
         $_SESSION['username'] = "Anonymous";
         $_SESSION['pass'] = Communicate::encrypt("");
         $request = RequestFactory::createUserAction("SIGN_IN");
-        $comm = Communicate::send($app, $request);
+        $comm = Communicate::send(Talnet::getApp(), $request);
         $_SESSION['user'] = new User($comm[0]);
     }
 
@@ -98,12 +90,8 @@ class Communicate {
     }
 
     public static function refresh() {
-        $app = array (
-            "name" => "talnet",
-            "key" => "betzim"
-        );
         $request = RequestFactory::createUserAction("SIGN_IN");
-        $comm = Communicate::send($app, $request);
+        $comm = Communicate::send(Talnet::getApp(), $request);
         $_SESSION['user'] = new User($comm[0]);
         return Communicate::getCurrentUser();
     }
@@ -113,10 +101,5 @@ class Communicate {
             Communicate::logout();
         }
 		return $_SESSION['user'];
-    }
-
-    public static function getLastError()
-    {
-        return Communicate::$last_error;
     }
 } 
