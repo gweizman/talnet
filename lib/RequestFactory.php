@@ -55,7 +55,7 @@ class RequestFactory {
             "RequestData" => (object) $data
         );
         if ($action == "SELECT") {
-            $request["RequestData"]["WHERE"] = $condition->JSON();
+            $request["RequestData"] = array("WHERE" => $condition->JSON());
         }
         return $request;
     }

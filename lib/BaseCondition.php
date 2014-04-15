@@ -35,10 +35,11 @@ class BaseCondition
     public function JSON()
     {
         return array(
+		"Term" => array(
             "Field" => $this->_field,
             "Op" => $this->_op,
             "Value"  => $this->_value
-        );
+        ));
     }
 }
 
