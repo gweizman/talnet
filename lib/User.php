@@ -47,7 +47,7 @@ class User extends Entry {
     public static function register($data) {
         $request = RequestFactory::createUserAction("SIGN_UP", $data, NULL);
         Communicate::send(User::$_app, $request);
-        return User::get(new BaseCondition("USERNAME", "=", $data['username']));
+        return User::get(new BaseCondition("USERNAME", "=", "'" . $data['username'] . "'"));
     }
 
     /**
