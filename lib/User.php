@@ -29,6 +29,13 @@ class User extends Entry {
         throw new Exception("Cannot set individual parameter");
     }
 
+    public function changeData($data) {
+        $data['username'] = $this->USERNAME;
+        $request = RequestFactory::createUserAction("UPDATE_USER_INFO", $data, NULL);
+        Communicate::send(User::$_app, $request);
+        return $this;
+    }
+
     /**
      * Delete row from the table
      */
@@ -57,7 +64,6 @@ class User extends Entry {
      */
     public static function get($condition) {
         $request = RequestFactory::createUserAction("SELECT", NULL , $condition);
-		print $request;
         $answer = Communicate::send(User::$_app,$request);
         $retVal = array();
         foreach ($answer as $user)
