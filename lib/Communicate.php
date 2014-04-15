@@ -23,7 +23,7 @@ class Communicate {
         $comm = Communicate::send($app, $request, $user, md5($pass));
         $_SESSION['username'] = $user;
         $_SESSION['pass'] = Communicate::encrypt($pass);
-        $_SESSION['user'] = new User($comm);
+        $_SESSION['user'] = new User($comm[0]);
         return Communicate::getCurrentUser();
     }
 
@@ -36,7 +36,7 @@ class Communicate {
         $_SESSION['pass'] = Communicate::encrypt("");
         $request = RequestFactory::createUserAction("SIGN_IN");
         $comm = Communicate::send($app, $request);
-        $_SESSION['user'] = new User($comm);
+        $_SESSION['user'] = new User($comm[0]);
     }
 
     public static function send($app, $request, $username = NULL, $password = NULL) {
