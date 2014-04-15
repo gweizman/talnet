@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Guy Weizman
- * Date: 26/03/14
- * Time: 16:18
- */
 
 namespace talnet;
 use Exception;

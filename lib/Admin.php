@@ -2,7 +2,6 @@
 
 namespace talnet;
 
-use talent\Talnet;
 
 class Admin {
 

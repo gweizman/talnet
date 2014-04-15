@@ -5,8 +5,6 @@ namespace talnet;
 require_once ("Entry.php");
 
 use Exception;
-use talent\RequestFactory;
-use talent\Talnet;
 
 class User extends Entry {
     protected static $_table = NULL,

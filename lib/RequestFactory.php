@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Guy Weizman
- * Date: 26/03/14
- * Time: 16:48
- */
 
-namespace talent;
+namespace talnet;
 
 use Exception;
 
 class RequestFactory {
-    // All three return a Request object to be sent to U443::request()
+    // All three return a Request object to be sent to Communicate::send()
 
     /*
      * Returns an array corresponding to the sent user action.

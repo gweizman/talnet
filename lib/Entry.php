@@ -3,8 +3,6 @@
 namespace talnet;
 
 use Exception;
-use talent\RequestFactory;
-use talent\Talnet;
 
 require_once ("RequestFactory.php");
 

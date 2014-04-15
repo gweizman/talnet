@@ -1,16 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Guy Weizman
- * Date: 26/03/14
- * Time: 15:57
- */
 
 namespace talnet;
 
-use talent\RequestFactory;
 use Exception;
-use talent\Talnet;
 
 class Communicate {
 
