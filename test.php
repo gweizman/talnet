@@ -6,7 +6,7 @@
  * Time: 20:45
  */
 
-require_once("lib/talnet.php");
+require_once("lib/lib.php");
 
 $test1 = (new \talnet\BaseCondition("id", "=", "3"));
 $test2 = (new \talnet\BaseCondition("name", "!=", "Yossi"));
