@@ -30,20 +30,6 @@ class User extends Entry {
     }
 
     /**
-     * Returns the value from the requested column
-     * @param $name - the column whose value we want to attain
-     * @return mixed- the value of the requested column
-     * @throws \Exception
-     */
-    public function __get($name) {
-        if (!isset(User::$_columns[$name]))
-        {
-            throw new Exception("The given name does not exist");
-        }
-        return $this->_keys[$name];
-    }
-
-    /**
      * Delete row from the table
      */
     public function remove() {

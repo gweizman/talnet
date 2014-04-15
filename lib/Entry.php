@@ -15,7 +15,7 @@ require_once ("RequestFactory.php");
 
 class Entry {
     private $_keys; // Dictionary containing names and values
-    protected static $_app, $_columns, $_table, $_id_field; // The given application, table and columns.
+    protected static $_app, $_table, $_id_field; // The given application, table and columns.
                                                //Columns is a dictionary of name : type
 
     /**
@@ -29,22 +29,9 @@ class Entry {
      */
     public function __construct ($keys, $created = TRUE) {
         $this->_keys = $keys;
-        // Possibly not required as backend will throw an error
         if($created== FALSE)
         {
-            for($i=0; $i<sizeof($this->_keys);$i++)
-            {
-                $temp_key = array_search($this->_keys[$i],$this->_keys);
-                if (!isset(static::$_columns[$temp_key]))
-                {
-                    throw new Exception("The given name does not exist");
-                }
-                if (static::$_columns[$temp_key] != gettype($this->_keys[$i]))
-                {
-                    throw new Exception("The given value does not meet the column requirement");
-                }
-            }
-            $request= RequestFactory::createDtdAction(static::$_table, "INSERT", $keys);
+            $request = RequestFactory::createDtdAction(static::$_table, "INSERT", $keys);
             return Communicate::send(static::$_app,$request);
         }
     }
@@ -83,7 +70,7 @@ class Entry {
      * @throws \Exception
      */
     public function __get($name) {
-        if (!isset(Entry::$_columns[$name]))
+        if (!isset(static::$_keys[$name]))
         {
             throw new Exception("The given name does not exist");
         }
