@@ -15,7 +15,9 @@ use talent\RequestFactory;
 
 class User extends Entry {
     private $_keys; // Dictionary containing names and values
-    protected static $_app = array ("name" => "talnet","key" => "betzim"), $_columns, $_table = NULL, $_id_field = "username";
+    protected static $_app = array ("name" => "talnet","key" => "betzim"),
+        $_table = NULL,
+        $_id_field = "username";
 
     /**
      * Sets value in the given column
@@ -65,6 +67,11 @@ class User extends Entry {
         $request = RequestFactory::createUserAction("SELECT", NULL , $condition);
 		print $request;
         $answer = Communicate::send(User::$_app,$request);
-        return $answer;
+        $retVal = array();
+        foreach ($answer as $user)
+        {
+            array_push($retVal, new User($user));
+        }
+        return $retVal;
     }
 } 

@@ -21,14 +21,22 @@ class Communicate {
         );
         $request = RequestFactory::createUserAction("SIGN_IN");
         $comm = Communicate::send($app, $request, $user, md5($pass));
-        $_SESSION['user'] = $user;
+        $_SESSION['username'] = $user;
         $_SESSION['pass'] = Communicate::encrypt($pass);
+        $_SESSION['user'] = new User($comm);
         return Communicate::getCurrentUser();
     }
 
     public static function logout() {
-        $_SESSION['user'] = "Anonymous";
+        $app = array (
+            "name" => "talnet",
+            "key" => "betzim"
+        );
+        $_SESSION['username'] = "Anonymous";
         $_SESSION['pass'] = Communicate::encrypt("");
+        $request = RequestFactory::createUserAction("SIGN_IN");
+        $comm = Communicate::send($app, $request);
+        $_SESSION['user'] = new User($comm);
     }
 
     public static function send($app, $request, $username = NULL, $password = NULL) {
@@ -36,8 +44,8 @@ class Communicate {
         // Must be called after U443::connect()
         error_reporting(E_ALL);
         if ($username == NULL) {
-            if (isset($_SESSION['user'])) {
-                $user = $_SESSION['user'];
+            if (isset($_SESSION['username'])) {
+                $user = $_SESSION['username'];
                 $pass = $_SESSION['pass'];
             }
             else {
@@ -90,15 +98,10 @@ class Communicate {
     }
 
     public static function getCurrentUser() {
-        $app = array (
-            "name" => "talnet",
-            "key" => "betzim"
-        );
         if (!isset($_SESSION['user'])) {
             Communicate::logout();
         }
-		print $_SESSION['user'];
-		return User::get(new BaseCondition("USERNAME", "!=", "'" . $_SESSION['user'] . "'"));
+		return $_SESSION['user'];
     }
 
     public static function getLastError()
