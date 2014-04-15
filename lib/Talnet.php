@@ -1,5 +1,5 @@
 <?php
-namespace talent;
+namespace talnet;
 
 class Talnet {
     private static $_app;
