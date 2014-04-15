@@ -33,7 +33,7 @@ class User extends Entry {
         $data['username'] = $this->USERNAME;
         $request = RequestFactory::createUserAction("UPDATE_INFO", $data, NULL);
         Communicate::send(User::$_app, $request);
-        return $this;
+        Communicate::refresh();
     }
 
     /**

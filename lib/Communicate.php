@@ -97,6 +97,17 @@ class Communicate {
         return md5($text);
     }
 
+    public static function refresh() {
+        $app = array (
+            "name" => "talnet",
+            "key" => "betzim"
+        );
+        $request = RequestFactory::createUserAction("SIGN_IN");
+        $comm = Communicate::send($app, $request);
+        $_SESSION['user'] = new User($comm[0]);
+        return Communicate::getCurrentUser();
+    }
+
     public static function getCurrentUser() {
         if (!isset($_SESSION['user'])) {
             Communicate::logout();
