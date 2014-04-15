@@ -31,7 +31,7 @@ class User extends Entry {
 
     public function changeData($data) {
         $data['username'] = $this->USERNAME;
-        $request = RequestFactory::createUserAction("UPDATE_USER_INFO", $data, NULL);
+        $request = RequestFactory::createUserAction("UPDATE_INFO", $data, NULL);
         Communicate::send(User::$_app, $request);
         return $this;
     }
