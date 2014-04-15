@@ -44,6 +44,12 @@ class User extends Entry {
         Communicate::send(Entry::$_app,$request);
     }
 
+    public static function register($data) {
+        $request = RequestFactory::createUserAction("SIGN_UP", $data, NULL);
+        Communicate::send(User::$_app, $request);
+        return User::get(new BaseCondition("USERNAME", "=", $data['username']));
+    }
+
     /**
      * Returns a list of all the entries matching a given condition
      * @param $condition - given condition
