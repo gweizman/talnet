@@ -30,7 +30,7 @@ class Table extends Entry {
             $data = array(
                 "appName" => $app->APP_NAME,
                 "tableName" => $this->_keys->TABLE_NAME,
-                "cols" => (object)$columns // Array of col objects
+                "cols" => $columns // Array of col objects
             );
             $request = RequestFactory::createAppAction("ADD_TABLE", $data);
             Communicate::send(Talnet::getApp(), $request);
