@@ -49,18 +49,18 @@ class Table extends Entry {
             $response = Communicate::send(Talnet::getApp(), $request);
             $cols = array();
             foreach ($response as $line) {
-                $name = $line['Field'];
-                if (strpos($line['Extra'], "auto_increment") !== FALSE) {
+                $name = $line->Field;
+                if (strpos($line->Extra, "auto_increment") !== FALSE) {
                     $ai = true;
                 } else {
                     $ai = false;
                 }
-                if (strpos($line['Key'], "PRI") !== FALSE) {
+                if (strpos($line->Key, "PRI") !== FALSE) {
                     $primary = true;
                 } else {
                     $primary = false;
                 }
-                $typesize = $line['Type'];
+                $typesize = $line->Type;
                 $type = strstr($typesize, '(', true);
                 $size = trim(strstr($typesize, '('), '()');
                 array_push($cols, new Column($name, $type, $size, $primary, $ai));
