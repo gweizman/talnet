@@ -69,6 +69,16 @@ class User extends Entry
     }
 
     /**
+     * @param string $subject
+     * @param string $message Lines should be separated with \n\r
+     * @return true iff successful
+     */
+    public function sendMail($subject, $message)
+    {
+        return mail($this->EMAIL, $subject, $message, 'From: ' . Talnet::getApp()->APP_NAME . '@talpiot');
+    }
+
+    /**
      * Returns a list of all the entries matching a given condition
      * @param $condition - given condition
      * @return array- array of entries matching the condition
