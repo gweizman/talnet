@@ -36,7 +36,8 @@ class Permission extends Entry
 
     public function getAdmin($user)
     {
-        return (User::get(new BaseCondition("USER_ID", "=", $this->PERMISSION_GROUP_ADMIN)))[0];
+        $user = User::get(new BaseCondition("USER_ID", "=", $this->PERMISSION_GROUP_ADMIN));
+        return $user[0];
     }
 
     public function setAdmin($user)
