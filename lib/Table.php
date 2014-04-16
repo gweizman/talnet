@@ -61,8 +61,8 @@ class Table extends Entry {
                     $primary = false;
                 }
                 $typesize = $line->Type;
-                $type = strstr($typesize, '(', true);
-                $size = trim(strstr($typesize, '('), '()');
+                $type = strstr($typesize, '(', true) or $typesize;
+                $size = trim(strstr($typesize, '(') or "", '()');
                 array_push($cols, new Column($name, $type, $size, $primary, $ai));
             }
             $this->_cols = $cols;

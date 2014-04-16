@@ -72,8 +72,8 @@ class RequestFactory {
             case "SELECT":
                 $request = array (
                     "RequestInfo" => array(
-                        "RequestType" => "DTD",
-                        "RequestAction" => "SELECT"
+                        "requestType" => "DTD",
+                        "requestAction" => "SELECT"
                     ),
                     "RequestData" => array(
                         "from" => $table,
@@ -86,8 +86,8 @@ class RequestFactory {
             case "DELETE":
                 $request = array (
                     "RequestInfo" => array(
-                        "RequestType" => "DTD",
-                        "RequestAction" => $action
+                        "requestType" => "DTD",
+                        "requestAction" => $action
                     ),
                     "RequestData" => array(
                         "into" => $table,
