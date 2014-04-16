@@ -76,7 +76,7 @@ class RequestFactory {
                         "RequestAction" => "SELECT"
                     ),
                     "RequestData" => array(
-                        "FROM" => $table,
+                        "from" => $table,
                         "WHERE" => ($condition != NULL ? $condition->JSON() : (object) NULL)
                     )
                 );
