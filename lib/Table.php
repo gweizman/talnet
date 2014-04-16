@@ -60,7 +60,7 @@ class Table extends Entry {
                 } else {
                     $primary = false;
                 }
-                if (strpos($line->Key, '(') !== FALSE) {
+                if (strpos($line->Type, '(') !== FALSE) {
                     $typesize = $line->Type;
                     $type = strstr($typesize, '(', true);
                     $size = trim(strstr($typesize, '('), '()');
