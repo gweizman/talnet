@@ -54,6 +54,18 @@ class RequestFactory {
         return $request;
     }
 
+    public static function createAppAction($action, $data)
+    {
+        $request = array(
+            "RequestInfo" => array(
+                "requestType" => "APP",
+                "requestAction" => $action
+            ),
+            "RequestData" => (object)$data
+        );
+        return $request;
+    }
+
     public static function createDtdAction($table, $action, $data = NULL, $condition = NULL) {
         switch($action)
         {

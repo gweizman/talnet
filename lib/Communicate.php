@@ -51,8 +51,8 @@ class Communicate {
 
         $request = array(
             "RequesterCredentials" => array(
-                "appName" => $app["name"],
-                "appKey" => Communicate::challenge(md5($app["key"]), $challenge),
+                "appName" => $app->APP_NAME,
+                "appKey" => Communicate::challenge(md5($app->APP_KEY), $challenge),
                 "username" => $user,
                 "password" => Communicate::challenge($pass, $challenge)
             ),

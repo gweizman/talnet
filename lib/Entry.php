@@ -4,19 +4,24 @@ namespace talnet;
 
 use Exception;
 
-require_once ("RequestFactory.php");
+require_once("RequestFactory.php");
 
-class Entry {
+class Entry
+{
     protected $_keys; // Dictionary containing names and values
     protected static $_table, $_id_field; // The given application, table and columns.
-                                               //Columns is a dictionary of name : type
+    //Columns is a dictionary of name : type
 
-    public function __construct ($keys, $created = TRUE) {
+    /**
+     * @param $keys Array of table information, built as key => value
+     * @param bool $new True iff a new entry is to be created
+     */
+    public function __construct($keys, $new = False)
+    {
         $this->_keys = $keys;
-        if($created== FALSE)
-        {
+        if ($new) {
             $request = RequestFactory::createDtdAction(static::$_table, "INSERT", $keys);
-            return Communicate::send(Talnet::getApp(),$request);
+            return Communicate::send(Talnet::getApp(), $request);
         }
         return $this;
     }
@@ -27,21 +32,20 @@ class Entry {
      * @param $value - the value to insert into the given column
      * @throws \Exception
      */
-    public function __set($name, $value) {
-        if (!isset($this->_keys->$name))
-        {
+    public function __set($name, $value)
+    {
+        if (!isset($this->_keys->$name)) {
             throw new Exception("The given name does not exist");
         }
         $this->_keys[$name] = $value;
-        if (!isset($this->{static::$_id_field}))
-        {
+        if (!isset($this->{static::$_id_field})) {
             throw new Exception("The id column does not exist");
         }
         $id = $this->{static::$_id_field};
-        $condition = new BaseCondition(static::$_id_field,"=", $id);
+        $condition = new BaseCondition(static::$_id_field, "=", $id);
         $data = array($name => $value);
         $request = RequestFactory::createDtdAction(static::$_table, "UPDATE", $data, $condition);
-        return Communicate::send(Talnet::getApp(),$request);
+        return Communicate::send(Talnet::getApp(), $request);
     }
 
     /**
@@ -50,9 +54,9 @@ class Entry {
      * @return mixed- the value of the requested column
      * @throws \Exception
      */
-    public function __get($name) {
-        if (!isset($this->_keys->$name))
-        {
+    public function __get($name)
+    {
+        if (!isset($this->_keys->$name)) {
             throw new Exception("The given name does not exist");
         }
         return $this->_keys->$name;
@@ -61,15 +65,15 @@ class Entry {
     /**
      * Delete row from the table
      */
-    public function remove() {
-        if (!isset($this->_keys["id"]))
-        {
+    public function remove()
+    {
+        if (!isset($this->_keys["id"])) {
             throw new Exception("The id column does not exist");
         }
         $id = $this->_keys[static::$_id_field];
-        $condition = new Condition(new BaseCondition(static::$_id_field,"=", $id));
-        $request = RequestFactory::createDtdAction(static::$_table, "DELETE", NULL , $condition);
-        return Communicate::send(Talnet::getApp(),$request);
+        $condition = new Condition(new BaseCondition(static::$_id_field, "=", $id));
+        $request = RequestFactory::createDtdAction(static::$_table, "DELETE", NULL, $condition);
+        return Communicate::send(Talnet::getApp(), $request);
     }
 
     /**
@@ -77,9 +81,17 @@ class Entry {
      * @param $condition - given condition
      * @return array- array of entries matching the condition
      */
-    public static function get($condition) {
-        $request = RequestFactory::createDtdAction(static::$_table, "SELECT", NULL , $condition);
-        $answer = Communicate::send(Talnet::getApp(),$request);
-        return $answer;
+    public static function get($condition)
+    {
+        $request = RequestFactory::createDtdAction(static::$_table, "SELECT", NULL, $condition);
+        $answers = Communicate::send(Talnet::getApp(), $request);
+        $retVal = array();
+        foreach ($answers as $answer) {
+            array_push($retVal, new Entry($answer));
+        }
+        if (count($retVal) == 1) {
+            return $retVal[0];
+        }
+        return $retVal;
     }
 }

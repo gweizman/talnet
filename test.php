@@ -11,8 +11,8 @@ $condition = new \talnet\Condition($test1, $test2, "OR");
 
 $_SESSION['user'] = 'a';
 
-$test = \talnet\Communicate::getCurrentUser();
+$test = (object)array("a" => "b");
 
 echo "<pre>";
-print_r($test);
+print_r($test->a);
 echo "</pre>";
