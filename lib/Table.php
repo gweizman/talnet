@@ -20,7 +20,7 @@ class Table extends Entry {
         $this->_app = $app;
         $this->_cols = $cols;
         if ($new) {
-            if ($cols = NULL) {
+            if ($cols == NULL) {
                 throw new Exception("Columns should be sent");
             }
             $columns = array();
