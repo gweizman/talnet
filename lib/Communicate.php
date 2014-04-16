@@ -61,6 +61,7 @@ class Communicate {
         );
         $_SESSION['last_request'] = $request;
         $message = json_encode($request);
+        $_SESSION['last_request_json'] = $message;
         socket_write($socket, $message, strlen($message));
         $output = socket_read($socket, 2048);
         socket_close($socket);
