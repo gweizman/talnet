@@ -40,17 +40,34 @@ class Table extends Entry {
 
     public function getCols()
     {
-        if ($this->_cols != NULL) {
-            return $this->_cols;
-        } else {
+        if ($this->_cols == NULL) {
             $data = array(
                 "tableName" => $this->TABLENAME,
                 "appName" => $this->_app->APP_NAME
             );
             $request = RequestFactory::createAppAction("GET_TABLE_INFO", $data);
-            Communicate::send(Talnet::getApp(), $request);
-            // Do something with that.
+            $response = Communicate::send(Talnet::getApp(), $request);
+            $cols = array();
+            foreach ($response as $line) {
+                $name = $line['Field'];
+                if (strpos($line['Extra'], "auto_increment") !== FALSE) {
+                    $ai = true;
+                } else {
+                    $ai = false;
+                }
+                if (strpos($line['Key'], "PRI") !== FALSE) {
+                    $primary = true;
+                } else {
+                    $primary = false;
+                }
+                $typesize = $line['Type'];
+                $type = strstr($typesize, '(', true);
+                $size = trim(strstr($typesize, '('), '()');
+                array_push($cols, new Column($name, $type, $size, $primary, $ai));
+            }
+            $this->_cols = $cols;
         }
+        return $this->_cols;
     }
 
     public function addPermissionGroup($name)
