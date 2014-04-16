@@ -91,9 +91,6 @@ class User extends Entry
         foreach ($answer as $user) {
             array_push($retVal, new User($user));
         }
-        if (count($retVal) == 1) {
-            return $retVal[0];
-        }
         return $retVal;
     }
 } 

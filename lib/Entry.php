@@ -89,9 +89,6 @@ class Entry
         foreach ($answers as $answer) {
             array_push($retVal, new Entry($answer));
         }
-        if (count($retVal) == 1) {
-            return $retVal[0];
-        }
         return $retVal;
     }
 }

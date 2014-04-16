@@ -60,9 +60,13 @@ class Table extends Entry {
                 } else {
                     $primary = false;
                 }
-                $typesize = $line->Type;
-                $type = strstr($typesize, '(', true) or $typesize;
-                $size = trim(strstr($typesize, '(') or "", '()');
+                if (strpos($line->Key, '(') !== FALSE) {
+                    $typesize = $line->Type;
+                    $type = strstr($typesize, '(', true);
+                    $size = trim(strstr($typesize, '('), '()');
+                } else {
+                    $type = $line->Type;
+                }
                 array_push($cols, new Column($name, $type, $size, $primary, $ai));
             }
             $this->_cols = $cols;
