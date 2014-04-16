@@ -29,7 +29,7 @@ class Table extends Entry {
             }
             $data = array(
                 "appName" => $app->APP_NAME,
-                "tableName" => $this->_keys->TABLE_NAME,
+                "tableName" => $this->_keys->TABLENAME,
                 "cols" => $columns // Array of col objects
             );
             $request = RequestFactory::createAppAction("ADD_TABLE", $data);
@@ -44,7 +44,7 @@ class Table extends Entry {
             return $this->_cols;
         } else {
             $data = array(
-                "tableName" => $this->TABLE_NAME,
+                "tableName" => $this->TABLENAME,
                 "appName" => $this->_app->APP_NAME
             );
             $request = RequestFactory::createAppAction("GET_TABLE_INFO", $data);
@@ -62,7 +62,7 @@ class Table extends Entry {
     {
         $data = array(
             "appName" => $this->_app->APP_NAME,
-            "tableName" => $this->TABLE_NAME
+            "tableName" => $this->TABLENAME
         );
         $request = RequestFactory::createAppAction("DROP_TABLE", $data);
         return Communicate::send(Talnet::getApp(), $request);
