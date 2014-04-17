@@ -35,7 +35,7 @@ class Talnet {
         // Do thousands
         $thousands = Talnet::calcOnes(intval($number / 1000) % 10);
         if ($thousands != null)
-            $output .= $thousands . Talnet::unichr(hexdec("5F3"));
+            $output .= $thousands . "'";
 
         // Do hundreds
         $hundreds = Talnet::calcHundreds(intval($number / 100) % 10);
@@ -65,11 +65,11 @@ class Talnet {
         if ($daf == 'a') {
             $output .= '.'; // This is really the wrong symbol.
         } elseif ($daf == 'b') {
-            $output .= Talnet::unichr(hexdec("5C3"));
+            $output .= '"';
         } elseif (mb_strlen($output) > 1) {
             $output = mb_substr($output, 0, -1) . Talnet::unichr(hexdec("5F4")) . mb_substr($output, -1, mb_strlen($output) + 1);
         } elseif (mb_strlen($output) == 1) {
-            $output .= Talnet::unichr(hexdec("5F3"));
+            $output .= "'";
         }
 
         return $output;
