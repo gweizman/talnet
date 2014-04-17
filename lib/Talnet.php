@@ -65,9 +65,9 @@ class Talnet {
         if ($daf == 'a') {
             $output .= '.'; // This is really the wrong symbol.
         } elseif ($daf == 'b') {
-            $output .= '"';
+            $output .= Talnet::unichr(hexdec("5C3"));
         } elseif (mb_strlen($output) > 1) {
-            $output = mb_substr($output, 0, -1) . Talnet::unichr(hexdec("5F4")) . mb_substr($output, -1, mb_strlen($output) + 1);
+            $output = mb_substr($output, 0, -1) . '"' . mb_substr($output, -1, mb_strlen($output) + 1);
         } elseif (mb_strlen($output) == 1) {
             $output .= "'";
         }
@@ -109,7 +109,7 @@ class Talnet {
 
     // returns a one character string containing the unicode character specified by unicode
     // from http://www.php.net/manual/en/function.chr.php#88611
-    private static function unichr($unicode)
+    static function unichr($unicode)
     {
         return mb_convert_encoding('&#' . $unicode . ';', 'UTF-8', 'HTML-ENTITIES');
     }
