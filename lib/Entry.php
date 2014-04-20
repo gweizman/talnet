@@ -41,7 +41,8 @@ class Entry
             throw new Exception("This method only accepts strings");
         }
         $this->_keys->$name = $value;
-        if (!isset($this->{static::$_id_field})) {
+        $idf = static::$_id_field;
+        if (!isset($this->$idf)) {
             throw new Exception("The id column does not exist");
         }
         $id = $this->{static::$_id_field};
