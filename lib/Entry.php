@@ -41,8 +41,7 @@ class Entry
             throw new Exception("This method only accepts strings");
         }
         $this->_keys->$name = $value;
-        $idf = static::$_id_field;
-        if (!isset($this->$idf)) {
+        if (!isset($this->{static::$_id_field})) {
             throw new Exception("The id column does not exist");
         }
         $id = $this->{static::$_id_field};
@@ -91,7 +90,7 @@ class Entry
         $answers = Communicate::send(Talnet::getApp(), $request);
         $retVal = array();
         foreach ($answers as $answer) {
-            array_push($retVal, new Entry($answer));
+            array_push($retVal, new static($answer));
         }
         return $retVal;
     }
