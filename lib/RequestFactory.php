@@ -83,7 +83,6 @@ class RequestFactory {
                 break;
             case "INSERT":
             case "UPDATE":
-            case "DELETE":
                 $request = array (
                     "RequestInfo" => array(
                         "requestType" => "DTD",
@@ -93,6 +92,19 @@ class RequestFactory {
                         "into" => $table,
                         "data" => (object) $data,
                         "WHERE" => ($condition != NULL ? $condition->JSON() : (object) NULL)
+                    )
+                );
+                break;
+            case "DELETE":
+                $request = array(
+                    "RequestInfo" => array(
+                        "requestType" => "DTD",
+                        "requestAction" => $action
+                    ),
+                    "RequestData" => array(
+                        "from" => $table,
+                        "data" => (object)$data,
+                        "WHERE" => ($condition != NULL ? $condition->JSON() : (object)NULL)
                     )
                 );
                 break;
