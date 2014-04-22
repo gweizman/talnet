@@ -63,7 +63,10 @@ class Communicate {
         $message = json_encode($request);
         $_SESSION['last_request_json'] = $message;
         socket_write($socket, $message, strlen($message));
-        $output = socket_read($socket, 2048);
+        $output = '';
+        while (($buffer = socket_read($socket, 2048, PHP_BINARY_READ)) != '') {
+            $output = $output . $buffer;
+        }
         socket_close($socket);
         $decode = json_decode($output);
         $_SESSION['last_response'] = $decode;
