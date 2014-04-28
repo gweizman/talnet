@@ -69,6 +69,16 @@ class User extends Entry
     }
 
 
+    public function getPermissionGroups()
+    {
+        $request = RequestFactory::createUserAction("GET_PERMISSION_GROUPS");
+        $answer = Communicate::send(Talnet::getApp(), $request);
+        $permissions = array();
+        foreach ($answer as $permission) {
+            array_push($permissions, new Permission($permission, false));
+        }
+    }
+
     /**
      * @param string $subject
      * @param string $message Lines should be separated with \n\r

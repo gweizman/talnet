@@ -21,7 +21,7 @@ class Permission extends Entry
             );
             $request = RequestFactory::createAppAction("ADD_PERMISSION_GROUP", $data);
             Communicate::send(Talnet::getApp(), $request);
-            $this->_keys->PERMISSION_GROUP_ADMIN = Communicate::getCurrentUser()->USER_ID;
+            $this->_keys->GROUPADMIN_USERNAME = Communicate::getCurrentUser()->USERNAME;
         }
     }
 
@@ -34,9 +34,9 @@ class Permission extends Entry
         return Communicate::send(Talnet::getApp(), $request);
     }
 
-    public function getAdmin($user)
+    public function getAdmin()
     {
-        $user = User::get(new BaseCondition("USER_ID", "=", strval($this->PERMISSION_GROUP_ADMIN)));
+        $user = User::get(new BaseCondition("USERNAME", "=", strval($this->GRPOUPADMIN_USERNAME)));
         return $user[0];
     }
 
