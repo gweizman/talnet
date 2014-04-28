@@ -77,7 +77,14 @@ class Table extends Entry {
 
     public function addPermissionGroup($permissiongroup, $type)
     {
-        $request = RequestFactory::
+        $data = array(
+            "appName" => $this->_app->APP_NAME,
+            "permissionGroupName" => $permissiongroup->PERMISSION_NAME,
+            "to" => $this->TABLENAME,
+            "type" => $type
+        );
+        $request = RequestFactory::createAppAction("ADD_PERMISSIONGROUP_FOR_TABLE", $data);
+        return Communicate::send(Talnet::getApp(), $request);
     }
 
     public function removePermissionGroup($name)
