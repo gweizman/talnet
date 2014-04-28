@@ -4,9 +4,11 @@ namespace talnet;
 
 use Exception;
 
-class Communicate {
+class Communicate
+{
 
-    public static function login($user, $pass) {
+    public static function login($user, $pass)
+    {
         $request = RequestFactory::createUserAction("SIGN_IN");
         $comm = Communicate::send(Talnet::getApp(), $request, $user, md5($pass));
         $_SESSION['username'] = $user;
@@ -15,11 +17,13 @@ class Communicate {
         return Communicate::getCurrentUser();
     }
 
-    public static function logout() {
+    public static function logout()
+    {
         Communicate::login("Anonymous", "");
     }
 
-    public static function send($app, $request, $username = NULL, $password = NULL) {
+    public static function send($app, $request, $username = NULL, $password = NULL)
+    {
         // Sends the request to the server through the TCP connection
         // Must be called after U443::connect()
         error_reporting(E_ALL);
@@ -27,8 +31,7 @@ class Communicate {
             if (isset($_SESSION['username'])) {
                 $user = $_SESSION['username'];
                 $pass = $_SESSION['pass'];
-            }
-            else {
+            } else {
                 $user = "Anonymous";
                 $pass = Communicate::encrypt("");
             }
@@ -65,37 +68,39 @@ class Communicate {
         }
         socket_close($socket);
         $output = stripslashes($output);
-        print "<pre>" . $output . "</pre>";
         $_SESSION['raw_output'] = $output;
         $decode = json_decode($output);
         $_SESSION['last_response'] = $decode;
         $_SESSION['json_error'] = json_last_error();
-        if ($decode->Status != 1)
-        {
+        if ($decode->Status != 1) {
             throw new Exception($decode->Message);
         }
         return $decode->Data;
     }
 
-    private static function challenge($field, $challenge) {
+    private static function challenge($field, $challenge)
+    {
         return Communicate::encrypt($field . trim($challenge));
     }
 
-    private static function encrypt($text) {
+    private static function encrypt($text)
+    {
         return md5($text);
     }
 
-    public static function refresh() {
+    public static function refresh()
+    {
         $request = RequestFactory::createUserAction("SIGN_IN");
         $comm = Communicate::send(Talnet::getApp(), $request);
         $_SESSION['user'] = new User($comm[0]);
         return Communicate::getCurrentUser();
     }
 
-    public static function getCurrentUser() {
+    public static function getCurrentUser()
+    {
         if (!isset($_SESSION['user'])) {
             Communicate::logout();
         }
-		return $_SESSION['user'];
+        return $_SESSION['user'];
     }
 } 
