@@ -71,7 +71,7 @@ class User extends Entry
 
     public function getPermissionGroups()
     {
-        $request = RequestFactory::createUserAction("GET_PERMISSION_GROUPS");
+        $request = RequestFactory::createUserAction("GET_GROUPS");
         $answer = Communicate::send(Talnet::getApp(), $request);
         $permissions = array();
         foreach ($answer as $permission) {
