@@ -65,6 +65,7 @@ class Communicate {
         }
         socket_close($socket);
         $output = stripslashes($output);
+        print "<pre>" . $output . "</pre>";
         $_SESSION['raw_output'] = $output;
         $decode = json_decode($output);
         $_SESSION['last_response'] = $decode;
