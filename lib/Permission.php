@@ -28,7 +28,7 @@ class Permission extends Entry
     public function remove()
     {
         $data = array(
-            "permissionGroupName" => $this->NAME
+            "permissionGroupName" => $this->PERMISSION_NAME
         );
         $request = RequestFactory::createAppAction("REMOVE_PERMISSION_GROUP", $data);
         return Communicate::send(Talnet::getApp(), $request);
@@ -43,7 +43,7 @@ class Permission extends Entry
     public function setAdmin($user)
     {
         $data = array(
-            "permissionGroupName" => $this->NAME,
+            "permissionGroupName" => $this->PERMISSION_NAME,
             "username" => $user->USERNAME
         );
         $request = RequestFactory::createAppAction("SET_PERMISSION_GROUP_ADMIN", $data);
@@ -53,7 +53,7 @@ class Permission extends Entry
     public function getUsers()
     {
         $data = array(
-            "groupName" => $this->NAME
+            "groupName" => $this->PERMISSION_NAME
         );
         $request = RequestFactory::createUserAction("GET_USERS_WITH_GROUPS", $data, NULL);
         $answers = Communicate::send(Talnet::getApp(), $request);
