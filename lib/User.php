@@ -77,6 +77,7 @@ class User extends Entry
         foreach ($answer as $permission) {
             array_push($permissions, new Permission($permission, false));
         }
+        return $permission;
     }
 
     /**
