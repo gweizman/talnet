@@ -64,7 +64,8 @@ class Communicate {
             $output = $output . $buffer;
         }
         socket_close($socket);
-        $_SESSION['row_output'] = $output;
+        $output = utf8_encode($output);
+        $_SESSION['raw_output'] = $output;
         $decode = json_decode($output);
         $_SESSION['last_response'] = $decode;
         $_SESSION['json_error'] = json_last_error_msg();
