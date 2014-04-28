@@ -36,7 +36,7 @@ class Permission extends Entry
 
     public function getAdmin()
     {
-        $user = User::get(new BaseCondition("USERNAME", "=", strval($this->GRPOUPADMIN_USERNAME)));
+        $user = User::get(new BaseCondition("USERNAME", "=", strval($this->GROUPADMIN_USERNAME)));
         return $user[0];
     }
 
