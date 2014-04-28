@@ -67,7 +67,7 @@ class Communicate {
         $_SESSION['row_output'] = $output;
         $decode = json_decode($output);
         $_SESSION['last_response'] = $decode;
-        $_SESSION['json_error'] = json_last_error();
+        $_SESSION['json_error'] = json_last_error_msg();
         if ($decode->Status != 1)
         {
             throw new Exception($decode->Message);
