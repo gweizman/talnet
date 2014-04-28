@@ -10,7 +10,7 @@ class App extends Entry
      * @param Array $keys should contain APP_NAME and APP_KEY
      * @param bool $new
      */
-    public function __construct($keys, $new = FALSE)
+    public function __construct($keys, $new = False)
     {
         $this->_keys = (object)$keys;
         if ($new) {
@@ -42,7 +42,7 @@ class App extends Entry
         $retVal = array();
         $answers = Communicate::send(Talnet::getApp(), $request);
         foreach ($answers as $answer) {
-            array_push($retVal, new Table($answer, $this));
+            array_push($retVal, new Table($answer, $this, false));
         }
         return $retVal;
     }
@@ -54,7 +54,7 @@ class App extends Entry
         $answers = Communicate::send(Talnet::getApp(), $request);
         $retValue = array();
         foreach ($answers as $answer) {
-            array_push($retValue, new App($answer));
+            array_push($retValue, new App($answer, false));
         }
         return $retValue;
     }

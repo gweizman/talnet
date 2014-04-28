@@ -16,14 +16,18 @@ class Entry
      * @param $keys Array of table information, built as key => value
      * @param bool $new True iff a new entry is to be created
      */
-    public function __construct($keys, $new = False)
+    public function __construct($keys, $new = True)
     {
-        $this->_keys = $keys;
+        $this->_keys = (object) $keys;
         if ($new) {
             $request = RequestFactory::createDtdAction(static::$_table, "INSERT", $keys);
-            return Communicate::send(Talnet::getApp(), $request);
+            $answer = Communicate::send(Talnet::getApp(), $request);
+            $answer = $answer[0];
+            $id = $answer->GENERATED_KEY;
+            if ($id > 0) {
+            	$this->_keys->{static::$_id_field} = $id;
+            }
         }
-        return $this;
     }
 
     /**
@@ -41,11 +45,11 @@ class Entry
             throw new Exception("This method only accepts strings");
         }
         $this->_keys->$name = $value;
-        if (!isset($this->{static::$_id_field})) {
+        if (!isset($this->_keys->{static::$_id_field})) {
             throw new Exception("The id column does not exist");
         }
         $id = $this->{static::$_id_field};
-        $condition = new BaseCondition(static::$_id_field, "=", $id);
+        $condition = new BaseCondition(static::$_id_field, "=", strval($id));
         $data = array($name => $value);
         $request = RequestFactory::createDtdAction(static::$_table, "UPDATE", $data, $condition);
         return Communicate::send(Talnet::getApp(), $request);
@@ -70,11 +74,11 @@ class Entry
      */
     public function remove()
     {
-        if (!isset($this->_keys["id"])) {
+        if (!isset($this->_keys->{static::$_id_field})) {
             throw new Exception("The id column does not exist");
         }
-        $id = $this->_keys[static::$_id_field];
-        $condition = new Condition(new BaseCondition(static::$_id_field, "=", $id));
+        $id = $this->_keys->{static::$_id_field};
+        $condition = new Condition(new BaseCondition(static::$_id_field, "=", strval($id)));
         $request = RequestFactory::createDtdAction(static::$_table, "DELETE", NULL, $condition);
         return Communicate::send(Talnet::getApp(), $request);
     }
@@ -90,7 +94,7 @@ class Entry
         $answers = Communicate::send(Talnet::getApp(), $request);
         $retVal = array();
         foreach ($answers as $answer) {
-            array_push($retVal, new static($answer));
+            array_push($retVal, new static($answer, FALSE));
         }
         return $retVal;
     }

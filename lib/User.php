@@ -68,6 +68,7 @@ class User extends Entry
         Communicate::send(Talnet::getApp(), $request);
     }
 
+
     /**
      * @param string $subject
      * @param string $message Lines should be separated with \n\r
@@ -89,7 +90,7 @@ class User extends Entry
         $answer = Communicate::send(Talnet::getApp(), $request);
         $retVal = array();
         foreach ($answer as $user) {
-            array_push($retVal, new User($user));
+            array_push($retVal, new User($user, false));
         }
         return $retVal;
     }

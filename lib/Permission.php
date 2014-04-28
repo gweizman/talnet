@@ -11,7 +11,7 @@ class Permission extends Entry
      * @param Array $keys NAME and DESCRIPTION
      * @param bool $new
      */
-    public function __construct($keys, $new = FALSE)
+    public function __construct($keys, $new = True)
     {
         $this->_keys = (object)$keys;
         if ($new) {
@@ -36,7 +36,7 @@ class Permission extends Entry
 
     public function getAdmin($user)
     {
-        $user = User::get(new BaseCondition("USER_ID", "=", $this->PERMISSION_GROUP_ADMIN));
+        $user = User::get(new BaseCondition("USER_ID", "=", strval($this->PERMISSION_GROUP_ADMIN)));
         return $user[0];
     }
 
@@ -59,7 +59,7 @@ class Permission extends Entry
         $answers = Communicate::send(Talnet::getApp(), $request);
         $retVal = array();
         foreach ($answers as $answer) {
-            array_push($retVal, new User($answer));
+            array_push($retVal, new User($answer, False));
         }
         return $retVal;
     }

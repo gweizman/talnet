@@ -68,7 +68,7 @@ class Table extends Entry {
                     $type = $line->Type;
                     $size = 0;
                 }
-                array_push($cols, new Column($name, $type, $size, $primary, $ai));
+                array_push($cols, new Column($name, $type, $size, $primary, $ai, false));
             }
             $this->_cols = $cols;
         }
@@ -78,6 +78,11 @@ class Table extends Entry {
     public function addPermissionGroup($name)
     {
 
+    }
+
+    public function removePermissionGroup($name)
+    {
+    
     }
 
     public function remove()

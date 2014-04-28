@@ -11,16 +11,12 @@ class Communicate {
         $comm = Communicate::send(Talnet::getApp(), $request, $user, md5($pass));
         $_SESSION['username'] = $user;
         $_SESSION['pass'] = Communicate::encrypt($pass);
-        $_SESSION['user'] = new User($comm[0]);
+        $_SESSION['user'] = new User($comm[0], false);
         return Communicate::getCurrentUser();
     }
 
     public static function logout() {
-        $_SESSION['username'] = "Anonymous";
-        $_SESSION['pass'] = Communicate::encrypt("");
-        $request = RequestFactory::createUserAction("SIGN_IN");
-        $comm = Communicate::send(Talnet::getApp(), $request);
-        $_SESSION['user'] = new User($comm[0]);
+        Communicate::login("Anonymous", "");
     }
 
     public static function send($app, $request, $username = NULL, $password = NULL) {
