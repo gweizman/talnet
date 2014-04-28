@@ -46,7 +46,7 @@ class Permission extends Entry
             "permissionGroupName" => $this->PERMISSION_NAME,
             "username" => $user->USERNAME
         );
-        $request = RequestFactory::createAppAction("SET_PERMISSION_GROUP_ADMIN", $data);
+        $request = RequestFactory::createAppAction("SET_PERMISSIONGROUP_ADMIN", $data);
         return Communicate::send(Talnet::getApp(), $request);
     }
 
