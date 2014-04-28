@@ -40,11 +40,11 @@ class Permission extends Entry
         return $user[0];
     }
 
-    public function setAdmin($user)
+    public static function setAdmin($name, $user)
     {
         $data = array(
-            "permissionGroupName" => $this->PERMISSION_NAME,
-            "username" => $user->USERNAME
+            "permissionGroupName" => $name,
+            "username" => $user
         );
         $request = RequestFactory::createAppAction("SET_PERMISSION_GROUP_ADMIN", $data);
         return Communicate::send(Talnet::getApp(), $request);

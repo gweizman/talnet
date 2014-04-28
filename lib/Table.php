@@ -75,9 +75,9 @@ class Table extends Entry {
         return $this->_cols;
     }
 
-    public function addPermissionGroup($name)
+    public function addPermissionGroup($permissiongroup, $type)
     {
-
+        $request = RequestFactory::
     }
 
     public function removePermissionGroup($name)
