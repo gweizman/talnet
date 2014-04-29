@@ -64,6 +64,17 @@ class Permission extends Entry
         return $retVal;
     }
 
+    public static function getAll()
+    {
+        $request = RequestFactory::createAppAction("GET_ALL_PERMISSIONS", (object)NULL);
+        $answers = Communicate::send(Talnet::getApp(), $request);
+        $retVal = array();
+        foreach ($answers as $answer) {
+            array_push($retVal, new Permission($answer, False));
+        }
+        return $retVal;
+    }
+
     public function __set($name, $value)
     {
         throw new Exception ("This serves no purpose.");
