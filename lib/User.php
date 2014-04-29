@@ -65,9 +65,28 @@ class User extends Entry
             'userToDelete' => $id
         );
         $request = RequestFactory::createUserAction(Talnet::getApp(), "DELETE_USER", $data, NULL);
-        Communicate::send(Talnet::getApp(), $request);
+        return Communicate::send(Talnet::getApp(), $request);
     }
 
+    public function addPermissionGroup($permission)
+    {
+        $data = array(
+            'username' => $this->USERNAME,
+            'permissionGroupName' => $permission->PERMISSION_NAME
+        );
+        $request = RequestFactory::createUserAction("ADD_PERMISSION", $data);
+        return Communicate::send(Talnet::getApp(), $request);
+    }
+
+    public function removePermissionGroup($permission)
+    {
+        $data = array(
+            'username' => $this->USERNAME,
+            'permissionGroupName' => $permission->PERMISSION_NAME
+        );
+        $request = RequestFactory::createUserAction("REMOVE_PERMISSION", $data);
+        return Communicate::send(Talnet::getApp(), $request);
+    }
 
     public function getPermissionGroups()
     {

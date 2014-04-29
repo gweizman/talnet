@@ -87,9 +87,26 @@ class Table extends Entry {
         return Communicate::send(Talnet::getApp(), $request);
     }
 
-    public function removePermissionGroup($name)
+    public function removePermissionGroup($permissiongroup, $type)
     {
-    
+        $data = array(
+            "appName" => $this->_app->APP_NAME,
+            "permissionGroupName" => $permissiongroup->PERMISSION_NAME,
+            "from" => $this->TABLENAME,
+            "type" => $type
+        );
+        $request = RequestFactory::createAppAction("REMOVE_PERMISSIONGROUP_FOR_TABLE", $data);
+        return Communicate::send(Talnet::getApp(), $request);
+    }
+
+    public function getPermissions()
+    {
+        $data = array(
+            "tableName" => $this->TABLENAME,
+            "appName" => $this->_app->APP_NAME
+        );
+        $request = RequestFactory::createAppAction("GET_TABLE_PERMISSIONS", $data);
+        return Communicate::send(Talnet::getApp(), $request);
     }
 
     public function remove()

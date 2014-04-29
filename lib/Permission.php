@@ -30,7 +30,7 @@ class Permission extends Entry
         $data = array(
             "permissionGroupName" => $this->PERMISSION_NAME
         );
-        $request = RequestFactory::createAppAction("REMOVE_PERMISSION_GROUP", $data);
+        $request = RequestFactory::createAppAction("REMOVE_PERMISSIONGROUP", $data);
         return Communicate::send(Talnet::getApp(), $request);
     }
 
