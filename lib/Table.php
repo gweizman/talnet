@@ -126,7 +126,7 @@ class Table extends Entry {
         $tables = $app->getTables();
         foreach ($tables as $table) {
             if ($table->TABLENAME == $tablename) {
-                return new Table($table, $app, NULL, false);
+                return $table;
             }
         }
         throw new Exception("No table by that name");

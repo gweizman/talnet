@@ -64,7 +64,7 @@ class App extends Entry
         $apps = App::getAll();
         foreach ($apps as $app) {
             if ($app->APP_NAME == $name) {
-                return new App($app, false);
+                return $app;
             }
         }
         throw new Exception("No app with that name");
