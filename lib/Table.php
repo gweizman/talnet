@@ -9,7 +9,7 @@ class Table extends Entry {
 
     /**
      * @param Array $keys
-     * @param bool $app
+     * @param App $app
      * @param Array $cols
      * @param bool $new
      * @throws Exception
@@ -106,7 +106,12 @@ class Table extends Entry {
             "appName" => $this->_app->APP_NAME
         );
         $request = RequestFactory::createAppAction("GET_TABLE_PERMISSIONS", $data);
-        return Communicate::send(Talnet::getApp(), $request);
+        $answer = Communicate::send(Talnet::getApp(), $request);
+        $permissions = array();
+        foreach ($answer as $permission) {
+            array_push($permissions, new Permission($permission, false));
+        }
+        return $permissions;
     }
 
     public function remove()
