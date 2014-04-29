@@ -114,6 +114,25 @@ class Table extends Entry {
         return $permissions;
     }
 
+
+    /**
+     * @param App $app
+     * @param string $tablename
+     * @return Table
+     * @throws Exception
+     */
+    public static function getTableByName($app, $tablename)
+    {
+        $tables = $app->getTables();
+        foreach ($tables as $table) {
+            if ($table->TABLENAME == $tablename) {
+                return new Table($table, $app, NULL, false);
+            }
+        }
+        throw new Exception("No table by that name");
+    }
+
+
     public function remove()
     {
         $data = array(

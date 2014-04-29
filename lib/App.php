@@ -59,6 +59,17 @@ class App extends Entry
         return $retValue;
     }
 
+    public static function getAppByName($name)
+    {
+        $apps = App::getAll();
+        foreach ($apps as $app) {
+            if ($app->APP_NAME == $name) {
+                return new App($app, false);
+            }
+        }
+        throw new Exception("No app with that name");
+    }
+
     public function __set($name, $value)
     {
         throw new Exception ("This serves no purpose.");
