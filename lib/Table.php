@@ -83,7 +83,7 @@ class Table extends Entry {
             "to" => $this->TABLENAME,
             "type" => $type
         );
-        $request = RequestFactory::createAppAction("ADD_PERMISSIONGROUP_FOR_TABLE", $data);
+        $request = RequestFactory::createAppAction("ADD_PERMISSION_GROUP_FOR_TABLE", $data);
         return Communicate::send(Talnet::getApp(), $request);
     }
 
@@ -95,7 +95,7 @@ class Table extends Entry {
             "from" => $this->TABLENAME,
             "type" => $type
         );
-        $request = RequestFactory::createAppAction("REMOVE_PERMISSIONGROUP_FOR_TABLE", $data);
+        $request = RequestFactory::createAppAction("REMOVE_PERMISSION_GROUP_FOR_TABLE", $data);
         return Communicate::send(Talnet::getApp(), $request);
     }
 
