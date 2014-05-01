@@ -19,7 +19,7 @@ class Permission extends Entry
                 "permissionGroupName" => $this->_keys->PERMISSION_NAME,
                 "description" => $this->_keys->PERMISSIONGROUP_DESCRIPTION
             );
-            $request = RequestFactory::createAppAction("ADD_PERMISSION_GROUP", $data);
+            $request = RequestFactory::createAppAction("ADD_PERMISSION", $data);
             Communicate::send(Talnet::getApp(), $request);
             $this->_keys->GROUPADMIN_USERNAME = Communicate::getCurrentUser()->USERNAME;
         }
