@@ -16,7 +16,7 @@ class App extends Entry
         if ($new) {
             $data = array(
                 "appName" => $this->_keys->APP_NAME,
-                "description" => $this->_keys->APP_KEY
+                "appKey" => $this->_keys->APP_KEY
             );
             $request = RequestFactory::createAppAction("CREATE_APP", $data);
             Communicate::send(Talnet::getApp(), $request);
