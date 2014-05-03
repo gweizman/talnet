@@ -6,6 +6,7 @@ if (!defined("TALNET_ENABLED"))
 {
     require_once("RequestFactory.php");
     require_once ("Talnet.php");
+    require_once("Sort.php");
     require_once ("Communicate.php");
     require_once ("Entry.php");
     require_once ("BaseCondition.php");
