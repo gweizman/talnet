@@ -75,6 +75,17 @@ class Permission extends Entry
         return $retVal;
     }
 
+    public static function getPermissionByName($name)
+    {
+        $permissions = Permission::getAll();
+        foreach ($permissions as $permission) {
+            if ($permission->PERMISSION_NAME == $name) {
+                return $permission;
+            }
+        }
+        throw new Exception("Permission not found");
+    }
+
     public function __set($name, $value)
     {
         throw new Exception ("This serves no purpose.");
