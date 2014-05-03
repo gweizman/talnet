@@ -88,9 +88,9 @@ class Entry
      * @param $condition - given condition
      * @return array- array of entries matching the condition
      */
-    public static function get($condition)
+    public static function get($condition = NULL, $order = NULL)
     {
-        $request = RequestFactory::createDtdAction(static::$_table, "SELECT", NULL, $condition);
+        $request = RequestFactory::createDtdAction(static::$_table, "SELECT", NULL, $condition, $order);
         $answers = Communicate::send(Talnet::getApp(), $request);
         $retVal = array();
         foreach ($answers as $answer) {

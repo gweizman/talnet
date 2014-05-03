@@ -66,7 +66,8 @@ class RequestFactory {
         return $request;
     }
 
-    public static function createDtdAction($table, $action, $data = NULL, $condition = NULL) {
+    public static function createDtdAction($table, $action, $data = NULL, $condition = NULL, $order = NULL)
+    {
         switch($action)
         {
             case "SELECT":
@@ -111,6 +112,9 @@ class RequestFactory {
             default:
                 throw new Exception("Unkown action");
                 break;
+        }
+        if ($order != NULL) {
+            $request['RequestData']['order'] = $order;
         }
         return $request;
     }

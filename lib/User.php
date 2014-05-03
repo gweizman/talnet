@@ -109,6 +109,32 @@ class User extends Entry
         return mail($this->EMAIL, $subject, $message, 'From: ' . Talnet::getApp()->APP_NAME . '@talpiot');
     }
 
+    public function isInPermissionGroup($name)
+    {
+        $groups = $this->getPermissionGroups();
+        foreach ($groups as $group) {
+            if ($group->PERMISSION_NAME == $name) {
+                return True;
+            }
+        }
+        return False;
+    }
+
+    public function isAppAdmin($name = NULL)
+    {
+        if ($name = NULL) {
+            $name = Talnet::getApp()->APP_NAME;
+        }
+        return $this->isInPermissionGroup($name . "_admin");
+    }
+
+
+    public static function getUserByName($name)
+    {
+        $result = User::get(new BaseCondition('USERNAME', '=', $name));
+        return $result[0];
+    }
+
     /**
      * Returns a list of all the entries matching a given condition
      * @param $condition - given condition
