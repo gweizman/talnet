@@ -114,7 +114,7 @@ class RequestFactory {
                 break;
         }
         if ($order != NULL) {
-            $request['RequestData']['order'] = $order;
+            $request['RequestData']['order'] = $order->JSON();
         }
         return $request;
     }
