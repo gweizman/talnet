@@ -27,7 +27,9 @@ class User extends Entry
                 "displayName" => $this->_keys->DISPLAY_NAME,
                 "email" => $this->_keys->EMAIL,
                 "year" => $this->_keys->YEAR,
-                "room" => $this->_keys->ROOM_NUM
+                "room" => $this->_keys->ROOM_NUM,
+                "phoneSuf" => $this->_keys->PHONE_SUF,
+                "phonePre" => $this->_keys->PHONE_PRE
             );
             $request = RequestFactory::createUserAction("SIGN_UP", $data, NULL);
             Communicate::send(Talnet::getApp(), $request);
