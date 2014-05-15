@@ -57,6 +57,16 @@ class User extends Entry
         Communicate::refresh();
     }
 
+    public function setPass($newPass)
+    {
+        $data = array(
+            'username' => $this->USERNAME,
+            'newPassword' => $newPass
+        );
+        $request = RequestFactory::createUserAction("UPDATE_USER_PASSWORD", $data);
+        return Communicate::send(Talnet::getApp(), $request);
+    }
+
     /**
      * Delete row from the table
      */
