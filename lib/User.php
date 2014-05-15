@@ -76,7 +76,7 @@ class User extends Entry
         $data = array(
             'userToDelete' => $id
         );
-        $request = RequestFactory::createUserAction(Talnet::getApp(), "DELETE_USER", $data, NULL);
+        $request = RequestFactory::createUserAction("DELETE_USER", $data);
         return Communicate::send(Talnet::getApp(), $request);
     }
 
