@@ -63,7 +63,7 @@ class User extends Entry
             'username' => $this->USERNAME,
             'newPassword' => $newPass
         );
-        $request = RequestFactory::createUserAction("UPDATE_USER_PASSWORD", $data);
+        $request = RequestFactory::createUserAction("UPDATE_PASSWORD", $data);
         return Communicate::send(Talnet::getApp(), $request);
     }
 
