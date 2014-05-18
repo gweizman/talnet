@@ -59,6 +59,18 @@ class App extends Entry
         return $retValue;
     }
 
+    public static function getAllUser()
+    {
+        $data = (object)null;
+        $request = RequestFactory::createAppAction("GET_USER_APPS", $data);
+        $answers = Communicate::send(Talnet::getApp(), $request);
+        $retValue = array();
+        foreach ($answers as $answer) {
+            array_push($retValue, new App($answer, false));
+        }
+        return $retValue;
+    }
+
     public static function getAppByName($name)
     {
         $apps = App::getAll();
