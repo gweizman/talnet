@@ -16,6 +16,21 @@ class Talnet {
     public static function getApp() {
         return Talnet::$_app;
     }
+	
+	/**
+	 * Returns the year number for the current first year in the program.
+	 * Assumes years start on September 1st.
+	 */
+	public static function getFirstYear() {
+		return date_diff(date_create('1978-09-01'), date_create('today'))->y;
+	}
+	
+	/**
+	 * Returns the phone number prefixes supported by Talnet in an array.
+	 */
+	public static function getPhonePrefixes() {
+		return array( '050', '051', '052', '053', '054', '057' );
+	}
 
     static function convertNumberToHebrew($num)
     {
