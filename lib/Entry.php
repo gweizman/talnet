@@ -28,6 +28,8 @@ class Entry
             	$this->_keys->{static::$_id_field} = $id;
             }
         }
+		
+		return $this;
     }
 
     /**
