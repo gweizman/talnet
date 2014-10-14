@@ -136,7 +136,7 @@ class User extends Entry
 
     public function isAppAdmin($name = NULL)
     {
-        if ($name = NULL) {
+        if ($name == NULL) {
             $name = Talnet::getApp()->APP_NAME;
         }
         return $this->isInPermissionGroup($name . "_admin");
@@ -146,6 +146,30 @@ class User extends Entry
     public static function getUserByName($name)
     {
         $result = User::get(new BaseCondition('USERNAME', '=', $name));
+		
+		if (empty($result)) {
+			throw new Exception("לא קיים משתמש עם שם זה.");
+			
+		}
+		
+        return $result[0];
+    }
+	
+	/**
+	 * Returns the user with the given ID
+	 * @param $ID - the user ID
+	 * @throws Exception if no such user found
+	 * @return The user matching the ID
+	 */
+    public static function getUserByID($ID)
+    {
+        $result = User::get(new BaseCondition('USER_ID', '=', $ID));
+		
+		if (empty($result)) {
+			throw new Exception("לא קיים משתמש עם ID זה.");
+			
+		}
+		
         return $result[0];
     }
 
