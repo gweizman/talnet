@@ -41,6 +41,9 @@ class Communicate
         }
         $address = "localhost";
         $port = 4850;
+		if (isset($_SESSION['dev']) and $_SESSION['dev'] == true) {
+			$port = 4855;
+		}
 
         /* Create a TCP/IP socket. */
         $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP) or die("socket_create() failed: reason: " . socket_strerror(socket_last_error()));

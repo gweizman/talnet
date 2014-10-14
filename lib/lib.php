@@ -17,7 +17,7 @@ if (!defined("TALNET_ENABLED"))
     require_once("Column.php");
     require_once("Permission.php");
 
-
+    session_name("talnet");
     session_start();
     define("TALNET_ENABLED", TRUE);
 }
