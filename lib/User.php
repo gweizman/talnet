@@ -24,8 +24,8 @@ class User extends Entry
                 "username" => $this->_keys->USERNAME,
                 "password" => $this->_keys->PASSWORD,
                 "name" => $this->_keys->NAME,
-		"firstName" => $this->_keys->FIRST_NAME,
-		"lastName" => $this->_keys->LAST_NAME,
+				"firstName" => $this->_keys->FIRST_NAME,
+				"lastName" => $this->_keys->LAST_NAME,
                 "displayName" => $this->_keys->DISPLAY_NAME,
                 "email" => $this->_keys->EMAIL,
                 "year" => $this->_keys->YEAR,
@@ -39,6 +39,24 @@ class User extends Entry
         unset($this->_keys->PASSWORD);
         return $this;
     }
+
+	/**
+	 * Get value in given column
+	 * @param $name - the column whose value we want to retrieve
+	 * @return the value in the column
+	 */
+	public function __get($name) {
+		switch ($name) {
+			// Calculate the user's year in the program, bigger than 3 values mean they have already finished
+			case 'YEAR_IN_PROGRAM':
+				return this->_keys->YEAR - Talnet\getFirstYear() + 1;
+				break;
+				
+			default:
+				return parent::__get($name);
+				break;
+		}
+	}
 
     /**
      * Sets value in the given column
