@@ -23,7 +23,6 @@ class User extends Entry
             $data = array(
                 "username" => $this->_keys->USERNAME,
                 "password" => $this->_keys->PASSWORD,
-                "name" => $this->_keys->NAME,
 				"firstName" => $this->_keys->FIRST_NAME,
 				"lastName" => $this->_keys->LAST_NAME,
                 "displayName" => $this->_keys->DISPLAY_NAME,
