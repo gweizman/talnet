@@ -15,7 +15,7 @@ class Order
     public function JSON()
     {
         return array(
-            "by" => $this->_sortBy,
+            "orderBy" => $this->_sortBy,
             "dir" => $this->_dir
         );
     }
