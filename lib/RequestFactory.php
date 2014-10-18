@@ -114,7 +114,7 @@ class RequestFactory {
                 break;
         }
         if ($order != NULL) {
-            $request['RequestData']['order'] = $order->JSON();
+            $request['RequestData'] = array_merge($request['RequestData'], $order->JSON());
         }
         return $request;
     }
