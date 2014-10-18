@@ -22,8 +22,12 @@ class Entry
         if ($new) {
             $request = RequestFactory::createDtdAction(static::$_table, "INSERT", $keys);
             $answer = Communicate::send(Talnet::getApp(), $request);
-            $answer = $answer[0];
-            $id = $answer->GENERATED_KEY;
+			if (!empty($answer)) {
+	            $answer = $answer[0];
+	            $id = $answer->GENERATED_KEY;
+			} else {
+				$id = 0;
+			}
             if ($id > 0) {
             	$this->_keys->{static::$_id_field} = $id;
             }
