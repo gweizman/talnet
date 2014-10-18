@@ -49,7 +49,7 @@ class User extends Entry
 		switch ($name) {
 			// Calculate the user's year in the program, bigger than 3 values mean they have already finished
 			case 'YEAR_IN_PROGRAM':
-				return $this->_keys->YEAR - Talnet\getFirstYear() + 1;
+				return $this->_keys->YEAR - \talnet\Talnet\getFirstYear() + 1;
 				break;
 				
 			default:
