@@ -205,4 +205,14 @@ class User extends Entry
         }
         return $retVal;
     }
+    
+    /**
+     * Returns the result length of a user select reuest
+     * @param $condition - given condition
+     * @return array- array of entries matching the condition
+     */
+    public static function countResult($condition)
+    {
+        return count(User::get(new BaseCondition('USER_ID', '=', $ID)));
+    }
 } 
