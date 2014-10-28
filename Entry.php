@@ -114,10 +114,6 @@ class Entry
     {
         $request = RequestFactory::createDtdAction(static::$_table, "COUNT", NULL, $condition, NULL);
         $answers = Communicate::send(Talnet::getApp(), $request);
-        $retVal = array();
-        foreach ($answers as $answer) {
-            array_push($retVal, new static($answer, FALSE));
-        }
-        return $retVal;
+        return $answer[0]['resultLength'];
     }
 }
