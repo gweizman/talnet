@@ -82,6 +82,18 @@ class RequestFactory {
                     )
                 );
                 break;
+            case "COUNT":
+                $request = array (
+                    "RequestInfo" => array(
+                        "requestType" => "DTD",
+                        "requestAction" => "COUNT"
+                    ),
+                    "RequestData" => array(
+                        "from" => $table,
+                        "WHERE" => ($condition != NULL ? $condition->JSON() : (object) NULL)
+                    )
+                );
+                break;
             case "INSERT":
             case "UPDATE":
                 $request = array (
