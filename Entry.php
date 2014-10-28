@@ -104,4 +104,20 @@ class Entry
         }
         return $retVal;
     }
+    
+    /**
+     * Returns the result set of a select query selecting with a given condition
+     * @param $condition - given condition
+     * @return int- the result size
+     */
+    public static function get($condition = NULL)
+    {
+        $request = RequestFactory::createDtdAction(static::$_table, "COUNT", NULL, $condition, NULL);
+        $answers = Communicate::send(Talnet::getApp(), $request);
+        $retVal = array();
+        foreach ($answers as $answer) {
+            array_push($retVal, new static($answer, FALSE));
+        }
+        return $retVal;
+    }
 }
