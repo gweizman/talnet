@@ -110,7 +110,7 @@ class Entry
      * @param $condition - given condition
      * @return int- the result size
      */
-    public static function get($condition = NULL)
+    public static function countResult($condition = NULL)
     {
         $request = RequestFactory::createDtdAction(static::$_table, "COUNT", NULL, $condition, NULL);
         $answers = Communicate::send(Talnet::getApp(), $request);
