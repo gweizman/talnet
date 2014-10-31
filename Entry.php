@@ -47,9 +47,6 @@ class Entry
         if (!isset($this->_keys->$name)) {
             throw new Exception("The given name does not exist");
         }
-        if (gettype($value) != "string") {
-            throw new Exception("This method only accepts strings");
-        }
         $this->_keys->$name = $value;
         if (!isset($this->_keys->{static::$_id_field})) {
             throw new Exception("The id column does not exist");
