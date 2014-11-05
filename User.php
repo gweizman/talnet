@@ -75,6 +75,24 @@ class User extends Entry
         Communicate::send(Talnet::getApp(), $request);
         Communicate::refresh();
     }
+    
+    public function activate()
+    {
+    	$data = array();
+        $data['userToActivate'] = $this->USERNAME;
+        $request = RequestFactory::createUserAction("ACTIVATE", $data, NULL);
+        Communicate::send(Talnet::getApp(), $request);
+        Communicate::refresh();
+    }
+    
+    public function deactivate()
+    {
+    	$data = array();
+        $data['userToDeactivate'] = $this->USERNAME;
+        $request = RequestFactory::createUserAction("DEACTIVATE", $data, NULL);
+        Communicate::send(Talnet::getApp(), $request);
+        Communicate::refresh();
+    }
 
     public function setPass($newPass)
     {
