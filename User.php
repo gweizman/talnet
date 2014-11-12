@@ -30,7 +30,7 @@ class User extends Entry
                 "year" => $this->_keys->YEAR,
                 "room" => $this->_keys->ROOM_NUM,
                 "phoneSuf" => $this->_keys->PHONE_SUF,
-                "phonePre" => $this->_keys->PHONE_PRE
+                "phonePre" => $this->_keys->PHONE_PRE,
             );
             $request = RequestFactory::createUserAction("SIGN_UP", $data, NULL);
             Communicate::send(Talnet::getApp(), $request);
@@ -214,6 +214,26 @@ class User extends Entry
      * @return array- array of entries matching the condition
      */
     public static function get($condition)
+    {
+		// Include active users only
+		$condition = new Condition($condition, new BaseCondition('active', '=', 1), 'AND');
+		
+        $request = RequestFactory::createUserAction("SELECT", NULL, $condition);
+        $answer = Communicate::send(Talnet::getApp(), $request);
+        $retVal = array();
+        foreach ($answer as $user) {
+            array_push($retVal, new User($user, false));
+        }
+        return $retVal;
+    }
+	
+    /**
+     * Returns a list of all the entries matching a given condition
+	 * Includes inactive users
+     * @param $condition - given condition
+     * @return array- array of entries matching the condition
+     */
+    public static function getWithInactive($condition)
     {
         $request = RequestFactory::createUserAction("SELECT", NULL, $condition);
         $answer = Communicate::send(Talnet::getApp(), $request);
