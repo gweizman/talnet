@@ -12,18 +12,18 @@ class Talnet {
      * @param $app App object
      */
     public static function setApp($app) {
-        Talnet::$_app = $app;
+        Talnet::pushApp($app);
     }
 
     public static function getApp() {
-        return Talnet::$_app;
+        return Talnet::$_savedApp->current();
     }
 
-    public static function pushApp() {
+    public static function pushApp($app) {
         if (Talnet::$_savedApp == null) {
             Talnet::$_savedApp = new SplStack();
         }
-        Talnet::$_savedApp->push(Talnet::$_app);
+        Talnet::$_savedApp->push($app);
     }
 
     public static function popApp() {
@@ -31,7 +31,7 @@ class Talnet {
             //?!
         }
         else {
-            Talnet::$_app = Talnet::$_savedApp->pop();
+            Talnet::$_savedApp->next();
         }
     }
 	
