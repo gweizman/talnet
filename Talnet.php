@@ -1,8 +1,10 @@
 <?php
 namespace talnet;
 
+use SplStack;
+
 class Talnet {
-    private static $_app, $_savedApp;
+    private static $_app, $_savedApp = null;
 
     /**
      * Sets the current app used by the library. Must be called before any other function.
@@ -17,12 +19,20 @@ class Talnet {
         return Talnet::$_app;
     }
 
-    public static function saveApp() {
-        Talnet::$_savedApp = Talnet::$_app;
+    public static function pushApp() {
+        if (Talnet::$_savedApp == null) {
+            Talnet::$_savedApp = new SplStack();
+        }
+        Talnet::$_savedApp->push(Talnet::$_app);
     }
 
-    public static function loadApp() {
-        Talnet::$_app = Talnet::$_savedApp;
+    public static function popApp() {
+        if (Talnet::$_savedApp == null || !Talnet::$_savedApp->valid()) {
+            //?!
+        }
+        else {
+            Talnet::$_app = Talnet::$_savedApp->pop();
+        }
     }
 	
 	/**
