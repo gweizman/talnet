@@ -13,12 +13,10 @@ class Talnet {
      */
     public static function setApp($app) {
         Talnet::pushApp($app);
-        print_r(Talnet::$_savedApp);
     }
 
     public static function getApp() {
-        print_r(Talnet::$_savedApp);
-        return Talnet::$_savedApp->current();
+        return Talnet::$_savedApp->top();
     }
 
     public static function pushApp($app) {
