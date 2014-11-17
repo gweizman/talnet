@@ -2,7 +2,7 @@
 namespace talnet;
 
 class Talnet {
-    private static $_app;
+    private static $_app, $_savedApp;
 
     /**
      * Sets the current app used by the library. Must be called before any other function.
@@ -15,6 +15,14 @@ class Talnet {
 
     public static function getApp() {
         return Talnet::$_app;
+    }
+
+    public static function saveApp() {
+        Talnet::$_savedApp = Talnet::$_app;
+    }
+
+    public static function loadApp() {
+        Talnet::$_app = Talnet::$_savedApp;
     }
 	
 	/**
