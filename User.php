@@ -180,13 +180,10 @@ class User extends Entry
 
     public static function getUserByName($name)
     {
-        $result = User::get(new BaseCondition('USERNAME', '=', $name));
-		
-		if (empty($result)) {
-			throw new Exception("לא קיים משתמש עם שם זה.");
-			
-		}
-		
+        $result = User::get(new BaseCondition('USERNAME', '=', $name), false);
+	if (empty($result)) {
+		throw new Exception("לא קיים משתמש עם שם זה.");
+	}
         return $result[0];
     }
 	
@@ -198,13 +195,10 @@ class User extends Entry
 	 */
     public static function getUserByID($ID)
     {
-        $result = User::get(new BaseCondition('USER_ID', '=', $ID));
-		
-		if (empty($result)) {
-			throw new Exception("לא קיים משתמש עם ID זה.");
-			
-		}
-		
+        $result = User::get(new BaseCondition('USER_ID', '=', $ID), false);
+	if (empty($result)) {
+		throw new Exception("לא קיים משתמש עם ID זה.");
+	}
         return $result[0];
     }
 
@@ -228,18 +222,7 @@ class User extends Entry
         }
         return $retVal;
     }
-	
-    /**
-     * Returns a list of all the entries matching a given condition
-     * Includes inactive users, assuming ACTIVE is not included in $condition
-     * @param $condition - given condition
-     * @return array- array of entries matching the condition
-     */
-    public static function getWithInactive($condition)
-    {
-        return self::get($condition, false);
-    }
-    
+
     /**
      * Returns the result length of a user select reuest
      * @param $condition - given condition
