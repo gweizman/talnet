@@ -209,10 +209,10 @@ class User extends Entry
      */
     public static function get($condition, $active = true)
     {
-	// Include active users only
-	if($active) {
-		$condition = new Condition($condition, new BaseCondition('ACTIVE', '=', 1), 'AND');
-	}
+		// Include active users only
+		if($active) {
+			$condition = new Condition($condition, new BaseCondition('ACTIVE', '=', 1), 'AND');
+		}
 		
         $request = RequestFactory::createUserAction("SELECT", NULL, $condition);
         $answer = Communicate::send(Talnet::getApp(), $request);
