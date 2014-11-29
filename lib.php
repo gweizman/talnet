@@ -5,6 +5,7 @@ namespace talent;
 if (!defined("TALNET_ENABLED"))
 {
     require_once("Utilities.php");
+    require_once("Application");
     require_once("RequestFactory.php");
     require_once ("Talnet.php");
     require_once("Sort.php");
