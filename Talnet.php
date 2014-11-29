@@ -16,7 +16,7 @@ class Talnet {
      * @param App $app App object
      */
     public static function setApp($app) {
-        Talnet::$_app = new Application($app->_keys->APP_NAME, $app->_keys->APP_KEY);
+        Talnet::$_app = new Application($app->APP_NAME, $app->APP_KEY);
     }
 
     public static function getApp() {
