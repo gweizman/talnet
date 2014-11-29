@@ -176,7 +176,7 @@ class User extends Entry
     public function isAppAdmin($name = NULL)
     {
         if ($name == NULL) {
-            $name = Talnet::getApp()->_name;
+            $name = $this->_app->_name;
         }
         return $this->isInPermissionGroup($name . "_admin") or $this->isInPermissionGroup("Super_Admin");
     }
