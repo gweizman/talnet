@@ -5,7 +5,7 @@ namespace talnet;
 use Exception;
 
 class Table extends Entry {
-    private $_app, $_cols;
+    private $_application, $_cols;
 
     /**
      * @param Array $keys
@@ -14,14 +14,14 @@ class Table extends Entry {
      * @param bool $new
      * @throws Exception
      */
-    public function __construct($keys, $app, $cols = NULL, $new = false, $application)
+    public function __construct($keys, $app, $cols = NULL, $new = false, $application = null)
     {
         if ($application == null)
-            $this->_application = Talnet::getApp();
+            $this->_app = Talnet::getApp();
         else
-            $this->_application = $application;
+            $this->_app = $application;
         $this->_keys = (object)$keys;
-        $this->_app = $app;
+        $this->_application = $app;
         $this->_cols = $cols;
         if ($new) {
             if ($cols == NULL) {
@@ -37,7 +37,7 @@ class Table extends Entry {
                 "cols" => $columns // Array of col objects
             );
             $request = RequestFactory::createAppAction("ADD_TABLE", $data);
-            $this->_application->send($request);
+            $this->_app->send($request);
             //$this->_keys->APP_ID = $app->; < This should be added some day
         }
     }
@@ -50,7 +50,7 @@ class Table extends Entry {
                 "appName" => $this->_app->APP_NAME
             );
             $request = RequestFactory::createAppAction("GET_TABLE_INFO", $data);
-            $response = $this->_application->send($request);
+            $response = $this->_app->send($request);
             $cols = array();
             foreach ($response as $line) {
                 $name = $line->Field;
@@ -88,7 +88,7 @@ class Table extends Entry {
             "type" => $type
         );
         $request = RequestFactory::createAppAction("ADD_PERMISSION_GROUP_FOR_TABLE", $data);
-        return $this->_application->send($request);
+        return $this->_app->send($request);
     }
 
     public function removePermissionGroup($permissiongroup, $type)
@@ -100,7 +100,7 @@ class Table extends Entry {
             "type" => $type
         );
         $request = RequestFactory::createAppAction("REMOVE_PERMISSION_GROUP_FOR_TABLE", $data);
-        return $this->_application->send($request);
+        return $this->_app->send($request);
     }
 
     public function getPermissions()
@@ -110,7 +110,7 @@ class Table extends Entry {
             "appName" => $this->_app->APP_NAME
         );
         $request = RequestFactory::createAppAction("GET_TABLE_PERMISSIONS", $data);
-        $answer = $this->_application->send($request);
+        $answer = $this->_app->send($request);
         $permissions = array();
         foreach ($answer as $permission) {
             array_push($permissions, new Permission($permission, false));
@@ -144,7 +144,7 @@ class Table extends Entry {
             "tableName" => $this->TABLENAME
         );
         $request = RequestFactory::createAppAction("DROP_TABLE", $data);
-        return $this->_application->send($request);
+        return $this->_app->send($request);
     }
 
     public function __set($name, $value)

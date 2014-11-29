@@ -212,7 +212,6 @@ class User extends Entry
      * @return array- array of entries matching the condition
      */
     public static function get($condition, $active = true, $app = null)
-, $app = null)
     {
         if ($app == null)
             $app = Talnet::getApp();
