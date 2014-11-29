@@ -46,7 +46,7 @@ class App extends Entry
         $retVal = array();
         $answers = $this->_app->send($request);
         foreach ($answers as $answer) {
-            array_push($retVal, new Table($answer, $this, false, $this->_app));
+            array_push($retVal, new Table($answer, $this, NULL, false, $this->_app));
         }
         return $retVal;
     }
