@@ -17,7 +17,7 @@ class Communicate
         if ($app == null)
             $app = Talnet::getApp();
         $request = RequestFactory::createUserAction("SIGN_IN");
-        $comm = $app->send(Talnet::getApp(), $request, $user, Utilities::encrypt($pass));
+        $comm = $app->send($request, $user, Utilities::encrypt($pass));
         $_SESSION['username'] = $user;
         $_SESSION['pass'] = Utilities::encrypt($pass);
         $_SESSION['user'] = new User($comm[0], false);
