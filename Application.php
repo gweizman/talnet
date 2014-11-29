@@ -4,6 +4,8 @@
     use Exception;
 
     class Application {
+        public $_name;
+        protected $_key;
 
         public function __construct($name, $key) {
             $this->_name = $name;

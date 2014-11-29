@@ -47,7 +47,7 @@ class Table extends Entry {
         if ($this->_cols == NULL) {
             $data = array(
                 "tableName" => $this->TABLENAME,
-                "appName" => $this->_app->APP_NAME
+                "appName" => $this->_application->APP_NAME
             );
             $request = RequestFactory::createAppAction("GET_TABLE_INFO", $data);
             $response = $this->_app->send($request);
@@ -82,7 +82,7 @@ class Table extends Entry {
     public function addPermissionGroup($permissiongroup, $type)
     {
         $data = array(
-            "appName" => $this->_app->APP_NAME,
+            "appName" => $this->_application->APP_NAME,
             "permissionGroupName" => $permissiongroup->PERMISSION_NAME,
             "to" => $this->TABLENAME,
             "type" => $type
@@ -94,7 +94,7 @@ class Table extends Entry {
     public function removePermissionGroup($permissiongroup, $type)
     {
         $data = array(
-            "appName" => $this->_app->APP_NAME,
+            "appName" => $this->_application->APP_NAME,
             "permissionGroupName" => $permissiongroup->PERMISSION_NAME,
             "from" => $this->TABLENAME,
             "type" => $type
@@ -107,7 +107,7 @@ class Table extends Entry {
     {
         $data = array(
             "tableName" => $this->TABLENAME,
-            "appName" => $this->_app->APP_NAME
+            "appName" => $this->_application->APP_NAME
         );
         $request = RequestFactory::createAppAction("GET_TABLE_PERMISSIONS", $data);
         $answer = $this->_app->send($request);
@@ -140,7 +140,7 @@ class Table extends Entry {
     public function remove()
     {
         $data = array(
-            "appName" => $this->_app->APP_NAME,
+            "appName" => $this->_application->APP_NAME,
             "tableName" => $this->TABLENAME
         );
         $request = RequestFactory::createAppAction("DROP_TABLE", $data);
