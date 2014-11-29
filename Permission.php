@@ -10,9 +10,14 @@ class Permission extends Entry
     /**
      * @param Array $keys NAME and DESCRIPTION
      * @param bool $new
+     * @param Application $app
      */
-    public function __construct($keys, $new = True)
+    public function __construct($keys, $new = True, $app = null)
     {
+        if ($app == null)
+            $this->_app = Talnet::getApp();
+        else
+            $this->_app = $app;
         $this->_keys = (object)$keys;
         if ($new) {
             $data = array(
@@ -20,7 +25,7 @@ class Permission extends Entry
                 "description" => $this->_keys->PERMISSIONGROUP_DESCRIPTION
             );
             $request = RequestFactory::createAppAction("ADD_PERMISSIONGROUP", $data);
-            Communicate::send(Talnet::getApp(), $request);
+            $this->_app->send($request);
             $this->_keys->GROUPADMIN_USERNAME = Communicate::getCurrentUser()->USERNAME;
         }
     }
@@ -31,7 +36,7 @@ class Permission extends Entry
             "permissionGroupName" => $this->PERMISSION_NAME
         );
         $request = RequestFactory::createAppAction("REMOVE_PERMISSIONGROUP", $data);
-        return Communicate::send(Talnet::getApp(), $request);
+        return $this->_app->send($request);
     }
 
     public function getAdmin()
@@ -47,7 +52,7 @@ class Permission extends Entry
             "username" => $user->USERNAME
         );
         $request = RequestFactory::createAppAction("SET_PERMISSIONGROUP_ADMIN", $data);
-        return Communicate::send(Talnet::getApp(), $request);
+        return $this->_app->send($request);
     }
 
     public function getUsers()
@@ -56,7 +61,7 @@ class Permission extends Entry
             "groupName" => $this->PERMISSION_NAME
         );
         $request = RequestFactory::createUserAction("GET_USERS_WITH_GROUPS", $data, NULL);
-        $answers = Communicate::send(Talnet::getApp(), $request);
+        $answers = $this->_app->send($request);
         $retVal = array();
         foreach ($answers as $answer) {
             array_push($retVal, new User($answer, False));
@@ -64,10 +69,12 @@ class Permission extends Entry
         return $retVal;
     }
 
-    public static function getAll()
+    public static function getAll($app = null)
     {
+        if ($app == null)
+            $app = Talnet::getApp();
         $request = RequestFactory::createAppAction("GET_ALL_PERMISSIONS", (object)NULL);
-        $answers = Communicate::send(Talnet::getApp(), $request);
+        $answers = $app->send($request);
         $retVal = array();
         foreach ($answers as $answer) {
             array_push($retVal, new Permission($answer, False));

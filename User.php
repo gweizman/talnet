@@ -16,8 +16,12 @@ class User extends Entry
      * @param $keys Array of table information, built as key => value
      * @param bool $new True iff a new user is to be created
      */
-    public function __construct($keys, $new = False)
+    public function __construct($keys, $new = False, $app = null)
     {
+        if ($app == null)
+            $this->_app = Talnet::getApp();
+        else
+            $this->_app = $app;
         $this->_keys = (object)$keys;
         if ($new) {
             $data = array(
@@ -33,7 +37,7 @@ class User extends Entry
                 "phonePre" => $this->_keys->PHONE_PRE,
             );
             $request = RequestFactory::createUserAction("SIGN_UP", $data, NULL);
-            Communicate::send(Talnet::getApp(), $request);
+            $this->_app->send($request);
         }
         unset($this->_keys->PASSWORD);
         return $this;
@@ -48,7 +52,7 @@ class User extends Entry
 		switch ($name) {
 			// Calculate the user's year in the program, bigger than 3 values mean they have already finished
 			case 'YEAR_IN_PROGRAM':
-				return Talnet::getFirstYear() - $this->_keys->YEAR + 1;
+				return Utilities::getFirstYear() - $this->_keys->YEAR + 1;
 				break;
 				
 			default:
@@ -72,8 +76,8 @@ class User extends Entry
     {
         $data['username'] = $this->USERNAME;
         $request = RequestFactory::createUserAction("UPDATE_INFO", $data, NULL);
-        Communicate::send(Talnet::getApp(), $request);
-        Communicate::refresh();
+        $this->_app->send($request);
+        Communicate::refresh($this->_app);
     }
     
     public function activate()
@@ -81,8 +85,8 @@ class User extends Entry
     	$data = array();
         $data['userToActivate'] = $this->USERNAME;
         $request = RequestFactory::createUserAction("ACTIVATE", $data, NULL);
-        Communicate::send(Talnet::getApp(), $request);
-        Communicate::refresh();
+        $this->_app->send($request);
+        Communicate::refresh($this->_app);
     }
     
     public function deactivate()
@@ -90,8 +94,8 @@ class User extends Entry
     	$data = array();
         $data['userToDeactivate'] = $this->USERNAME;
         $request = RequestFactory::createUserAction("DEACTIVATE", $data, NULL);
-        Communicate::send(Talnet::getApp(), $request);
-        Communicate::refresh();
+        $this->_app->send($request);
+        Communicate::refresh($this->_app);
     }
 
     public function setPass($newPass)
@@ -101,7 +105,7 @@ class User extends Entry
             'newPassword' => $newPass
         );
         $request = RequestFactory::createUserAction("UPDATE_PASSWORD", $data);
-        return Communicate::send(Talnet::getApp(), $request);
+        return $this->_app->send($request);
     }
 
     /**
@@ -114,7 +118,7 @@ class User extends Entry
             'userToDelete' => $id
         );
         $request = RequestFactory::createUserAction("DELETE_USER", $data);
-        return Communicate::send(Talnet::getApp(), $request);
+        return $this->_app->send($request);
     }
 
     public function addPermissionGroup($permission)
@@ -124,7 +128,7 @@ class User extends Entry
             'permissionGroupName' => $permission->PERMISSION_NAME
         );
         $request = RequestFactory::createUserAction("ADD_PERMISSION", $data);
-        return Communicate::send(Talnet::getApp(), $request);
+        return $this->_app->send($request);
     }
 
     public function removePermissionGroup($permission)
@@ -134,13 +138,13 @@ class User extends Entry
             'permissionGroupName' => $permission->PERMISSION_NAME
         );
         $request = RequestFactory::createUserAction("REMOVE_PERMISSION", $data);
-        return Communicate::send(Talnet::getApp(), $request);
+        return $this->_app->send($request);
     }
 
     public function getPermissionGroups()
     {
         $request = RequestFactory::createUserAction("GET_GROUPS");
-        $answer = Communicate::send(Talnet::getApp(), $request);
+        $answer = $this->_app->send($request);
         $permissions = array();
         foreach ($answer as $permission) {
             array_push($permissions, new Permission($permission, false));
@@ -213,31 +217,22 @@ class User extends Entry
      * @param $condition - given condition
      * @return array- array of entries matching the condition
      */
-    public static function get($condition, $active = true)
+    public static function get($condition, $active = true, $app = null)
     {
+    if ($app == null)
+        $app = Talnet::getApp();
 	// Include active users only
 	if($active) {
 		$condition = new Condition($condition, new BaseCondition('ACTIVE', '=', 1), 'AND');
 	}
 		
         $request = RequestFactory::createUserAction("SELECT", NULL, $condition);
-        $answer = Communicate::send(Talnet::getApp(), $request);
+        $answer = $app->send($request);
         $retVal = array();
         foreach ($answer as $user) {
             array_push($retVal, new User($user, false));
         }
         return $retVal;
-    }
-	
-    /**
-     * Returns a list of all the entries matching a given condition
-     * Includes inactive users, assuming ACTIVE is not included in $condition
-     * @param $condition - given condition
-     * @return array- array of entries matching the condition
-     */
-    public static function getWithInactive($condition)
-    {
-        return self::get($condition, false);
     }
     
     /**
@@ -247,6 +242,6 @@ class User extends Entry
      */
     public static function countResult($condition)
     {
-        return count(User::get(new BaseCondition('USER_ID', '=', $ID)));
+        return count(User::get($condition));
     }
 } 

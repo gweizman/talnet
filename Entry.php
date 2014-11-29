@@ -8,6 +8,10 @@ require_once("RequestFactory.php");
 
 class Entry
 {
+    /**
+     * @var Application
+     */
+    protected $_app; // App used for all communication
     protected $_keys; // Dictionary containing names and values
     protected static $_table, $_id_field; // The given application, table and columns.
     //Columns is a dictionary of name : type
@@ -15,13 +19,18 @@ class Entry
     /**
      * @param $keys Array of table information, built as key => value
      * @param bool $new True iff a new entry is to be created
+     * @param Application $app Application
      */
-    public function __construct($keys, $new = True)
+    public function __construct($keys, $new = True, $app = null)
     {
+        if ($app == null)
+            $this->_app = Talnet::getApp();
+        else
+            $this->_app = $app;
         $this->_keys = (object) $keys;
         if ($new) {
             $request = RequestFactory::createDtdAction(static::$_table, "INSERT", $keys);
-            $answer = Communicate::send(Talnet::getApp(), $request);
+            $answer = $this->_app->send($request);
 			if (!empty($answer)) {
 	            $answer = $answer[0];
 	            $id = $answer->GENERATED_KEY;
@@ -55,7 +64,7 @@ class Entry
         $condition = new BaseCondition(static::$_id_field, "=", strval($id));
         $data = array($name => $value);
         $request = RequestFactory::createDtdAction(static::$_table, "UPDATE", $data, $condition);
-        return Communicate::send(Talnet::getApp(), $request);
+        return $this->_app->send($request);
     }
 
     /**
@@ -83,18 +92,21 @@ class Entry
         $id = $this->_keys->{static::$_id_field};
         $condition = new Condition(new BaseCondition(static::$_id_field, "=", strval($id)));
         $request = RequestFactory::createDtdAction(static::$_table, "DELETE", NULL, $condition);
-        return Communicate::send(Talnet::getApp(), $request);
+        return $this->_app->send($request);
     }
 
     /**
      * Returns a list of all the entries matching a given condition
      * @param $condition - given condition
+     * @param Application $app
      * @return array- array of entries matching the condition
      */
-    public static function get($condition = NULL, $order = NULL)
+    public static function get($condition = NULL, $order = NULL, $app = null)
     {
+        if ($app == null)
+            $app = Talnet::getApp();
         $request = RequestFactory::createDtdAction(static::$_table, "SELECT", NULL, $condition, $order);
-        $answers = Communicate::send(Talnet::getApp(), $request);
+        $answers = $app->send($request);
         $retVal = array();
         foreach ($answers as $answer) {
             array_push($retVal, new static($answer, FALSE));
@@ -105,12 +117,15 @@ class Entry
     /**
      * Returns the result set of a select query selecting with a given condition
      * @param $condition - given condition
+     * @param Application $app
      * @return int- the result size
      */
-    public static function countResult($condition = NULL)
+    public static function countResult($condition = NULL, $app = null)
     {
+        if ($app == null)
+            $app = Talnet::getApp();
         $request = RequestFactory::createDtdAction(static::$_table, "COUNT", NULL, $condition, NULL);
-        $answers = Communicate::send(Talnet::getApp(), $request);
+        $answers = $app->send($request);
         return $answers[0]->resultLength;
     }
 }
