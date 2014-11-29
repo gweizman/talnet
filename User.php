@@ -184,13 +184,10 @@ class User extends Entry
 
     public static function getUserByName($name)
     {
-        $result = User::get(new BaseCondition('USERNAME', '=', $name));
-		
-		if (empty($result)) {
-			throw new Exception("לא קיים משתמש עם שם זה.");
-			
-		}
-		
+        $result = User::get(new BaseCondition('USERNAME', '=', $name), false);
+	if (empty($result)) {
+		throw new Exception("לא קיים משתמש עם שם זה.");
+	}
         return $result[0];
     }
 	
@@ -202,13 +199,10 @@ class User extends Entry
 	 */
     public static function getUserByID($ID)
     {
-        $result = User::get(new BaseCondition('USER_ID', '=', $ID));
-		
-		if (empty($result)) {
-			throw new Exception("לא קיים משתמש עם ID זה.");
-			
-		}
-		
+        $result = User::get(new BaseCondition('USER_ID', '=', $ID), false);
+	if (empty($result)) {
+		throw new Exception("לא קיים משתמש עם ID זה.");
+	}
         return $result[0];
     }
 
@@ -218,7 +212,10 @@ class User extends Entry
      * @return array- array of entries matching the condition
      */
     public static function get($condition, $active = true, $app = null)
+, $app = null)
     {
+        if ($app == null)
+            $app = Talnet::getApp();
     if ($app == null)
         $app = Talnet::getApp();
 	// Include active users only
