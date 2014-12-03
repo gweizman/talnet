@@ -8,7 +8,7 @@
 
         public function __construct($name, $key) {
             $this->_name = $name;
-            $this->_key = $key;
+            $this->_key = Utilities::encrypt($key);
 
             return $this;
         }
@@ -46,7 +46,7 @@
             $request = array(
                 "RequesterCredentials" => array(
                     "appName" => $this->_name,
-                    "appKey" => Utilities::challenge(md5($this->_key), $challenge),
+                    "appKey" => Utilities::challenge($this->_key, $challenge),
                     "username" => $user,
                     "password" => Utilities::challenge($pass, $challenge)
                 ),
