@@ -24,7 +24,7 @@ class Utilities {
      * Returns the phone number prefixes supported by Talnet in an array.
      */
     public static function getPhonePrefixes() {
-        return array( '050', '051', '052', '053', '054', '057' );
+        return array( '050', '051', '052', '053', '054', '057', '058' );
     }
 
     static function convertNumberToHebrew($num)

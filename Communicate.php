@@ -26,6 +26,9 @@ class Communicate
 
     public static function logout($app = null)
     {
+        session_destroy();
+        session_name("talnet");
+        session_start();
         Communicate::login("Anonymous", "", $app);
     }
 
