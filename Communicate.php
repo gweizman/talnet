@@ -51,6 +51,10 @@ class Communicate
         if (!isset($_SESSION['user'])) {
             Communicate::logout($app);
         }
+        if ($app == null) {
+            $app = Talnet::getApp();
+        }
+        $_SESSION['user']->_app = $app;
         return $_SESSION['user'];
     }
 } 
