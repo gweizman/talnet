@@ -54,9 +54,7 @@ class Communicate
         if ($app == null) {
             $app = Talnet::getApp();
         }
-        $temp = $_SESSION['user'];
-        $temp->_app = $app;
-        $_SESSION['user'] = $temp;
+        $_SESSION['user']->setApp($app);
         return $_SESSION['user'];
     }
 } 

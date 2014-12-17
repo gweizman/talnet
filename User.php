@@ -240,4 +240,11 @@ class User extends Entry
     {
         return count(User::get($condition));
     }
+
+    public function setApp($app = null) {
+        if ($app == null) {
+            $app = Talnet::getApp();
+        }
+        $this->_app = $app;
+    }
 } 
