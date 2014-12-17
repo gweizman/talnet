@@ -7,7 +7,7 @@ class Utilities {
             $app = Talnet::getApp();
         $tables = [];
         foreach($tableNames as $tableName){
-            array_push($tables, array('tableName' => $tableName))
+            array_push($tables, array('tableName' => $tableName));
         }
         $request = RequestFactory::createDtdAction($tables, "SELECT", NULL, $condition, $order);
         $records = $app->send($request);
