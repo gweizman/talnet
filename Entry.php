@@ -105,7 +105,7 @@ class Entry
     {
         if ($app == null)
             $app = Talnet::getApp();
-        $request = RequestFactory::createDtdAction(array('tableName' => static::$_table), "SELECT", NULL, $condition, $order);
+        $request = RequestFactory::createDtdAction(array(new Object('tableName' => static::$_table)), "SELECT", NULL, $condition, $order);
         $answers = $app->send($request);
         $retVal = array();
         foreach ($answers as $answer) {
