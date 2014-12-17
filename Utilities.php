@@ -2,6 +2,18 @@
 namespace talnet;
 
 class Utilities {
+    public static function generalSelect($tableNames, $condition = NULL, $order = NULL, $app = null){
+        if ($app == null)
+            $app = Talnet::getApp();
+        $tables = [];
+        foreach($tableNames as $tableName){
+            array_push($tables, array('tableName' => $tableName))
+        }
+        $request = RequestFactory::createDtdAction($tables, "SELECT", NULL, $condition, $order);
+        $records = $app->send($request);
+        return $records;
+    }
+    
     public static function challenge($field, $challenge)
     {
         return Utilities::encrypt($field . trim($challenge));
