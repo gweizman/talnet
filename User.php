@@ -166,8 +166,16 @@ class User extends Entry
     {
         $groups = $this->getPermissionGroups();
         foreach ($groups as $group) {
-            if ($group->PERMISSION_NAME == $name) {
-                return True;
+            if (is_array($name)) {
+                foreach ($name as $item) {
+                    if ($group->PERMISSION_NAME == $name) {
+                        return true;
+                    }
+                }
+            } else {
+                if ($group->PERMISSION_NAME == $name) {
+                    return True;
+                }
             }
         }
         return False;
@@ -178,7 +186,7 @@ class User extends Entry
         if ($name == NULL) {
             $name = $this->_app->_name;
         }
-        return $this->isInPermissionGroup($name . "_admin") or $this->isInPermissionGroup("Super_Admin");
+        return $this->isInPermissionGroup(array($name . "_admin", "Super_Admin"));
     }
 
 
