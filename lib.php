@@ -4,7 +4,7 @@ namespace talent;
 
 if (!defined("TALNET_ENABLED"))
 {
-    require_once 'swift/lib/swift_required.php';
+    require_once 'swiftmailer/lib/swift_required.php';
     require_once '../gmail.php';
     $mail_transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
         ->setUsername($GMAIL_USERNAME)
