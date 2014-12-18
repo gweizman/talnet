@@ -159,6 +159,11 @@ class User extends Entry
      */
     public function sendMail($subject, $message)
     {
+        require 'gmail.php';
+        $mail_transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
+            ->setUsername($GMAIL_USERNAME)
+            ->setPassword($GMAIL_PASSWORD);
+
         $mailer = \Swift_Mailer::newInstance($mail_transport);
 
         $message = \Swift_Message::newInstance($subject)
