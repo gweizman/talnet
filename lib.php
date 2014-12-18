@@ -1,7 +1,7 @@
 <?php
 
 namespace talent;
-
+$mail_transport = null;
 if (!defined("TALNET_ENABLED"))
 {
     require 'vendor/autoload.php';
