@@ -6,6 +6,8 @@ if (!defined("TALNET_ENABLED"))
 {
     require 'vendor/autoload.php';
     require_once 'gmail.php';
+    $GMAIL_USERNAME = "";
+    $GMAIL_PASSWORD = "";
     \Swift_Preferences::getInstance()->setCharset('UTF-8');
     $mail_transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
         ->setUsername($GMAIL_USERNAME)
