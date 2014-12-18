@@ -23,7 +23,7 @@ class Utilities {
         }
         $request = RequestFactory::createDtdAction($tables, "COUNT", NULL, $condition);
         $records = $app->send($request);
-        return $records;
+        return $records[0]->resultLength;
     }
     
     public static function challenge($field, $challenge)
