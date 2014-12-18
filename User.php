@@ -169,7 +169,7 @@ class User extends Entry
         $message = \Swift_Message::newInstance($subject)
             ->setFrom(array('talnet.talpiot@gmail.com' => 'Talnet'))
             ->setTo(array($this->EMAIL))
-            ->setBody("<center class='wrapper' style='display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;background-color: #ecf5f3l; height: 100%, width: 100%;' lang='he' dir='rtl'>
+            ->setBody("<center class='wrapper' style='display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;background-color: #ecf5f3l; height: 100%; width: 100%;' lang='he' dir='rtl'>
         <table class='header centered' style='border-collapse: collapse;border-spacing: 0;Margin-right: auto;Margin-left: auto;width: 600px'>
           <tbody><tr>
             <td style='padding: 0;vertical-align: top'>
