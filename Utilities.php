@@ -14,6 +14,18 @@ class Utilities {
         return $records;
     }
     
+    public static function generalCount($tableNames, $condition = NULL, $app = null){
+        if ($app == null)
+            $app = Talnet::getApp();
+        $tables = [];
+        foreach($tableNames as $tableName){
+            array_push($tables, array('tableName' => $tableName));
+        }
+        $request = RequestFactory::createDtdAction($tables, "COUNT", NULL, $condition);
+        $records = $app->send($request);
+        return $records;
+    }
+    
     public static function challenge($field, $challenge)
     {
         return Utilities::encrypt($field . trim($challenge));
