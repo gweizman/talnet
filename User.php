@@ -159,7 +159,17 @@ class User extends Entry
      */
     public function sendMail($subject, $message)
     {
-        return mail($this->EMAIL, $subject, $message, 'From: ' . Talnet::getApp()->APP_NAME . '@talpiot');
+        $mailer = Swift_Mailer::newInstance($mail_transport);
+
+        $message = Swift_Message::newInstance($subject)
+            ->setFrom(array('talnet.talpiot@gmail.com' => 'Talnet'))
+            ->setTo(array($this->EMAIL))
+            ->setBody("<strong>זוהי הודעה אוטומטית ממערכת תלנט</strong><br /><br />" . $message);
+
+        $result = $mailer->send($message);
+
+        return $result;
+        //return mail($this->EMAIL, $subject, $message, 'From: ' . Talnet::getApp()->APP_NAME . '@talpiot');
     }
 
     public function isInPermissionGroup($name)

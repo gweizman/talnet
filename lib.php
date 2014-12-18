@@ -4,6 +4,14 @@ namespace talent;
 
 if (!defined("TALNET_ENABLED"))
 {
+    require_once 'swift/lib/swift_required.php';
+    require_once '../gmail.php';
+    $mail_transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
+        ->setUsername($GMAIL_USERNAME)
+        ->setPassword($GMAIL_PASSWORD);
+    unset($GMAIL_USERNAME);
+    unset($GMAIL_PASSWORD);
+
     require_once("Utilities.php");
     require_once("Application.php");
     require_once("RequestFactory.php");
