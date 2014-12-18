@@ -159,9 +159,9 @@ class User extends Entry
      */
     public function sendMail($subject, $message)
     {
-        $mailer = Swift_Mailer::newInstance($mail_transport);
+        $mailer = \Swift_Mailer::newInstance($mail_transport);
 
-        $message = Swift_Message::newInstance($subject)
+        $message = \Swift_Message::newInstance($subject)
             ->setFrom(array('talnet.talpiot@gmail.com' => 'Talnet'))
             ->setTo(array($this->EMAIL))
             ->setBody("<strong>זוהי הודעה אוטומטית ממערכת תלנט</strong><br /><br />" . $message);

@@ -4,10 +4,10 @@ namespace talent;
 
 if (!defined("TALNET_ENABLED"))
 {
-    require 'vendor/swiftmailer/swiftmailer/lib/swift_required.php';
+    require 'vendor/autoload.php';
     require_once 'gmail.php';
-    Swift_Preferences::getInstance()->setCharset('UTF-8');
-    $mail_transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
+    \Swift_Preferences::getInstance()->setCharset('UTF-8');
+    $mail_transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
         ->setUsername($GMAIL_USERNAME)
         ->setPassword($GMAIL_PASSWORD);
     unset($GMAIL_USERNAME);
