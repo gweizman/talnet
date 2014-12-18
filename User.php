@@ -174,6 +174,9 @@ class User extends Entry
     <title></title>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
     <style type='text/css'>
+body, div, table, tr, td, span, tbody {
+    direction: rtl;
+}
 body {
   direction: rtl;
   margin: 0;
@@ -900,16 +903,6 @@ blockquote,.wrapper .narrower blockquote{border-right:2px solid #ecf5f3}.logo{}.
               <center>
                 <div class='address' style='Margin-bottom: 19px'>Talnet - העתיד כבר כאן.</div>
                 <div class='permission' style='Margin-bottom: 10px'>זוהי הודעה אוטומטית ממערכת Talnet - אין להשיב למייל זה.</div>
-                <div>
-                  <span class='block'>
-
-                  </span>
-                  <span class='block'>
-                    <unsubscribe>
-                      Unsubscribe
-                    </unsubscribe>
-                  </span>
-                </div>
               </center>
             </td>
           </tr>
