@@ -169,7 +169,7 @@ class User extends Entry
         $message = \Swift_Message::newInstance($subject)
             ->setFrom(array('talnet.talpiot@gmail.com' => 'Talnet'))
             ->setTo(array($this->EMAIL))
-            ->setBody("<strong>זוהי הודעה אוטומטית ממערכת תלנט</strong><br /><br />" . $message);
+            ->setBody("<strong>זוהי הודעה אוטומטית ממערכת תלנט</strong><br /><br />" . $message, 'text/html');
 
         $result = $mailer->send($message);
 
