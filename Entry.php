@@ -124,7 +124,7 @@ class Entry
     {
         if ($app == null)
             $app = Talnet::getApp();
-        $request = RequestFactory::createDtdAction(static::$_table, "COUNT", NULL, $condition, NULL);
+        $request = RequestFactory::createDtdAction(array(array('tableName' => static::$_table)), "COUNT", NULL, $condition, NULL);
         $answers = $app->send($request);
         return $answers[0]->resultLength;
     }
