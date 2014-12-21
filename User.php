@@ -264,7 +264,7 @@ class User extends Entry
         foreach ($groups as $group) {
             if (is_array($name)) {
                 foreach ($name as $item) {
-                    if ($group->PERMISSION_NAME == $name) {
+                    if ($group->PERMISSION_NAME == $item) {
                         return true;
                     }
                 }
