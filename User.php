@@ -264,6 +264,9 @@ class User extends Entry
      */
     public static function spam($users, $subject, $title, $message, $app = null) {
         $currentUser = Communicate::getCurrentUser($app);
+        if ($app == null) {
+            $app = Talnet::getApp();
+        }
         include('gmail.php');
         $mail_transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
             ->setUsername($GMAIL_USERNAME)
@@ -284,7 +287,7 @@ class User extends Entry
                 <tbody><tr>
                   <td class='preheader' style='padding: 0;vertical-align: top;letter-spacing: 0.01em;font-style: normal;line-height: 17px;font-weight: 400;font-size: 11px;color: #b9b9b9;font-family: sans-serif;padding-bottom: 40px;padding-top: 40px;text-align: left;width: 280px'>
                     <div class='spacer' style='font-size: 1px;line-height: 2px;width: 100%'>&nbsp;</div>
-                    <div class='title'>זוהי הודעה אוטומטית ממערכת Talnet, בשם האפליקציה " . $this->_app->_name . "</div>
+                    <div class='title'>זוהי הודעה אוטומטית ממערכת Talnet, בשם האפליקציה " . $app->_name . "</div>
 
                   </td>
                 </tr>
