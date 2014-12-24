@@ -155,11 +155,15 @@ class Utilities {
 	 * @param field - a field name present in all the objects
 	 * @return an array of the values of the field in the objects
 	 */
-	static private function fieldArray($objects, $field) {
+	static private function fieldArray($objects, $field, $index = NULL) {
 		$arr = array();
 		
 		foreach ($objects as $object) {
-			$arr[] = $object->{$field};
+			if($index == NULL) {
+				array_push($arr, $object->$field);
+			} else {
+				$arr[$object->$index] = $object->$field;
+			}
 		}
 		
 		return $arr;
