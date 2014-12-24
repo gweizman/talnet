@@ -155,7 +155,7 @@ class Utilities {
 	 * @param field - a field name present in all the objects
 	 * @return an array of the values of the field in the objects
 	 */
-	static private function fieldArray($objects, $field, $index = NULL) {
+	static public function fieldArray($objects, $field, $index = NULL) {
 		$arr = array();
 		
 		foreach ($objects as $object) {
