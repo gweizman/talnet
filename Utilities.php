@@ -147,5 +147,23 @@ class Utilities {
     {
         return mb_convert_encoding('&#' . $unicode . ';', 'UTF-8', 'HTML-ENTITIES');
     }
+    
+	/**
+	 * Extract an array of the values of a specific field in an enumerable group of objects.
+	 *
+	 * @param objects - enumerable group of objects
+	 * @param field - a field name present in all the objects
+	 * @return an array of the values of the field in the objects
+	 */
+	static private function fieldArray($objects, $field) {
+		$arr = array();
+		
+		foreach ($objects as $object) {
+			$arr[] = $object->{$field};
+		}
+		
+		return $arr;
+	}
+
 }
 ?>
