@@ -272,7 +272,7 @@ class User extends Entry
         $mailer = \Swift_Mailer::newInstance($mail_transport);
 
         $message = \Swift_Message::newInstance($subject)
-            ->setFrom(array($currentUser->MAIL => $currentUser->NAME))
+            ->setFrom(array($currentUser->EMAIL => $currentUser->NAME))
             ->setTo($mails)
             ->setBody("
 <div style='margin:0;padding:0;min-width:100%;background-color:#ecf5f3'>
