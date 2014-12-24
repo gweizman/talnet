@@ -159,103 +159,7 @@ class User extends Entry
      */
     public function sendMail($subject, $title, $message)
     {
-        include('gmail.php');
-        $mail_transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
-            ->setUsername($GMAIL_USERNAME)
-            ->setPassword($GMAIL_PASSWORD);
-
-        $mailer = \Swift_Mailer::newInstance($mail_transport);
-
-        $message = \Swift_Message::newInstance($subject)
-            ->setFrom(array('talnet.talpiot@gmail.com' => 'Talnet'))
-            ->setTo(array($this->EMAIL))
-            ->setBody("
-<div style='margin:0;padding:0;min-width:100%;background-color:#ecf5f3'>
-<center class='wrapper' style='display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;background-color: #ecf5f3l; height: 100%; width: 100%;' lang='he' dir='rtl'>
-        <table class='header centered' style='border-collapse: collapse;border-spacing: 0;Margin-right: auto;Margin-left: auto;width: 600px'>
-          <tbody><tr>
-            <td style='padding: 0;vertical-align: top'>
-              <table style='border-collapse: collapse;border-spacing: 0' align='left'>
-                <tbody><tr>
-                  <td class='preheader' style='padding: 0;vertical-align: top;letter-spacing: 0.01em;font-style: normal;line-height: 17px;font-weight: 400;font-size: 11px;color: #b9b9b9;font-family: sans-serif;padding-bottom: 40px;padding-top: 40px;text-align: left;width: 280px'>
-                    <div class='spacer' style='font-size: 1px;line-height: 2px;width: 100%'>&nbsp;</div>
-                    <div class='title'>זוהי הודעה אוטומטית ממערכת Talnet, בשם האפליקציה " . $this->_app->_name . "</div>
-
-                  </td>
-                </tr>
-              </tbody></table>
-              <table style='border-collapse: collapse;border-spacing: 0' align='right'>
-                <tbody><tr>
-                  <td class='logo' style='padding: 0;vertical-align: top;mso-line-height-rule: at-least;font-size: 24px;font-weight: 700;line-height: 30px;padding-bottom: 40px;padding-top: 40px;text-align: right;width: 280px;font-family: sans-serif;color: #555'>
-                    <div class='logo-right' align='right' id='emb-email-header'><img style='border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 206px' src='http://up413.siz.co.il/up1/ed0wuimzwjdn.png' alt='' width='200' height='39' /></div>
-                  </td>
-                </tr>
-              </tbody></table>
-            </td>
-          </tr>
-        </tbody></table>
-
-            <table class='border' style='border-collapse: collapse;border-spacing: 0;font-size: 1px;line-height: 1px;background-color: #d4dddb;Margin-right: auto;Margin-left: auto' width='602'>
-              <tbody><tr><td style='padding: 0;vertical-align: top'>&#8203;</td></tr>
-            </tbody></table>
-
-            <table class='centered' style='border-collapse: collapse;border-spacing: 0;Margin-right: auto;Margin-left: auto'>
-              <tbody><tr>
-                <td class='border' style='padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #d4dddb;width: 1px'>&#8203;</td>
-                <td style='padding: 0;vertical-align: top'>
-                  <table class='one-col' style='border-collapse: collapse;border-spacing: 0;Margin-right: auto;Margin-left: auto;width: 600px;background-color: #ffffff'>
-                    <tbody><tr>
-                      <td class='column' style='padding: 0;vertical-align: top;text-align: right'>
-                        <div><div class='column-top' style='font-size: 50px;line-height: 50px'>&nbsp;</div></div>
-                          <table class='contents' style='border-collapse: collapse;border-spacing: 0;width: 100%'>
-                            <tbody><tr>
-                              <td class='padded' style='padding: 0;vertical-align: top;padding-right: 50px;padding-left: 50px'>
-
-              <h1 style='Margin-top: 0;color: #3b3e42;font-weight: 400;font-size: 40px;Margin-bottom: 20px;font-family: sans-serif;line-height: 48px'>
-              " . $title . "
-              </h1>
-              <p style='Margin-top: 0;color: #60666d;font-size: 15px;font-family: sans-serif;line-height: 24px;Margin-bottom: 24px'>
-              " . $message . "
-              </p>
-
-                              </td>
-                            </tr>
-                          </tbody></table>
-
-                        <div class='column-bottom' style='font-size: 26px;line-height: 26px'>&nbsp;</div>
-                      </td>
-                    </tr>
-                  </tbody></table>
-                </td>
-                <td class='border' style='padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #d4dddb;width: 1px'>&#8203;</td>
-              </tr>
-            </tbody></table>
-
-            <table class='border' style='border-collapse: collapse;border-spacing: 0;font-size: 1px;line-height: 1px;background-color: #d4dddb;Margin-right: auto;Margin-left: auto' width='602'>
-              <tbody><tr><td style='padding: 0;vertical-align: top'>&nbsp;</td></tr>
-            </tbody></table>
-
-        <table class='centered' style='border-collapse: collapse;border-spacing: 0;Margin-right: auto;Margin-left: auto'>
-          <tbody><tr>
-            <td class='footer' style='padding: 0;vertical-align: top;letter-spacing: 0.01em;font-style: normal;line-height: 17px;font-weight: 400;font-size: 11px;Margin-left: auto;Margin-right: auto;padding-top: 50px;padding-bottom: 40px;width: 602px;color: #b9b9b9;font-family: sans-serif'>
-              <center>
-                <div class='address' style='Margin-bottom: 19px'>Talnet - העתיד כבר כאן.</div>
-                <div class='permission' style='Margin-bottom: 10px'>זוהי הודעה אוטומטית ממערכת Talnet - אין להשיב למייל זה.</div>
-                <div>
-                </div>
-              </center>
-            </td>
-          </tr>
-        </tbody></table>
-      </center>
-</div>
-
-            ", 'text/html');
-
-        $result = $mailer->send($message);
-
-        return $result;
-        //return mail($this->EMAIL, $subject, $message, 'From: ' . Talnet::getApp()->APP_NAME . '@talpiot');
+        return User::spam($this, $subject, $title, $message, $this->_app);
     }
 
     public function isInPermissionGroup($name)
@@ -350,5 +254,111 @@ class User extends Entry
             $app = Talnet::getApp();
         }
         $this->_app = $app;
+    }
+
+    /**
+     * @param $users
+     * @param $subject
+     * @param $title
+     * @param $message
+     */
+    public static function spam($users, $subject, $title, $message, $app = null) {
+        $currentUser = Communicate::getCurrentUser($app);
+        include('gmail.php');
+        $mail_transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
+            ->setUsername($GMAIL_USERNAME)
+            ->setPassword($GMAIL_PASSWORD);
+        $mails = Utilities::fieldArray($users, "NAME", "EMAIL");
+        $mailer = \Swift_Mailer::newInstance($mail_transport);
+
+        $message = \Swift_Message::newInstance($subject)
+            ->setFrom(array($currentUser->MAIL => $currentUser->NAME))
+            ->setTo($mails)
+            ->setBody("
+<div style='margin:0;padding:0;min-width:100%;background-color:#ecf5f3'>
+<center class='wrapper' style='display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;background-color: #ecf5f3l; height: 100%; width: 100%;' lang='he' dir='rtl'>
+        <table class='header centered' style='border-collapse: collapse;border-spacing: 0;Margin-right: auto;Margin-left: auto;width: 600px'>
+          <tbody><tr>
+            <td style='padding: 0;vertical-align: top'>
+              <table style='border-collapse: collapse;border-spacing: 0' align='left'>
+                <tbody><tr>
+                  <td class='preheader' style='padding: 0;vertical-align: top;letter-spacing: 0.01em;font-style: normal;line-height: 17px;font-weight: 400;font-size: 11px;color: #b9b9b9;font-family: sans-serif;padding-bottom: 40px;padding-top: 40px;text-align: left;width: 280px'>
+                    <div class='spacer' style='font-size: 1px;line-height: 2px;width: 100%'>&nbsp;</div>
+                    <div class='title'>זוהי הודעה אוטומטית ממערכת Talnet, בשם האפליקציה " . $this->_app->_name . "</div>
+
+                  </td>
+                </tr>
+              </tbody></table>
+              <table style='border-collapse: collapse;border-spacing: 0' align='right'>
+                <tbody><tr>
+                  <td class='logo' style='padding: 0;vertical-align: top;mso-line-height-rule: at-least;font-size: 24px;font-weight: 700;line-height: 30px;padding-bottom: 40px;padding-top: 40px;text-align: right;width: 280px;font-family: sans-serif;color: #555'>
+                    <div class='logo-right' align='right' id='emb-email-header'><img style='border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 206px' src='http://up413.siz.co.il/up1/ed0wuimzwjdn.png' alt='' width='200' height='39' /></div>
+                  </td>
+                </tr>
+              </tbody></table>
+            </td>
+          </tr>
+        </tbody></table>
+
+            <table class='border' style='border-collapse: collapse;border-spacing: 0;font-size: 1px;line-height: 1px;background-color: #d4dddb;Margin-right: auto;Margin-left: auto' width='602'>
+              <tbody><tr><td style='padding: 0;vertical-align: top'>&#8203;</td></tr>
+            </tbody></table>
+
+            <table class='centered' style='border-collapse: collapse;border-spacing: 0;Margin-right: auto;Margin-left: auto'>
+              <tbody><tr>
+                <td class='border' style='padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #d4dddb;width: 1px'>&#8203;</td>
+                <td style='padding: 0;vertical-align: top'>
+                  <table class='one-col' style='border-collapse: collapse;border-spacing: 0;Margin-right: auto;Margin-left: auto;width: 600px;background-color: #ffffff'>
+                    <tbody><tr>
+                      <td class='column' style='padding: 0;vertical-align: top;text-align: right'>
+                        <div><div class='column-top' style='font-size: 50px;line-height: 50px'>&nbsp;</div></div>
+                          <table class='contents' style='border-collapse: collapse;border-spacing: 0;width: 100%'>
+                            <tbody><tr>
+                              <td class='padded' style='padding: 0;vertical-align: top;padding-right: 50px;padding-left: 50px'>
+
+              <h1 style='Margin-top: 0;color: #3b3e42;font-weight: 400;font-size: 40px;Margin-bottom: 20px;font-family: sans-serif;line-height: 48px'>
+              " . $title . "
+              </h1>
+              <p style='Margin-top: 0;color: #60666d;font-size: 15px;font-family: sans-serif;line-height: 24px;Margin-bottom: 24px'>
+              " . $message . "
+              </p>
+
+                              </td>
+                            </tr>
+                          </tbody></table>
+
+                        <div class='column-bottom' style='font-size: 26px;line-height: 26px'>&nbsp;</div>
+                      </td>
+                    </tr>
+                  </tbody></table>
+                </td>
+                <td class='border' style='padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #d4dddb;width: 1px'>&#8203;</td>
+              </tr>
+            </tbody></table>
+
+            <table class='border' style='border-collapse: collapse;border-spacing: 0;font-size: 1px;line-height: 1px;background-color: #d4dddb;Margin-right: auto;Margin-left: auto' width='602'>
+              <tbody><tr><td style='padding: 0;vertical-align: top'>&nbsp;</td></tr>
+            </tbody></table>
+
+        <table class='centered' style='border-collapse: collapse;border-spacing: 0;Margin-right: auto;Margin-left: auto'>
+          <tbody><tr>
+            <td class='footer' style='padding: 0;vertical-align: top;letter-spacing: 0.01em;font-style: normal;line-height: 17px;font-weight: 400;font-size: 11px;Margin-left: auto;Margin-right: auto;padding-top: 50px;padding-bottom: 40px;width: 602px;color: #b9b9b9;font-family: sans-serif'>
+              <center>
+                <div class='address' style='Margin-bottom: 19px'>Talnet - העתיד כבר כאן.</div>
+                <div class='permission' style='Margin-bottom: 10px'>זוהי הודעה אוטומטית ממערכת Talnet - אין להשיב למייל זה.</div>
+                <div>
+                </div>
+              </center>
+            </td>
+          </tr>
+        </tbody></table>
+      </center>
+</div>
+
+            ", 'text/html');
+
+        $result = $mailer->send($message);
+
+        return $result;
     }
 } 
