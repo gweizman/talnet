@@ -105,8 +105,8 @@ class App extends Entry
             $app = Talnet::getApp();
         $data = array(
             "appName" => $this->APP_NAME,
-            "start" => $offset,
-            "index" => $size + $offset
+            "offset" => $offset,
+            "size" => $size
         );
         $request = RequestFactory::createAppAction("GET_RECENT_FAILURES", $data);
         return $app->send($request);
