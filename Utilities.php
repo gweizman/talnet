@@ -13,6 +13,25 @@ class Utilities {
         $records = $app->send($request);
         return $records;
     }
+
+    public function generalSet($toApp, $table, $entry, $name, $value, $app = null)
+    {
+        if ($app == null)
+            $app = Talnet::getApp();
+        $condition = null;
+        foreach ($entry as $field=>$val) {
+            $temp = new BaseCondition($field, "=", $val);
+            if ($condition = null) {
+                $condition = $temp;
+            }
+            else {
+                $condition = new Condition($condition, $temp, "AND");
+            }
+        }
+        $data = array($name => $value);
+        $request = RequestFactory::createDtdAction($table, "UPDATE", $data, $condition, $toApp);
+        return $app->send($request);
+    }
     
     public static function generalCount($tableNames, $condition = NULL, $app = null){
         if ($app == null)

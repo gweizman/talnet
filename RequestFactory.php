@@ -66,7 +66,7 @@ class RequestFactory {
         return $request;
     }
 
-    public static function createDtdAction($table, $action, $data = NULL, $condition = NULL, $order = NULL)
+    public static function createDtdAction($table, $action, $data = NULL, $condition = NULL, $order = NULL, $appName = NULL)
     {
         switch($action)
         {
@@ -107,6 +107,9 @@ class RequestFactory {
                         "WHERE" => ($condition != NULL ? $condition->JSON() : (object) NULL)
                     )
                 );
+                if ($appName != NULL) {
+                    $request["RequestData"]["appName"] = $appName;
+                }
                 break;
             case "DELETE":
                 $request = array(
