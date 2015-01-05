@@ -100,15 +100,13 @@ class App extends Entry
         throw new Exception ("This serves no purpose.");
     }
     
-    public function getRecentFailedRequests($size, $offset = 0, $app = null){
-        if ($app == null)
-            $app = Talnet::getApp();
+    public function getRecentFailedRequests($size, $offset = 0){
         $data = array(
             "appName" => $this->APP_NAME,
             "offset" => $offset,
             "size" => $size
         );
         $request = RequestFactory::createAppAction("GET_RECENT_FAILURES", $data);
-        return $app->send($request);
+        return $this->_app->send($request);
     }
 } 

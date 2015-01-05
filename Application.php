@@ -53,9 +53,7 @@
                 "RequestInfo" => $request["RequestInfo"],
                 "RequestData" => $request["RequestData"]
             );
-            $_SESSION['last_request'] = $request;
             $message = json_encode($request, JSON_UNESCAPED_UNICODE);
-            $_SESSION['last_request_json'] = $message;
             socket_write($socket, $message, strlen($message));
             $output = '';
             while (($buffer = socket_read($socket, 2048, PHP_BINARY_READ)) != '') {
@@ -63,10 +61,7 @@
             }
             socket_close($socket);
             $output = stripslashes($output);
-            $_SESSION['raw_output'] = $output;
             $decode = json_decode($output);
-            $_SESSION['last_response'] = $decode;
-            $_SESSION['json_error'] = json_last_error();
             if ($decode->Status != 1) {
                 throw new Exception($decode->Message);
             }
