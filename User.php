@@ -11,6 +11,7 @@ class User extends Entry
     protected static $_table = NULL,
         $_id_field = "USER_ID";
 
+    private $permissiongroups;
 
     /**
      * @param $keys Array of table information, built as key => value
@@ -128,6 +129,7 @@ class User extends Entry
             'permissionGroupName' => $permission->PERMISSION_NAME
         );
         $request = RequestFactory::createUserAction("ADD_PERMISSION", $data);
+        $this->getPermissionGroups(true);
         return $this->_app->send($request);
     }
 
@@ -138,18 +140,23 @@ class User extends Entry
             'permissionGroupName' => $permission->PERMISSION_NAME
         );
         $request = RequestFactory::createUserAction("REMOVE_PERMISSION", $data);
+        $this->getPermissionGroups(true);
         return $this->_app->send($request);
     }
 
-    public function getPermissionGroups()
+    public function getPermissionGroups($refresh = false)
     {
+        if(isset($this->permissiongroups) && !$refresh){
+        	return $this->permissiongroups;
+        }
         $request = RequestFactory::createUserAction("GET_GROUPS");
         $answer = $this->_app->send($request);
         $permissions = array();
         foreach ($answer as $permission) {
             array_push($permissions, new Permission($permission, false));
         }
-        return $permissions;
+	$this->permissiongroups = $permission;
+        return $this->permissiongroups;
     }
 
     /**
