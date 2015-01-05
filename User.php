@@ -171,7 +171,7 @@ class User extends Entry
 
     public function isInPermissionGroup($name)
     {
-        $groups = $this->getPermissionGroups();
+        $groups = $this->getPermissionGroups(true);
         foreach ($groups as $group) {
             if (is_array($name)) {
                 foreach ($name as $item) {
