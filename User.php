@@ -144,13 +144,11 @@ class User extends Entry
     {
         $request = RequestFactory::createUserAction("GET_GROUPS");
         $answer = $this->_app->send($request);
-        print_r($answer);
         $permissions = array();
         foreach ($answer as $permission) {
             array_push($permissions, new Permission($permission, false));
         }
-        print_r($permission);
-        return $permission;
+        return $permissions;
     }
 
     /**
