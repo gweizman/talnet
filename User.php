@@ -156,6 +156,7 @@ class User extends Entry
             array_push($permissions, new Permission($permission, false));
         }
 	$this->permissiongroups = $permission;
+	print_r($this->permissiongroups);
         return $this->permissiongroups;
     }
 
