@@ -10,6 +10,7 @@ class Utilities {
             array_push($tables, array('tableName' => $tableName));
         }
         $request = RequestFactory::createDtdAction($tables, "SELECT", NULL, $condition, $order, $toApp);
+        print_r($request);
         $records = $app->send($request);
         return $records;
     }
