@@ -20,7 +20,7 @@ class Utilities {
             $app = Talnet::getApp();
         $condition = new BaseCondition($field, "=", $val);
         $data = array($name => $value);
-        $request = RequestFactory::createDtdAction($table, "UPDATE", $data, $condition, $toApp);
+        $request = RequestFactory::createDtdAction($table, "UPDATE", $data, $condition, NULL, $toApp);
         return $app->send($request);
     }
     
