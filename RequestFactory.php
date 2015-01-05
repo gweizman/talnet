@@ -81,6 +81,9 @@ class RequestFactory {
                         "WHERE" => ($condition != NULL ? $condition->JSON() : (object) NULL)
                     )
                 );
+                if ($appName != NULL) {
+                    $request["RequestData"]["appName"] = $appName;
+                }
                 break;
             case "COUNT":
                 $request = array (
