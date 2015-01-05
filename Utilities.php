@@ -162,7 +162,11 @@ class Utilities {
 			if($index == NULL) {
 				array_push($arr, $object->$field);
 			} else {
-				$arr[$object->$index] = $object->$field;
+				if($field == ''){
+					$arr[$object->$index] = $object;
+				} else {
+					$arr[$object->$index] = $object->$field;
+				}
 			}
 		}
 		
