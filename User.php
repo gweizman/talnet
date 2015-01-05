@@ -129,7 +129,7 @@ class User extends Entry
             'permissionGroupName' => $permission->PERMISSION_NAME
         );
         $request = RequestFactory::createUserAction("ADD_PERMISSION", $data);
-        $this->getPermissionGroups(true);
+        //$this->getPermissionGroups(true);
         return $this->_app->send($request);
     }
 
@@ -140,15 +140,15 @@ class User extends Entry
             'permissionGroupName' => $permission->PERMISSION_NAME
         );
         $request = RequestFactory::createUserAction("REMOVE_PERMISSION", $data);
-        $this->getPermissionGroups(true);
+        //$this->getPermissionGroups(true);
         return $this->_app->send($request);
     }
 
     public function getPermissionGroups($refresh = false)
     {
-        if(isset($this->permissiongroups) && !$refresh){
-        	return $this->permissiongroups;
-        }
+        //if(isset($this->permissiongroups) && !$refresh){
+        //	return $this->permissiongroups;
+        //}
         $request = RequestFactory::createUserAction("GET_GROUPS");
         $answer = $this->_app->send($request);
         $permissions = array();
@@ -156,8 +156,8 @@ class User extends Entry
             array_push($permissions, new Permission($permission, false));
         }
 	$this->permissiongroups = $permission;
-	print_r($this->permissiongroups);
-        return $this->permissiongroups;
+	//print_r($this->permissiongroups);
+        return $permission;
     }
 
     /**
@@ -172,7 +172,7 @@ class User extends Entry
 
     public function isInPermissionGroup($name)
     {
-        $groups = $this->getPermissionGroups(true);
+        $groups = $this->getPermissionGroups();
         foreach ($groups as $group) {
             if (is_array($name)) {
                 foreach ($name as $item) {
