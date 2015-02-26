@@ -53,6 +53,14 @@ class Utilities {
     public static function getFirstYear() {
         return date_diff(date_create('1978-09-01'), date_create('today'))->y;
     }
+    
+    /**
+     * Returns 0 for even semester, 1 for an odd one.
+     * Assumes the odd semester is in Sept. to Jan.
+     */
+    public static function getCurrentSemester() {
+        return (date("m") % 12 < 2 || date("m") % 12 >= 9)?0:1;
+    }
 
     /**
      * Returns the phone number prefixes supported by Talnet in an array.
