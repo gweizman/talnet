@@ -222,8 +222,7 @@ class User extends Entry
     {
         if ($app == null)
             $app = Talnet::getApp();
-    if ($app == null)
-        $app = Talnet::getApp();
+
 	// Include active users only
 	if($active) {
 		$condition = new Condition($condition, new BaseCondition('ACTIVE', '=', 1), 'AND');
